@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+/* eslint-disable import/no-cycle */
+
+import {
+  Column, Entity, OneToMany, PrimaryGeneratedColumn,
+} from 'typeorm'
+import { Travel } from './Travel'
 
 @Entity()
 export class User {
@@ -24,4 +29,7 @@ export class User {
     nullable: false,
   })
     password: string
+
+  @OneToMany(() => Travel, (travel) => travel.user)
+    travels: Travel[]
 }
