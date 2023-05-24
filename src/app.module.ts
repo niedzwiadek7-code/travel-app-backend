@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { PlaceModule } from './place/place.module';
+import { TravelModule } from './travel/travel.module';
 import entities from './typeorm'
 
 @Module({
@@ -24,6 +25,7 @@ import entities from './typeorm'
       isGlobal: true,
     }),
     PlaceModule,
+    TravelModule,
   ],
 })
 export class AppModule {}
