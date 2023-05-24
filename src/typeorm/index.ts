@@ -3,6 +3,7 @@ import { Travel } from './Travel'
 import { Place } from './Place'
 import { ElementTravel } from './ElementTravel'
 import { Activity } from './Activity'
+import { ElementTravelPhoto } from './ElementTravelPhoto'
 
 export {
   User,
@@ -13,7 +14,7 @@ export {
 }
 
 const entities = [
-  User, Travel, Place, ElementTravel, Activity,
+  User, Travel, Place, ElementTravel, Activity, ElementTravelPhoto,
 ]
 
 export default entities

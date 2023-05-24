@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+/* eslint-disable import/no-cycle */
+
+import {
+  Column, Entity, OneToMany, PrimaryGeneratedColumn,
+} from 'typeorm'
+import { ElementTravelPhoto } from './ElementTravelPhoto'
 
 @Entity()
 export class ElementTravel {
@@ -16,4 +21,7 @@ export class ElementTravel {
     type: 'date',
   })
     to: Date
+
+  @OneToMany(() => ElementTravelPhoto, (elementTravelPhoto) => elementTravelPhoto.elementTravel)
+    photos: ElementTravelPhoto[]
 }
