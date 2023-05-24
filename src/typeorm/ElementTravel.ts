@@ -1,9 +1,11 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { ElementTravelPhoto } from './ElementTravelPhoto'
+import { Travel } from './Travel'
+import {Activity} from "./Activity";
 
 @Entity()
 export class ElementTravel {
@@ -12,16 +14,23 @@ export class ElementTravel {
 
   @Column({
     nullable: false,
-    type: 'date',
+    type: 'datetime',
   })
     from: Date
 
   @Column({
     nullable: false,
-    type: 'date',
+    type: 'datetime',
   })
     to: Date
 
   @OneToMany(() => ElementTravelPhoto, (elementTravelPhoto) => elementTravelPhoto.elementTravel)
     photos: ElementTravelPhoto[]
+
+  @ManyToOne(() => Travel, (travel) => travel.travelElements)
+    travel: Travel
+
+  @ManyToOne(() => Activity)
+  @JoinTable()
+    activity: Activity
 }

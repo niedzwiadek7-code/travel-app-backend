@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn,
+  Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { User } from './User'
 import { Place } from './Place'
+import { ElementTravel } from './ElementTravel'
 
 @Entity()
 export class Travel {
@@ -17,4 +18,7 @@ export class Travel {
   @ManyToOne(() => Place)
   @JoinTable()
     place: Place
+
+  @OneToMany(() => ElementTravel, (elementTravel) => elementTravel.travel)
+    travelElements: ElementTravel[]
 }
