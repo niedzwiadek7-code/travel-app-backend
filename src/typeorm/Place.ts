@@ -10,9 +10,13 @@ export class Place {
   })
     name: string
 
-  @Column()
-    longitude: number | null
+  @Column({
+    nullable: true,
+  })
+    longitude: string | null
 
-  @Column()
-    latitude: number | null
+  @Column({
+    nullable: true,
+  })
+    latitude: string | null
 }
