@@ -5,7 +5,7 @@ import {
 } from 'typeorm'
 import { ElementTravelPhoto } from './ElementTravelPhoto'
 import { Travel } from './Travel'
-import {Activity} from "./Activity";
+import { Activity } from './Activity'
 
 @Entity()
 export class ElementTravel {
