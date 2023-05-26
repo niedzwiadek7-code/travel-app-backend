@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
+  Column,
   Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { User } from './User'
@@ -11,6 +12,11 @@ import { ElementTravel } from './ElementTravel'
 export class Travel {
   @PrimaryGeneratedColumn()
     id: number
+
+  @Column({
+    nullable: false,
+  })
+    name: string
 
   @ManyToOne(() => User, (user) => user.travels)
     user: User
