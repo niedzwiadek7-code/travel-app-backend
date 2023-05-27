@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+/* eslint-disable import/no-cycle */
+
+import {
+  Column, Entity, OneToMany, PrimaryGeneratedColumn,
+} from 'typeorm'
+import { Question } from './Question'
 
 @Entity()
 export class Activity {
@@ -20,4 +25,7 @@ export class Activity {
     nullable: false,
   })
     description: string
+
+  @OneToMany(() => Question, (question) => question.activity)
+    questions: Question[]
 }
