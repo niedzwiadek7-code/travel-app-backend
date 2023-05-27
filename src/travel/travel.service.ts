@@ -51,9 +51,11 @@ export class TravelService {
       }
 
       const travelElement = {
+        id: e.id,
         from: dayjs(e.from).format('HH:mm'),
         to: dayjs(e.to).format('HH:mm'),
         activity: {
+          id: e.activity.id,
           name: e.activity.name,
           price: e.activity.price,
         },
