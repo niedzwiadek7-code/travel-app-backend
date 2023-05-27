@@ -82,6 +82,6 @@ export class TravelService {
       .innerJoinAndSelect('travelElement.photos', 'elementTravelPhoto')
       .where('travelElement.id = :id', { id })
 
-    return query.getMany()
+    return query.getOne()
   }
 }
