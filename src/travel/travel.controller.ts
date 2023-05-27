@@ -1,4 +1,6 @@
-import {Controller, Get, Param, Query} from '@nestjs/common'
+import {
+  Controller, Get, Param, Query,
+} from '@nestjs/common'
 import { TravelService } from './travel.service'
 
 @Controller('travel')
@@ -15,5 +17,10 @@ export class TravelController {
       default:
         return this.travelService.getTravel(id)
     }
+  }
+
+  @Get('element/:id')
+  getElement(@Param('id') id: string) {
+    return this.travelService.getTravelElement(id)
   }
 }

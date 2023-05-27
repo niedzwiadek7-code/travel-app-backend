@@ -2,13 +2,15 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
-import { Travel as TravelEntity } from '../typeorm'
+import { Travel as TravelEntity, ElementTravel as ElementTravelEntity } from '../typeorm'
 
 @Injectable()
 export class TravelService {
   constructor(
     @InjectRepository(TravelEntity)
     private readonly travelRepository: Repository<TravelEntity>,
+    @InjectRepository(ElementTravelEntity)
+    private readonly elementTravelRepository: Repository<ElementTravelEntity>,
   ) {}
 
   async getTravel(id: string) {
@@ -71,5 +73,15 @@ export class TravelService {
       place: result.place,
       travelElements,
     }
+  }
+
+  getTravelElement(id: string) {
+    const query = this.elementTravelRepository
+      .createQueryBuilder('travelElement')
+      .innerJoinAndSelect('travelElement.activity', 'activity')
+      .innerJoinAndSelect('travelElement.photos', 'elementTravelPhoto')
+      .where('travelElement.id = :id', { id })
+
+    return query.getMany()
   }
 }
