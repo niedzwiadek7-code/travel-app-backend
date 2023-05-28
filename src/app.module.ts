@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { PlaceModule } from './place/place.module'
 import { TravelModule } from './travel/travel.module'
+import { QuestionModule } from './question/question.module';
 import entities from './typeorm'
 
 @Module({
@@ -26,6 +27,7 @@ import entities from './typeorm'
     }),
     PlaceModule,
     TravelModule,
+    QuestionModule,
   ],
 })
 export class AppModule {}
