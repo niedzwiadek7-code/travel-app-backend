@@ -79,7 +79,11 @@ export class TravelService {
     const query = this.elementTravelRepository
       .createQueryBuilder('travelElement')
       .innerJoinAndSelect('travelElement.activity', 'activity')
-      .innerJoinAndSelect('travelElement.photos', 'elementTravelPhoto')
+      .leftJoinAndSelect('travelElement.photos', 'elementTravelPhoto')
+      .leftJoinAndSelect('activity.questions', 'question')
+      .leftJoinAndSelect('question.author', 'questionAuthor')
+      .leftJoinAndSelect('question.answers', 'answer')
+      .leftJoinAndSelect('answer.author', 'answerAuthor')
       .where('travelElement.id = :id', { id })
 
     return query.getOne()
