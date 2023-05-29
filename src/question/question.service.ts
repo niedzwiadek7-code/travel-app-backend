@@ -1,23 +1,33 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Question as QuestionEntity } from '../typeorm'
+import { Question as QuestionEntity, User, Answer as AnswerEntity } from '../typeorm'
+import { AnswerDto } from './dto'
 
 @Injectable()
 export class QuestionService {
   constructor(
     @InjectRepository(QuestionEntity)
     private readonly questionRepository: Repository<QuestionEntity>,
+    @InjectRepository(AnswerEntity)
+    private readonly answerRepository: Repository<AnswerEntity>,
   ) {}
 
   getQuestion(id: string) {
-    const query = this.questionRepository
-      .createQueryBuilder('question')
-      .innerJoinAndSelect('question.author', 'questionAuthor')
-      .leftJoinAndSelect('question.answers', 'answer')
-      .leftJoinAndSelect('answer.author', 'answerAuthor')
-      .where('question.id = :id', { id })
+    return this.questionRepository.findOne({
+      where: {
+        id: parseInt(id, 10),
+      },
+      relations: ['answers', 'author', 'answers.author'],
+    })
+  }
 
-    return query.getOne()
+  async addAnswer(body: AnswerDto, questionId: string, user: User) {
+    const answerObj = new AnswerEntity()
+    answerObj.answer = body.answer
+    answerObj.questionId = questionId
+    answerObj.authorId = user.id.toString()
+
+    await this.answerRepository.save(answerObj)
   }
 }

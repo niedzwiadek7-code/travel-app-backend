@@ -17,9 +17,15 @@ export class Answer {
     answer: string
 
   @ManyToOne(() => Question, (question) => question.answers)
-    question: Question
+    question: Promise<Question>
+
+  @Column()
+    questionId: string
 
   @ManyToOne(() => User)
   @JoinTable()
-    author: User
+    author: Promise<User>
+
+  @Column()
+    authorId: string
 }
