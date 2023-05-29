@@ -5,25 +5,26 @@ import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { PlaceModule } from './place/place.module'
 import { TravelModule } from './travel/travel.module'
-import { QuestionModule } from './question/question.module';
+import { QuestionModule } from './question/question.module'
 import entities from './typeorm'
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env'],
+    }),
     AuthModule,
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
       port: parseInt(process.env.DATABASE_PORT, 10),
-      database: 'mobile-app',
-      username: 'root',
-      password: '',
+      database: process.env.DATABASE_NAME,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
       entities,
-      synchronize: true,
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true,
+      synchronize: false,
     }),
     PlaceModule,
     TravelModule,
