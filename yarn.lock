@@ -4356,11 +4356,6 @@ lru-cache@^8.0.0:
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-8.0.5.tgz#983fe337f3e176667f8e567cfcce7cb064ea214e"
   integrity sha512-MhWWlVnuab1RG5/zMRRcVGXZLCXrZTgfwMikgzCegsPnG62yDQo5JnqKkrK4jO5iKqDAZGItAqN5CtKBCBWRUA==
 
-m@^3.3.2:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/m/-/m-1.8.4.tgz#b6f791400e60c79cae18646a8e738ec8584c7ab4"
-  integrity sha512-d1WsT1/x7o71Z3tu2YU9qXXYvY0CyEkxlmJ2hpZGLSU4+bC/Fmo15Fdj1uDO0ojMV31sqqZI1VUqpVBAKDVltw==
-
 macos-release@^2.5.0:
   version "2.5.0"
   resolved "https://registry.npmjs.org/macos-release/-/macos-release-2.5.0.tgz"
