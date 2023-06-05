@@ -3,8 +3,7 @@
 import {
   Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ElementTravelPhoto } from './ElementTravelPhoto'
-import { Travel } from './Travel'
+import { TravelRecipe } from './TravelRecipe'
 import { Activity } from './Activity'
 
 @Entity()
@@ -24,11 +23,8 @@ export class ElementTravel {
   })
     to: Date
 
-  @OneToMany(() => ElementTravelPhoto, (elementTravelPhoto) => elementTravelPhoto.elementTravel)
-    photos: ElementTravelPhoto[]
-
-  @ManyToOne(() => Travel, (travel) => travel.travelElements)
-    travel: Travel
+  @ManyToOne(() => TravelRecipe, (travel) => travel.travelElements)
+    travel: TravelRecipe
 
   @ManyToOne(() => Activity)
   @JoinTable()

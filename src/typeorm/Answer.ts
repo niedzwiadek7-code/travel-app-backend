@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Question } from './Question'
 import { User } from './User'
@@ -28,4 +28,12 @@ export class Answer {
 
   @Column()
     authorId: string
+
+  @ManyToMany(() => User)
+  @JoinTable()
+    likes: User[]
+
+  @ManyToMany(() => User)
+  @JoinTable()
+    dislikes: User[]
 }

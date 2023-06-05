@@ -3,7 +3,7 @@
 import {
   Column, Entity, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ElementTravel } from './ElementTravel'
+import { ElementTravelInstance } from './ElementTravelInstance'
 
 @Entity()
 export class ElementTravelPhoto {
@@ -15,6 +15,6 @@ export class ElementTravelPhoto {
   })
     url: string
 
-  @ManyToOne(() => ElementTravel, (elementTravel) => elementTravel.photos)
-    elementTravel: ElementTravel
+  @ManyToOne(() => ElementTravelInstance, (elementTravel) => elementTravel.photos)
+    elementTravel: ElementTravelInstance
 }

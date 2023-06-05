@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
-import { Travel as TravelEntity, ElementTravel as ElementTravelEntity } from '../typeorm'
+import { TravelRecipe as TravelEntity, ElementTravel as ElementTravelEntity } from '../typeorm'
 
 @Injectable()
 export class TravelService {
@@ -59,9 +59,8 @@ export class TravelService {
         activity: {
           id: e.activity.id,
           name: e.activity.name,
-          price: e.activity.price,
+          price: e.activity.prices,
         },
-        photos: e.photos.map((photo) => photo.url),
       }
 
       travelElements[day].push(travelElement)

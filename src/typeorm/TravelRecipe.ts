@@ -7,9 +7,10 @@ import {
 import { User } from './User'
 import { Place } from './Place'
 import { ElementTravel } from './ElementTravel'
+import { TravelInstance } from './TravelInstance'
 
 @Entity()
-export class Travel {
+export class TravelRecipe {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -27,4 +28,7 @@ export class Travel {
 
   @OneToMany(() => ElementTravel, (elementTravel) => elementTravel.travel)
     travelElements: ElementTravel[]
+
+  @OneToMany(() => TravelInstance, (travelInstance) => travelInstance.travelRecipe)
+    travelInstances: TravelInstance[]
 }

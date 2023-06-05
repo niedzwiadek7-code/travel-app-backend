@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Activity } from './Activity'
 import { User } from './User'
@@ -25,4 +25,12 @@ export class Question {
 
   @OneToMany(() => Answer, (answer) => answer.question)
     answers: Answer[]
+
+  @ManyToMany(() => User)
+  @JoinTable()
+    likes: User[]
+
+  @ManyToMany(() => User)
+  @JoinTable()
+    dislikes: User[]
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Travel as TravelEntity } from '../typeorm'
+import { TravelRecipe as TravelEntity } from '../typeorm'
 
 @Injectable()
 export class UserService {

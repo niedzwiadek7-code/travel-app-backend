@@ -19,4 +19,24 @@ export class Place {
     nullable: true,
   })
     latitude: string | null
+
+  @Column({
+    nullable: false,
+  })
+    address: string
+
+  @Column({
+    nullable: false,
+  })
+    zipCode: string
+
+  @Column({
+    nullable: false,
+  })
+    city: string
+
+  @Column({
+    nullable: false,
+  })
+    country: string
 }

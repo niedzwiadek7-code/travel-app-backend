@@ -1,9 +1,12 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Question } from './Question'
+import { Rating } from './Rating'
+import { Price } from './Price'
+import { ActivityType } from './ActivityType'
 
 @Entity()
 export class Activity {
@@ -12,20 +15,33 @@ export class Activity {
 
   @Column({
     nullable: false,
+    type: 'boolean',
   })
-    name: string
+    accepted: boolean
 
   @Column({
     nullable: false,
-    type: 'float',
   })
-    price: number
+    name: string
 
   @Column({
     nullable: false,
   })
     description: string
 
+  @ManyToOne(() => ActivityType)
+  @JoinTable()
+    activityType: Promise<ActivityType>
+
+  @Column()
+    activityTypeId: string
+
+  @OneToMany(() => Price, (price) => price.activity)
+    prices: Price[]
+
   @OneToMany(() => Question, (question) => question.activity)
     questions: Question[]
+
+  @OneToMany(() => Rating, (rating) => rating.activity)
+    ratings: Rating[]
 }
