@@ -1,11 +1,11 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
 import { Question } from './Question'
-import {UserRole} from "./UserRole";
+import { UserRole } from './UserRole'
 
 @Entity()
 export class User {

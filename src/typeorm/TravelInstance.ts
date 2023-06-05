@@ -1,9 +1,11 @@
+/* eslint-disable import/no-cycle */
+
 import {
   Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
 import { DateRange } from './DateRange'
-import {ElementTravelInstance} from "./ElementTravelInstance";
+import { ElementTravelInstance } from './ElementTravelInstance'
 
 @Entity()
 export class TravelInstance {
@@ -17,6 +19,9 @@ export class TravelInstance {
   @JoinTable()
     dateRange: DateRange
 
-  @OneToMany(() => ElementTravelInstance, (elementTravelInstance) => elementTravelInstance.travelInstance)
+  @OneToMany(
+    () => ElementTravelInstance,
+    (elementTravelInstance) => elementTravelInstance.travelInstance,
+  )
     travelElements: ElementTravelInstance[]
 }

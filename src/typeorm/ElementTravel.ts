@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
 import { Activity } from './Activity'
