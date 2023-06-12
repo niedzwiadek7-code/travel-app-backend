@@ -14,6 +14,7 @@ export class Question {
 
   @Column({
     nullable: false,
+    type: 'text',
   })
     question: string
 

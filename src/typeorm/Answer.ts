@@ -13,6 +13,7 @@ export class Answer {
 
   @Column({
     nullable: false,
+    type: 'text',
   })
     answer: string
 
