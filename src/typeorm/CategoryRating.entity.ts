@@ -3,25 +3,24 @@
 import {
   Column, Entity, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Activity } from './Activity'
+import { RatingEntity } from './Rating.entity'
 
 @Entity()
-export class Price {
+export class CategoryRatingEntity {
   @PrimaryGeneratedColumn()
     id: number
 
   @Column({
     nullable: false,
-    type: 'float',
   })
-    price: number
+    category: string
 
   @Column({
     nullable: false,
-    type: 'date',
+    type: 'int',
   })
-    startDate: number
+    value: number
 
-  @ManyToOne(() => Activity, (activity) => activity.prices)
-    activity: Activity
+  @ManyToOne(() => RatingEntity, (rating) => rating.categoryRatings)
+    rating: RatingEntity
 }

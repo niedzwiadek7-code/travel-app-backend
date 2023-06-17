@@ -6,7 +6,7 @@ import { UserModule } from './user/user.module'
 import { PlaceModule } from './place/place.module'
 import { TravelModule } from './travel/travel.module'
 import { QuestionModule } from './question/question.module'
-import entities from './typeorm'
+import { dataSourceOptions } from '../db/data-source'
 
 @Module({
   imports: [
@@ -16,16 +16,7 @@ import entities from './typeorm'
     }),
     AuthModule,
     UserModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      database: process.env.DATABASE_NAME,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      entities,
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     PlaceModule,
     TravelModule,
     QuestionModule,

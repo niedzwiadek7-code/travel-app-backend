@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Place as PlaceEntity } from '../typeorm'
+import { PlaceEntity as PlaceEntity } from '../typeorm'
 
 @Injectable()
 export class PlaceService {

@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { User as UserEntity } from '../../typeorm'
+import { UserEntity as UserEntity } from '../../typeorm'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

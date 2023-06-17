@@ -3,12 +3,12 @@
 import {
   Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { TravelRecipe } from './TravelRecipe'
-import { Question } from './Question'
-import { UserRole } from './UserRole'
+import { TravelRecipeEntity } from './TravelRecipe.entity'
+import { QuestionEntity } from './Question.entity'
+import { UserRoleEntity } from './UserRole.entity'
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -32,13 +32,13 @@ export class User {
   })
     password: string
 
-  @ManyToOne(() => UserRole)
+  @ManyToOne(() => UserRoleEntity)
   @JoinTable()
-    role: UserRole
+    role: UserRoleEntity
 
-  @OneToMany(() => TravelRecipe, (travel) => travel.user)
-    travels: TravelRecipe[]
+  @OneToMany(() => TravelRecipeEntity, (travel) => travel.user)
+    travels: TravelRecipeEntity[]
 
-  @OneToMany(() => Question, (question) => question.author)
-    questions: Question[]
+  @OneToMany(() => QuestionEntity, (question) => question.author)
+    questions: QuestionEntity[]
 }

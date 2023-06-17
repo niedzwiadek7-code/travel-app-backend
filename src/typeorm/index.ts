@@ -1,48 +1,50 @@
-import { User } from './User'
-import { TravelRecipe } from './TravelRecipe'
-import { Place } from './Place'
-import { ElementTravel } from './ElementTravel'
-import { Activity } from './Activity'
-import { ElementTravelPhoto } from './ElementTravelPhoto'
-import { Question } from './Question'
-import { Answer } from './Answer'
-import { DateRange } from './DateRange'
-import { TimeRange } from './TimeRange'
-import { Rating } from './Rating'
-import { Price } from './Price'
-import { CategoryRating } from './CategoryRating'
-import { ActivityType } from './ActivityType'
-import { ActivityTypeParameter } from './ActivityTypeParameter'
-import { ActivityParameter } from './ActivityParameter'
-import { UserRole } from './UserRole'
-import { TravelInstance } from './TravelInstance'
-import { ElementTravelInstance } from './ElementTravelInstance'
+import { UserEntity } from './User.entity'
+import { TravelRecipeEntity } from './TravelRecipe.entity'
+import { PlaceEntity } from './Place.entity'
+import { ElementTravelEntity } from './ElementTravel.entity'
+import { ActivityEntity } from './Activity.entity'
+import { ElementTravelPhotoEntity } from './ElementTravelPhoto.entity'
+import { QuestionEntity } from './Question.entity'
+import { AnswerEntity } from './Answer.entity'
+import { DateRangeEntity } from './DateRange.entity'
+import { TimeRangeEntity } from './TimeRange.entity'
+import { RatingEntity } from './Rating.entity'
+import { PriceEntity } from './Price.entity'
+import { CategoryRatingEntity } from './CategoryRating.entity'
+import { ActivityTypeEntity } from './ActivityType.entity'
+import { ActivityTypeParameterEntity } from './ActivityTypeParameter.entity'
+import { ActivityParameterEntity } from './ActivityParameter.entity'
+import { UserRoleEntity } from './UserRole.entity'
+import { TravelInstanceEntity } from './TravelInstance.entity'
+import { ElementTravelInstanceEntity } from './ElementTravelInstance.entity'
+
+// TODO: entities should be in relative modules
 
 export {
-  User,
-  TravelRecipe,
-  Place,
-  ElementTravel,
-  Activity,
-  Question,
-  Answer,
-  DateRange,
-  TimeRange,
-  CategoryRating,
-  ActivityType,
-  ActivityTypeParameter,
-  ActivityParameter,
-  Price,
-  UserRole,
-  TravelInstance,
-  ElementTravelInstance,
+  UserEntity,
+  TravelRecipeEntity,
+  PlaceEntity,
+  ElementTravelEntity,
+  ActivityEntity,
+  QuestionEntity,
+  AnswerEntity,
+  DateRangeEntity,
+  TimeRangeEntity,
+  CategoryRatingEntity,
+  ActivityTypeEntity,
+  ActivityTypeParameterEntity,
+  ActivityParameterEntity,
+  PriceEntity,
+  UserRoleEntity,
+  TravelInstanceEntity,
+  ElementTravelInstanceEntity,
 }
 
 const entities = [
-  User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
-  Question, Answer, DateRange, TimeRange, Rating, CategoryRating,
-  ActivityType, ActivityTypeParameter, ActivityParameter, Price,
-  UserRole, TravelInstance, ElementTravelInstance,
+  UserEntity, TravelRecipeEntity, PlaceEntity, ElementTravelEntity, ActivityEntity, ElementTravelPhotoEntity,
+  QuestionEntity, AnswerEntity, DateRangeEntity, TimeRangeEntity, RatingEntity, CategoryRatingEntity,
+  ActivityTypeEntity, ActivityTypeParameterEntity, ActivityParameterEntity, PriceEntity,
+  UserRoleEntity, TravelInstanceEntity, ElementTravelInstanceEntity,
 ]
 
 export default entities

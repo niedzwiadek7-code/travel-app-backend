@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PlaceController } from './place.controller'
 import { PlaceService } from './place.service'
-import { Place } from '../typeorm'
+import { PlaceEntity } from '../typeorm'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Place]),
+    TypeOrmModule.forFeature([PlaceEntity]),
   ],
   controllers: [PlaceController],
   providers: [PlaceService],

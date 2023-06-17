@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { AuthDto, RegisterDto } from './dto'
-import { User as UserEntity } from '../typeorm'
+import { UserEntity as UserEntity } from '../typeorm'
 
 @Injectable()
 export class AuthService {

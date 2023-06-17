@@ -1,19 +1,19 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
-export class TimeRange {
+export class DateRangeEntity {
   @PrimaryGeneratedColumn()
     id: number
 
   @Column({
     nullable: false,
-    type: 'time',
+    type: 'datetime',
   })
     from: string
 
   @Column({
     nullable: false,
-    type: 'time',
+    type: 'datetime',
   })
     to: string
 }

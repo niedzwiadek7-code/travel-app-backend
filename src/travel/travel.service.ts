@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
-import { TravelRecipe as TravelEntity, ElementTravel as ElementTravelEntity } from '../typeorm'
+import { TravelRecipeEntity as TravelEntity, ElementTravelEntity as ElementTravelEntity } from '../typeorm'
 
 @Injectable()
 export class TravelService {

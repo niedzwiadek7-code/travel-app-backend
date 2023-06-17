@@ -2,7 +2,7 @@ import {
   Controller, Get, UseGuards,
 } from '@nestjs/common'
 import { JwtGuard } from 'src/auth/guard'
-import { User } from '../typeorm'
+import { UserEntity } from '../typeorm'
 import { GetUser } from '../auth/decorator'
 import { UserService } from './user.service'
 
@@ -14,12 +14,12 @@ export class UserController {
   ) {}
 
   @Get()
-  get(@GetUser() user: User) {
+  get(@GetUser() user: UserEntity) {
     return user
   }
 
   @Get('travels')
-  async getTravels(@GetUser() user: User) {
+  async getTravels(@GetUser() user: UserEntity) {
     return this.userService.getTravels(user.id)
   }
 }
