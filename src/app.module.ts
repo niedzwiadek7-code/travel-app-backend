@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { AuthModule } from './auth/auth.module'
-import { UserModule } from './user/user.module'
-import { PlaceModule } from './place/place.module'
-import { TravelModule } from './travel/travel.module'
-import { QuestionModule } from './question/question.module'
-import entities from './typeorm'
+import { AuthModule } from './modules/auth/auth.module'
+import { UserModule } from './modules/user/user.module'
+import { PlaceModule } from './modules/place/place.module'
+import { TravelModule } from './modules/travel/travel.module'
+import { QuestionModule } from './modules/question/question.module'
+import { typeormConfig } from './config/typeorm.config'
 
 @Module({
   imports: [
@@ -16,16 +16,7 @@ import entities from './typeorm'
     }),
     AuthModule,
     UserModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      database: process.env.DATABASE_NAME,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      entities,
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(typeormConfig),
     PlaceModule,
     TravelModule,
     QuestionModule,

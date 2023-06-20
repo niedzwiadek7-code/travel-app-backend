@@ -1,0 +1,124 @@
+import { MigrationInterface, QueryRunner } from "typeorm";
+
+export class Generate1687272177296 implements MigrationInterface {
+    name = 'Generate1687272177296'
+
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE TABLE \`activity_parameter\` (\`id\` int NOT NULL AUTO_INCREMENT, \`value\` varchar(255) NOT NULL, \`activityTypeParameterId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`activity_type_parameter\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`activityTypeId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`activity_type\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`place\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`longitude\` varchar(255) NULL, \`latitude\` varchar(255) NULL, \`address\` varchar(255) NOT NULL, \`zipCode\` varchar(255) NOT NULL, \`city\` varchar(255) NOT NULL, \`country\` varchar(255) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`element_travel\` (\`id\` int NOT NULL AUTO_INCREMENT, \`from\` datetime NOT NULL, \`to\` datetime NOT NULL, \`travelId\` int NULL, \`activityId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`date_range\` (\`id\` int NOT NULL AUTO_INCREMENT, \`from\` datetime NOT NULL, \`to\` datetime NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`element_travel_photo\` (\`id\` int NOT NULL AUTO_INCREMENT, \`url\` varchar(255) NOT NULL, \`elementTravelId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`element_travel_instance\` (\`id\` int NOT NULL AUTO_INCREMENT, \`dateRangeId\` int NULL, \`travelInstanceId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`travel_instance\` (\`id\` int NOT NULL AUTO_INCREMENT, \`travelRecipeId\` int NULL, \`dateRangeId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`travel_recipe\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`userId\` int NULL, \`placeId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`user_role\` (\`id\` int NOT NULL AUTO_INCREMENT, \`role\` varchar(255) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`user\` (\`id\` int NOT NULL AUTO_INCREMENT, \`firstName\` varchar(255) NOT NULL, \`lastName\` varchar(255) NOT NULL, \`email\` varchar(255) NOT NULL, \`password\` varchar(255) NOT NULL, \`roleId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`answer\` (\`id\` int NOT NULL AUTO_INCREMENT, \`answer\` text NOT NULL, \`questionId\` int NOT NULL, \`authorId\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`question\` (\`id\` int NOT NULL AUTO_INCREMENT, \`question\` text NOT NULL, \`activityId\` int NULL, \`authorId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`category_rating\` (\`id\` int NOT NULL AUTO_INCREMENT, \`category\` varchar(255) NOT NULL, \`value\` int NOT NULL, \`ratingId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`rating\` (\`id\` int NOT NULL AUTO_INCREMENT, \`text\` text NOT NULL, \`authorId\` int NOT NULL, \`activityId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`price\` (\`id\` int NOT NULL AUTO_INCREMENT, \`price\` float NOT NULL, \`startDate\` date NOT NULL, \`activityId\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`activity\` (\`id\` int NOT NULL AUTO_INCREMENT, \`accepted\` tinyint NOT NULL, \`name\` varchar(255) NOT NULL, \`description\` text NOT NULL, \`activityTypeId\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`time_range\` (\`id\` int NOT NULL AUTO_INCREMENT, \`from\` time NOT NULL, \`to\` time NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`answer_likes_user\` (\`answerId\` int NOT NULL, \`userId\` int NOT NULL, INDEX \`IDX_29cde37bbe05f8af127e950311\` (\`answerId\`), INDEX \`IDX_5c310e8f5db34120737935b692\` (\`userId\`), PRIMARY KEY (\`answerId\`, \`userId\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`answer_dislikes_user\` (\`answerId\` int NOT NULL, \`userId\` int NOT NULL, INDEX \`IDX_b46b2acc9ca636160c31d6585c\` (\`answerId\`), INDEX \`IDX_b1b727c67b4c08acae44b222a6\` (\`userId\`), PRIMARY KEY (\`answerId\`, \`userId\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`question_likes_user\` (\`questionId\` int NOT NULL, \`userId\` int NOT NULL, INDEX \`IDX_b6ade3a5087c64154a0fc6d352\` (\`questionId\`), INDEX \`IDX_019c2fe8b6a3933d91d5620137\` (\`userId\`), PRIMARY KEY (\`questionId\`, \`userId\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`question_dislikes_user\` (\`questionId\` int NOT NULL, \`userId\` int NOT NULL, INDEX \`IDX_ea796fc39cf1332fbeaab35be0\` (\`questionId\`), INDEX \`IDX_fce22250b891fa1c611381129b\` (\`userId\`), PRIMARY KEY (\`questionId\`, \`userId\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`ALTER TABLE \`activity_parameter\` ADD CONSTRAINT \`FK_04de3d04c98c0eeaa839fd749f1\` FOREIGN KEY (\`activityTypeParameterId\`) REFERENCES \`activity_type_parameter\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`activity_type_parameter\` ADD CONSTRAINT \`FK_8069c99bc6307a2fe4d8c8bd7bf\` FOREIGN KEY (\`activityTypeId\`) REFERENCES \`activity_type\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`element_travel\` ADD CONSTRAINT \`FK_3cd05a27479f43dbc5da05d88f9\` FOREIGN KEY (\`travelId\`) REFERENCES \`travel_recipe\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`element_travel\` ADD CONSTRAINT \`FK_334b779e1a56f0f117612f27bef\` FOREIGN KEY (\`activityId\`) REFERENCES \`activity\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`element_travel_photo\` ADD CONSTRAINT \`FK_72eb27c0d61d0f7d8f827d6e515\` FOREIGN KEY (\`elementTravelId\`) REFERENCES \`element_travel_instance\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`element_travel_instance\` ADD CONSTRAINT \`FK_2810b75ffcd8588ba23cd8048d7\` FOREIGN KEY (\`dateRangeId\`) REFERENCES \`date_range\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`element_travel_instance\` ADD CONSTRAINT \`FK_7cc5b6d7e3cdbeabb72f73aa1f0\` FOREIGN KEY (\`travelInstanceId\`) REFERENCES \`travel_instance\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`travel_instance\` ADD CONSTRAINT \`FK_bf53b090426ad4a286aba46b453\` FOREIGN KEY (\`travelRecipeId\`) REFERENCES \`travel_recipe\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`travel_instance\` ADD CONSTRAINT \`FK_f5152ea494dba650b09b31a01cf\` FOREIGN KEY (\`dateRangeId\`) REFERENCES \`date_range\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`travel_recipe\` ADD CONSTRAINT \`FK_8e168e43ad56369cffb4e8cdfd8\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`travel_recipe\` ADD CONSTRAINT \`FK_dd5d5df6bdf95aa1a814f493e0c\` FOREIGN KEY (\`placeId\`) REFERENCES \`place\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`user\` ADD CONSTRAINT \`FK_c28e52f758e7bbc53828db92194\` FOREIGN KEY (\`roleId\`) REFERENCES \`user_role\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`answer\` ADD CONSTRAINT \`FK_a4013f10cd6924793fbd5f0d637\` FOREIGN KEY (\`questionId\`) REFERENCES \`question\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`answer\` ADD CONSTRAINT \`FK_328f85639a97f8ff158e0cf7b1f\` FOREIGN KEY (\`authorId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`question\` ADD CONSTRAINT \`FK_b5b066da9ea6a4ac4c80040577e\` FOREIGN KEY (\`activityId\`) REFERENCES \`activity\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`question\` ADD CONSTRAINT \`FK_75fc761f2752712276be38e7d13\` FOREIGN KEY (\`authorId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`category_rating\` ADD CONSTRAINT \`FK_27459aab9b8130abe807746c97f\` FOREIGN KEY (\`ratingId\`) REFERENCES \`rating\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`rating\` ADD CONSTRAINT \`FK_dc05a97d06394594fc882cb1e39\` FOREIGN KEY (\`authorId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`rating\` ADD CONSTRAINT \`FK_fa63d0a148d1703c070adbdbd85\` FOREIGN KEY (\`activityId\`) REFERENCES \`activity\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`price\` ADD CONSTRAINT \`FK_a1c5ec230fb791e7996e02afb53\` FOREIGN KEY (\`activityId\`) REFERENCES \`activity\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`activity\` ADD CONSTRAINT \`FK_2ee1eb997c3066d38ee63b4cc32\` FOREIGN KEY (\`activityTypeId\`) REFERENCES \`activity_type\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE \`answer_likes_user\` ADD CONSTRAINT \`FK_29cde37bbe05f8af127e950311d\` FOREIGN KEY (\`answerId\`) REFERENCES \`answer\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`answer_likes_user\` ADD CONSTRAINT \`FK_5c310e8f5db34120737935b6926\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`answer_dislikes_user\` ADD CONSTRAINT \`FK_b46b2acc9ca636160c31d6585ce\` FOREIGN KEY (\`answerId\`) REFERENCES \`answer\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`answer_dislikes_user\` ADD CONSTRAINT \`FK_b1b727c67b4c08acae44b222a6d\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`question_likes_user\` ADD CONSTRAINT \`FK_b6ade3a5087c64154a0fc6d3528\` FOREIGN KEY (\`questionId\`) REFERENCES \`question\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`question_likes_user\` ADD CONSTRAINT \`FK_019c2fe8b6a3933d91d56201377\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`question_dislikes_user\` ADD CONSTRAINT \`FK_ea796fc39cf1332fbeaab35be02\` FOREIGN KEY (\`questionId\`) REFERENCES \`question\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE \`question_dislikes_user\` ADD CONSTRAINT \`FK_fce22250b891fa1c611381129b1\` FOREIGN KEY (\`userId\`) REFERENCES \`user\`(\`id\`) ON DELETE CASCADE ON UPDATE CASCADE`);
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE \`question_dislikes_user\` DROP FOREIGN KEY \`FK_fce22250b891fa1c611381129b1\``);
+        await queryRunner.query(`ALTER TABLE \`question_dislikes_user\` DROP FOREIGN KEY \`FK_ea796fc39cf1332fbeaab35be02\``);
+        await queryRunner.query(`ALTER TABLE \`question_likes_user\` DROP FOREIGN KEY \`FK_019c2fe8b6a3933d91d56201377\``);
+        await queryRunner.query(`ALTER TABLE \`question_likes_user\` DROP FOREIGN KEY \`FK_b6ade3a5087c64154a0fc6d3528\``);
+        await queryRunner.query(`ALTER TABLE \`answer_dislikes_user\` DROP FOREIGN KEY \`FK_b1b727c67b4c08acae44b222a6d\``);
+        await queryRunner.query(`ALTER TABLE \`answer_dislikes_user\` DROP FOREIGN KEY \`FK_b46b2acc9ca636160c31d6585ce\``);
+        await queryRunner.query(`ALTER TABLE \`answer_likes_user\` DROP FOREIGN KEY \`FK_5c310e8f5db34120737935b6926\``);
+        await queryRunner.query(`ALTER TABLE \`answer_likes_user\` DROP FOREIGN KEY \`FK_29cde37bbe05f8af127e950311d\``);
+        await queryRunner.query(`ALTER TABLE \`activity\` DROP FOREIGN KEY \`FK_2ee1eb997c3066d38ee63b4cc32\``);
+        await queryRunner.query(`ALTER TABLE \`price\` DROP FOREIGN KEY \`FK_a1c5ec230fb791e7996e02afb53\``);
+        await queryRunner.query(`ALTER TABLE \`rating\` DROP FOREIGN KEY \`FK_fa63d0a148d1703c070adbdbd85\``);
+        await queryRunner.query(`ALTER TABLE \`rating\` DROP FOREIGN KEY \`FK_dc05a97d06394594fc882cb1e39\``);
+        await queryRunner.query(`ALTER TABLE \`category_rating\` DROP FOREIGN KEY \`FK_27459aab9b8130abe807746c97f\``);
+        await queryRunner.query(`ALTER TABLE \`question\` DROP FOREIGN KEY \`FK_75fc761f2752712276be38e7d13\``);
+        await queryRunner.query(`ALTER TABLE \`question\` DROP FOREIGN KEY \`FK_b5b066da9ea6a4ac4c80040577e\``);
+        await queryRunner.query(`ALTER TABLE \`answer\` DROP FOREIGN KEY \`FK_328f85639a97f8ff158e0cf7b1f\``);
+        await queryRunner.query(`ALTER TABLE \`answer\` DROP FOREIGN KEY \`FK_a4013f10cd6924793fbd5f0d637\``);
+        await queryRunner.query(`ALTER TABLE \`user\` DROP FOREIGN KEY \`FK_c28e52f758e7bbc53828db92194\``);
+        await queryRunner.query(`ALTER TABLE \`travel_recipe\` DROP FOREIGN KEY \`FK_dd5d5df6bdf95aa1a814f493e0c\``);
+        await queryRunner.query(`ALTER TABLE \`travel_recipe\` DROP FOREIGN KEY \`FK_8e168e43ad56369cffb4e8cdfd8\``);
+        await queryRunner.query(`ALTER TABLE \`travel_instance\` DROP FOREIGN KEY \`FK_f5152ea494dba650b09b31a01cf\``);
+        await queryRunner.query(`ALTER TABLE \`travel_instance\` DROP FOREIGN KEY \`FK_bf53b090426ad4a286aba46b453\``);
+        await queryRunner.query(`ALTER TABLE \`element_travel_instance\` DROP FOREIGN KEY \`FK_7cc5b6d7e3cdbeabb72f73aa1f0\``);
+        await queryRunner.query(`ALTER TABLE \`element_travel_instance\` DROP FOREIGN KEY \`FK_2810b75ffcd8588ba23cd8048d7\``);
+        await queryRunner.query(`ALTER TABLE \`element_travel_photo\` DROP FOREIGN KEY \`FK_72eb27c0d61d0f7d8f827d6e515\``);
+        await queryRunner.query(`ALTER TABLE \`element_travel\` DROP FOREIGN KEY \`FK_334b779e1a56f0f117612f27bef\``);
+        await queryRunner.query(`ALTER TABLE \`element_travel\` DROP FOREIGN KEY \`FK_3cd05a27479f43dbc5da05d88f9\``);
+        await queryRunner.query(`ALTER TABLE \`activity_type_parameter\` DROP FOREIGN KEY \`FK_8069c99bc6307a2fe4d8c8bd7bf\``);
+        await queryRunner.query(`ALTER TABLE \`activity_parameter\` DROP FOREIGN KEY \`FK_04de3d04c98c0eeaa839fd749f1\``);
+        await queryRunner.query(`DROP INDEX \`IDX_fce22250b891fa1c611381129b\` ON \`question_dislikes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_ea796fc39cf1332fbeaab35be0\` ON \`question_dislikes_user\``);
+        await queryRunner.query(`DROP TABLE \`question_dislikes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_019c2fe8b6a3933d91d5620137\` ON \`question_likes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_b6ade3a5087c64154a0fc6d352\` ON \`question_likes_user\``);
+        await queryRunner.query(`DROP TABLE \`question_likes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_b1b727c67b4c08acae44b222a6\` ON \`answer_dislikes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_b46b2acc9ca636160c31d6585c\` ON \`answer_dislikes_user\``);
+        await queryRunner.query(`DROP TABLE \`answer_dislikes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_5c310e8f5db34120737935b692\` ON \`answer_likes_user\``);
+        await queryRunner.query(`DROP INDEX \`IDX_29cde37bbe05f8af127e950311\` ON \`answer_likes_user\``);
+        await queryRunner.query(`DROP TABLE \`answer_likes_user\``);
+        await queryRunner.query(`DROP TABLE \`time_range\``);
+        await queryRunner.query(`DROP TABLE \`activity\``);
+        await queryRunner.query(`DROP TABLE \`price\``);
+        await queryRunner.query(`DROP TABLE \`rating\``);
+        await queryRunner.query(`DROP TABLE \`category_rating\``);
+        await queryRunner.query(`DROP TABLE \`question\``);
+        await queryRunner.query(`DROP TABLE \`answer\``);
+        await queryRunner.query(`DROP TABLE \`user\``);
+        await queryRunner.query(`DROP TABLE \`user_role\``);
+        await queryRunner.query(`DROP TABLE \`travel_recipe\``);
+        await queryRunner.query(`DROP TABLE \`travel_instance\``);
+        await queryRunner.query(`DROP TABLE \`element_travel_instance\``);
+        await queryRunner.query(`DROP TABLE \`element_travel_photo\``);
+        await queryRunner.query(`DROP TABLE \`date_range\``);
+        await queryRunner.query(`DROP TABLE \`element_travel\``);
+        await queryRunner.query(`DROP TABLE \`place\``);
+        await queryRunner.query(`DROP TABLE \`activity_type\``);
+        await queryRunner.query(`DROP TABLE \`activity_type_parameter\``);
+        await queryRunner.query(`DROP TABLE \`activity_parameter\``);
+    }
+
+}
