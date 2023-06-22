@@ -24,7 +24,7 @@ import entities from './typeorm'
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       entities,
-      synchronize: true,
+      synchronize: false,
     }),
     PlaceModule,
     TravelModule,

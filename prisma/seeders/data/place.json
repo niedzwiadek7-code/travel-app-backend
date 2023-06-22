@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Pałac Kultury i Nauki",
+    "longitude": "21.0039",
+    "latitude": "52.2319",
+    "address": "Plac Defilad 1",
+    "zipCode": "00-901",
+    "city": "Warszawa",
+    "country": "Polska"
+  },
+  {
+    "name": "Wielka Muralla",
+    "longitude": "116.5704",
+    "latitude": "40.4319",
+    "address": "",
+    "zipCode": "",
+    "city": "Pekin",
+    "country": "Chiny"
+  },
+  {
+    "name": "Piramidy w Gizie",
+    "longitude": "31.1342",
+    "latitude": "29.9792",
+    "address": "",
+    "zipCode": "",
+    "city": "Giza",
+    "country": "Egipt"
+  },
+  {
+    "name": "Taj Mahal",
+    "longitude": "78.0421",
+    "latitude": "27.1751",
+    "address": "Dharmapuri, Forest Colony",
+    "zipCode": "282001",
+    "city": "Agra",
+    "country": "Indie"
+  },
+  {
+    "name": "Wielka Rafa Koralowa",
+    "longitude": "145.9869",
+    "latitude": "-16.3224",
+    "address": "",
+    "zipCode": "",
+    "city": "Queensland",
+    "country": "Australia"
+  },
+  {
+    "name": "Machu Picchu",
+    "longitude": "-72.5450",
+    "latitude": "-13.1631",
+    "address": "",
+    "zipCode": "",
+    "city": "Cusco",
+    "country": "Peru"
+  },
+  {
+    "name": "Piramidy w Teotihuacán",
+    "longitude": "-98.8450",
+    "latitude": "19.6917",
+    "address": "",
+    "zipCode": "",
+    "city": "San Juan Teotihuacán",
+    "country": "Meksyk"
+  },
+  {
+    "name": "Statua Wolności",
+    "longitude": "-74.0445",
+    "latitude": "40.6892",
+    "address": "Liberty Island",
+    "zipCode": "10004",
+    "city": "Nowy Jork",
+    "country": "USA"
+  },
+  {
+    "name": "Park Narodowy Banff",
+    "longitude": "-115.5508",
+    "latitude": "51.4968",
+    "address": "",
+    "zipCode": "",
+    "city": "Banff",
+    "country": "Kanada"
+  },
+  {
+    "name": "Wielki Mur Berliński",
+    "longitude": "13.4392",
+    "latitude": "52.5079",
+    "address": "",
+    "zipCode": "",
+    "city": "Berlin",
+    "country": "Niemcy"
+  },
+  {
+    "name": "Bora Bora",
+    "longitude": "-151.7425",
+    "latitude": "-16.5004",
+    "address": "",
+    "zipCode": "",
+    "city": "",
+    "country": "Francuskie Polinezje"
+  },
+  {
+    "name": "Królewskie Ogrody w Londynie",
+    "longitude": "-0.1722",
+    "latitude": "51.5033",
+    "address": "",
+    "zipCode": "",
+    "city": "Londyn",
+    "country": "Wielka Brytania"
+  },
+  {
+    "name": "Wodospad Niagara",
+    "longitude": "-79.0756",
+    "latitude": "43.0812",
+    "address": "",
+    "zipCode": "",
+    "city": "Niagara Falls",
+    "country": "Kanada / USA"
+  },
+  {
+    "name": "Santuario Historico de Machu Picchu",
+    "longitude": "-72.5449",
+    "latitude": "-13.1631",
+    "address": "",
+    "zipCode": "",
+    "city": "Cusco",
+    "country": "Peru"
+  },
+  {
+    "name": "Wzgórze Akropol",
+    "longitude": "23.7266",
+    "latitude": "37.9715",
+    "address": "",
+    "zipCode": "",
+    "city": "Ateny",
+    "country": "Grecja"
+  }
+]

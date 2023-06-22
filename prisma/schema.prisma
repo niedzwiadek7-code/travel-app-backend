@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Place {
+  id Int @default(autoincrement()) @id
+  name String @unique
+  longitude String?
+  latitude String?
+  address String
+  zipCode String
+  city String
+  country String
+}
+
+model DateRange {
+  id Int @default(autoincrement()) @id
+  from DateTime
+  to   DateTime
+}
+
+enum Role {
+  USER
+  AGENCY_OWNER
+  ADMIN
+}
+
+model User {
+  id Int @default(autoincrement()) @id
+  firstName String
+  lastName String
+  email String @unique
+  password String
+  role Role @default(USER)
+
+  travels TravelRecipe[]
+}
+
+model TravelRecipe {
+  id Int @default(autoincrement()) @id
+  name String
+  owner User @relation(fields: [ownerId], references: [id])
+  ownerId Int
+}
+
+model ElementTravel {
+  id Int @default(autoincrement()) @id
+  dateRange DateRange
+}
