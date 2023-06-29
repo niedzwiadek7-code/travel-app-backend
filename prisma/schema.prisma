@@ -18,6 +18,7 @@ model Place {
   country   String
 }
 
+// this is new type
 model DateRange {
   id   Int      @id @default(autoincrement())
   from DateTime
@@ -25,6 +26,7 @@ model DateRange {
 
   ElementTravel         ElementTravel[]
   ElementTravelInstance ElementTravelInstance[]
+  TravelInstance        TravelInstance[]
 }
 
 enum Role {
@@ -41,9 +43,10 @@ model User {
   password  String
   role      Role   @default(USER)
 
-  // questions
-  travels TravelRecipe[]
-  Answer  Answer[]
+  questions Question[]
+  travels   TravelRecipe[]
+  Authors   Answer[]
+  Rating    Rating[]
 }
 
 model TravelRecipe {
@@ -54,6 +57,7 @@ model TravelRecipe {
 
   // travel instance
   travelElements ElementTravel[]
+  TravelInstance TravelInstance[]
 }
 
 model ElementTravel {
@@ -74,10 +78,11 @@ model Activity {
   activityType   ActivityType @relation(fields: [activityTypeId], references: [id])
   activityTypeId Int
 
-  // prices
-  // questions
   // ratings
+  questions      Question[]
+  price          Price[]
   elementTravels ElementTravel[]
+  Rating         Rating[]
 }
 
 model ActivityParameter {
@@ -104,10 +109,12 @@ model ActivityTypeParameter {
 }
 
 model Answer {
-  id       Int    @id @default(autoincrement())
-  answer   String
-  author   User   @relation("author", fields: [authorId], references: [id])
-  authorId Int
+  id         Int      @id @default(autoincrement())
+  answer     String
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   Int
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
 
   // question
   // likes
@@ -118,8 +125,8 @@ model CategoryRating {
   id       Int    @id @default(autoincrement())
   category String
   value    Int
-
-  // rating
+  rating   Rating @relation(fields: [ratingId], references: [id])
+  ratingId Int
 }
 
 model ElementTravelInstance {
@@ -127,7 +134,6 @@ model ElementTravelInstance {
   dataRange   DateRange @relation(fields: [dataRangeId], references: [id])
   dataRangeId Int
 
-  // photos
   // travel instance
   ElementTravelPhoto ElementTravelPhoto[]
 }
@@ -138,4 +144,44 @@ model ElementTravelPhoto {
   elementTravel           ElementTravelInstance @relation(fields: [elementTravelInstanceId], references: [id])
   elementTravelId         Int
   elementTravelInstanceId Int
+}
+
+model Price {
+  id         Int      @id @default(autoincrement())
+  price      Float
+  startDate  DateTime
+  activity   Activity @relation(fields: [activityId], references: [id])
+  activityId Int
+}
+
+model Question {
+  id         Int      @id @default(autoincrement())
+  question   String
+  activity   Activity @relation(fields: [activityId], references: [id])
+  activityId Int
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   Int
+
+  answers Answer[]
+  // likes
+  // dislikes
+}
+
+model Rating {
+  id         Int      @id @default(autoincrement())
+  text       String
+  authror    User     @relation(fields: [authorId], references: [id])
+  authorId   Int
+  activity   Activity @relation(fields: [activityId], references: [id])
+  activityId Int
+
+  categoryRating CategoryRating[]
+}
+
+model TravelInstance {
+  id             Int          @id @default(autoincrement())
+  travelRecipe   TravelRecipe @relation(fields: [travelRecipeId], references: [id])
+  travelRecipeId Int
+  dataRange      DateRange    @relation(fields: [dateRangeId], references: [id])
+  dateRangeId    Int
 }
