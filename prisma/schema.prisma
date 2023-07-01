@@ -20,8 +20,8 @@ model Place {
 
 model DateRange {
   id   Int      @id @default(autoincrement())
-  from DateTime
-  to   DateTime
+  from DateTime @db.Timestamp()
+  to   DateTime @db.Timestamp()
 
   ElementTravel         ElementTravel[]
   ElementTravelInstance ElementTravelInstance[]
@@ -151,7 +151,7 @@ model ElementTravelPhoto {
 model Price {
   id         Int      @id @default(autoincrement())
   price      Float
-  startDate  DateTime
+  startDate  DateTime @db.Timestamp()
   activity   Activity @relation(fields: [activityId], references: [id])
   activityId Int
 }
