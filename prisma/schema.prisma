@@ -18,7 +18,6 @@ model Place {
   country   String
 }
 
-// this is new type
 model DateRange {
   id   Int      @id @default(autoincrement())
   from DateTime
@@ -47,6 +46,11 @@ model User {
   travels   TravelRecipe[]
   Authors   Answer[]
   Rating    Rating[]
+
+  likeAnswers      Answer[]   @relation("likeAnswers")
+  dislikeAnswers   Answer[]   @relation("dislikeAnswers")
+  likeQuestions    Question[] @relation("likeQuestions")
+  dislikeQuestions Question[] @relation("dislikeQuestions")
 }
 
 model TravelRecipe {
@@ -55,7 +59,6 @@ model TravelRecipe {
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId Int
 
-  // travel instance
   travelElements ElementTravel[]
   TravelInstance TravelInstance[]
 }
@@ -78,7 +81,6 @@ model Activity {
   activityType   ActivityType @relation(fields: [activityTypeId], references: [id])
   activityTypeId Int
 
-  // ratings
   questions      Question[]
   price          Price[]
   elementTravels ElementTravel[]
@@ -116,9 +118,8 @@ model Answer {
   question   Question @relation(fields: [questionId], references: [id])
   questionId Int
 
-  // question
-  // likes
-  // dislikes
+  likes    User[] @relation("likeAnswers")
+  dislikes User[] @relation("dislikeAnswers")
 }
 
 model CategoryRating {
@@ -130,11 +131,12 @@ model CategoryRating {
 }
 
 model ElementTravelInstance {
-  id          Int       @id @default(autoincrement())
-  dataRange   DateRange @relation(fields: [dataRangeId], references: [id])
-  dataRangeId Int
+  id               Int            @id @default(autoincrement())
+  dataRange        DateRange      @relation(fields: [dataRangeId], references: [id])
+  dataRangeId      Int
+  TravelInstance   TravelInstance @relation(fields: [travelInstanceId], references: [id])
+  travelInstanceId Int
 
-  // travel instance
   ElementTravelPhoto ElementTravelPhoto[]
 }
 
@@ -163,8 +165,9 @@ model Question {
   authorId   Int
 
   answers Answer[]
-  // likes
-  // dislikes
+
+  likes    User[] @relation("likeQuestions")
+  dislikes User[] @relation("dislikeQuestions")
 }
 
 model Rating {
@@ -184,4 +187,6 @@ model TravelInstance {
   travelRecipeId Int
   dataRange      DateRange    @relation(fields: [dateRangeId], references: [id])
   dateRangeId    Int
+
+  travelInstanceElements ElementTravelInstance[]
 }
