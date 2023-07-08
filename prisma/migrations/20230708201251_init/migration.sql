@@ -4,9 +4,8 @@ CREATE TYPE "Role" AS ENUM ('USER', 'AGENCY_OWNER', 'ADMIN');
 -- CreateTable
 CREATE TABLE "Place" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "longitude" TEXT,
-    "latitude" TEXT,
+    "longitude" DOUBLE PRECISION NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
     "address" TEXT NOT NULL,
     "zipCode" TEXT NOT NULL,
     "city" TEXT NOT NULL,
@@ -18,10 +17,19 @@ CREATE TABLE "Place" (
 -- CreateTable
 CREATE TABLE "DateRange" (
     "id" SERIAL NOT NULL,
-    "from" TIMESTAMP(3) NOT NULL,
-    "to" TIMESTAMP(3) NOT NULL,
+    "from" TIMESTAMP NOT NULL,
+    "to" TIMESTAMP NOT NULL,
 
     CONSTRAINT "DateRange_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TimeRange" (
+    "id" SERIAL NOT NULL,
+    "from" TIME NOT NULL,
+    "to" TIME NOT NULL,
+
+    CONSTRAINT "TimeRange_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -48,7 +56,8 @@ CREATE TABLE "TravelRecipe" (
 -- CreateTable
 CREATE TABLE "ElementTravel" (
     "id" SERIAL NOT NULL,
-    "dateRangeId" INTEGER NOT NULL,
+    "dayNumber" INTEGER NOT NULL,
+    "timeRangeId" INTEGER NOT NULL,
     "activityId" INTEGER NOT NULL,
     "travelRecipeId" INTEGER NOT NULL,
 
@@ -61,6 +70,7 @@ CREATE TABLE "Activity" (
     "accepted" BOOLEAN NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "placeId" INTEGER NOT NULL,
     "activityTypeId" INTEGER NOT NULL,
 
     CONSTRAINT "Activity_pkey" PRIMARY KEY ("id")
@@ -71,6 +81,7 @@ CREATE TABLE "ActivityParameter" (
     "id" SERIAL NOT NULL,
     "value" TEXT NOT NULL,
     "activityTypeParameterId" INTEGER NOT NULL,
+    "activityId" INTEGER NOT NULL,
 
     CONSTRAINT "ActivityParameter_pkey" PRIMARY KEY ("id")
 );
@@ -86,6 +97,7 @@ CREATE TABLE "ActivityType" (
 -- CreateTable
 CREATE TABLE "ActivityTypeParameter" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
     "activityTypeId" INTEGER NOT NULL,
 
     CONSTRAINT "ActivityTypeParameter_pkey" PRIMARY KEY ("id")
@@ -114,6 +126,7 @@ CREATE TABLE "CategoryRating" (
 -- CreateTable
 CREATE TABLE "ElementTravelInstance" (
     "id" SERIAL NOT NULL,
+    "activityId" INTEGER NOT NULL,
     "dataRangeId" INTEGER NOT NULL,
     "travelInstanceId" INTEGER NOT NULL,
 
@@ -134,7 +147,7 @@ CREATE TABLE "ElementTravelPhoto" (
 CREATE TABLE "Price" (
     "id" SERIAL NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
-    "startDate" TIMESTAMP(3) NOT NULL,
+    "startDate" TIMESTAMP NOT NULL,
     "activityId" INTEGER NOT NULL,
 
     CONSTRAINT "Price_pkey" PRIMARY KEY ("id")
@@ -163,8 +176,9 @@ CREATE TABLE "Rating" (
 -- CreateTable
 CREATE TABLE "TravelInstance" (
     "id" SERIAL NOT NULL,
+    "startDate" DATE NOT NULL,
+    "userId" INTEGER NOT NULL,
     "travelRecipeId" INTEGER NOT NULL,
-    "dateRangeId" INTEGER NOT NULL,
 
     CONSTRAINT "TravelInstance_pkey" PRIMARY KEY ("id")
 );
@@ -192,9 +206,6 @@ CREATE TABLE "_dislikeQuestions" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Place_name_key" ON "Place"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
@@ -227,7 +238,7 @@ CREATE INDEX "_dislikeQuestions_B_index" ON "_dislikeQuestions"("B");
 ALTER TABLE "TravelRecipe" ADD CONSTRAINT "TravelRecipe_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ElementTravel" ADD CONSTRAINT "ElementTravel_dateRangeId_fkey" FOREIGN KEY ("dateRangeId") REFERENCES "DateRange"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ElementTravel" ADD CONSTRAINT "ElementTravel_timeRangeId_fkey" FOREIGN KEY ("timeRangeId") REFERENCES "TimeRange"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ElementTravel" ADD CONSTRAINT "ElementTravel_activityId_fkey" FOREIGN KEY ("activityId") REFERENCES "Activity"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -236,10 +247,16 @@ ALTER TABLE "ElementTravel" ADD CONSTRAINT "ElementTravel_activityId_fkey" FOREI
 ALTER TABLE "ElementTravel" ADD CONSTRAINT "ElementTravel_travelRecipeId_fkey" FOREIGN KEY ("travelRecipeId") REFERENCES "TravelRecipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Activity" ADD CONSTRAINT "Activity_placeId_fkey" FOREIGN KEY ("placeId") REFERENCES "Place"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Activity" ADD CONSTRAINT "Activity_activityTypeId_fkey" FOREIGN KEY ("activityTypeId") REFERENCES "ActivityType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ActivityParameter" ADD CONSTRAINT "ActivityParameter_activityTypeParameterId_fkey" FOREIGN KEY ("activityTypeParameterId") REFERENCES "ActivityTypeParameter"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ActivityParameter" ADD CONSTRAINT "ActivityParameter_activityId_fkey" FOREIGN KEY ("activityId") REFERENCES "Activity"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ActivityTypeParameter" ADD CONSTRAINT "ActivityTypeParameter_activityTypeId_fkey" FOREIGN KEY ("activityTypeId") REFERENCES "ActivityType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -252,6 +269,9 @@ ALTER TABLE "Answer" ADD CONSTRAINT "Answer_questionId_fkey" FOREIGN KEY ("quest
 
 -- AddForeignKey
 ALTER TABLE "CategoryRating" ADD CONSTRAINT "CategoryRating_ratingId_fkey" FOREIGN KEY ("ratingId") REFERENCES "Rating"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ElementTravelInstance" ADD CONSTRAINT "ElementTravelInstance_activityId_fkey" FOREIGN KEY ("activityId") REFERENCES "Activity"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ElementTravelInstance" ADD CONSTRAINT "ElementTravelInstance_dataRangeId_fkey" FOREIGN KEY ("dataRangeId") REFERENCES "DateRange"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -278,10 +298,10 @@ ALTER TABLE "Rating" ADD CONSTRAINT "Rating_authorId_fkey" FOREIGN KEY ("authorI
 ALTER TABLE "Rating" ADD CONSTRAINT "Rating_activityId_fkey" FOREIGN KEY ("activityId") REFERENCES "Activity"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TravelInstance" ADD CONSTRAINT "TravelInstance_travelRecipeId_fkey" FOREIGN KEY ("travelRecipeId") REFERENCES "TravelRecipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TravelInstance" ADD CONSTRAINT "TravelInstance_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TravelInstance" ADD CONSTRAINT "TravelInstance_dateRangeId_fkey" FOREIGN KEY ("dateRangeId") REFERENCES "DateRange"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TravelInstance" ADD CONSTRAINT "TravelInstance_travelRecipeId_fkey" FOREIGN KEY ("travelRecipeId") REFERENCES "TravelRecipe"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_likeAnswers" ADD CONSTRAINT "_likeAnswers_A_fkey" FOREIGN KEY ("A") REFERENCES "Answer"("id") ON DELETE CASCADE ON UPDATE CASCADE;

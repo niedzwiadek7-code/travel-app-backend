@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Place {
-  id        Int     @id @default(autoincrement())
-  name      String  @unique
-  longitude String?
-  latitude  String?
+  id        Int    @id @default(autoincrement())
+  longitude Float
+  latitude  Float
   address   String
   zipCode   String
   city      String
   country   String
+
+  activity Activity[]
 }
 
 model DateRange {
@@ -23,9 +24,14 @@ model DateRange {
   from DateTime @db.Timestamp()
   to   DateTime @db.Timestamp()
 
-  ElementTravel         ElementTravel[]
   ElementTravelInstance ElementTravelInstance[]
-  TravelInstance        TravelInstance[]
+}
+
+model TimeRange {
+  id            Int             @id @default(autoincrement())
+  from          DateTime        @db.Time()
+  to            DateTime        @db.Time()
+  ElementTravel ElementTravel[]
 }
 
 enum Role {
@@ -47,10 +53,11 @@ model User {
   Authors   Answer[]
   Rating    Rating[]
 
-  likeAnswers      Answer[]   @relation("likeAnswers")
-  dislikeAnswers   Answer[]   @relation("dislikeAnswers")
-  likeQuestions    Question[] @relation("likeQuestions")
-  dislikeQuestions Question[] @relation("dislikeQuestions")
+  likeAnswers      Answer[]         @relation("likeAnswers")
+  dislikeAnswers   Answer[]         @relation("dislikeAnswers")
+  likeQuestions    Question[]       @relation("likeQuestions")
+  dislikeQuestions Question[]       @relation("dislikeQuestions")
+  TravelInstance   TravelInstance[]
 }
 
 model TravelRecipe {
@@ -65,8 +72,9 @@ model TravelRecipe {
 
 model ElementTravel {
   id             Int          @id @default(autoincrement())
-  dataRange      DateRange    @relation(fields: [dateRangeId], references: [id])
-  dateRangeId    Int
+  dayNumber      Int
+  timeRange      TimeRange    @relation(fields: [timeRangeId], references: [id])
+  timeRangeId    Int
   activity       Activity     @relation(fields: [activityId], references: [id])
   activityId     Int
   travelRecipe   TravelRecipe @relation(fields: [travelRecipeId], references: [id])
@@ -78,13 +86,17 @@ model Activity {
   accepted       Boolean
   name           String
   description    String
+  place          Place        @relation(fields: [placeId], references: [id])
+  placeId        Int
   activityType   ActivityType @relation(fields: [activityTypeId], references: [id])
   activityTypeId Int
 
-  questions      Question[]
-  price          Price[]
-  elementTravels ElementTravel[]
-  Rating         Rating[]
+  questions             Question[]
+  price                 Price[]
+  elementTravels        ElementTravel[]
+  rating                Rating[]
+  activityParameter     ActivityParameter[]
+  ElementTravelInstance ElementTravelInstance[]
 }
 
 model ActivityParameter {
@@ -92,6 +104,8 @@ model ActivityParameter {
   value                   String
   activityTypeParameter   ActivityTypeParameter @relation(fields: [activityTypeParameterId], references: [id])
   activityTypeParameterId Int
+  activity                Activity              @relation(fields: [activityId], references: [id])
+  activityId              Int
 }
 
 model ActivityType {
@@ -104,6 +118,7 @@ model ActivityType {
 
 model ActivityTypeParameter {
   id             Int          @id @default(autoincrement())
+  name           String
   activityType   ActivityType @relation(fields: [activityTypeId], references: [id])
   activityTypeId Int
 
@@ -132,6 +147,8 @@ model CategoryRating {
 
 model ElementTravelInstance {
   id               Int            @id @default(autoincrement())
+  activity         Activity       @relation(fields: [activityId], references: [id])
+  activityId       Int
   dataRange        DateRange      @relation(fields: [dataRangeId], references: [id])
   dataRangeId      Int
   TravelInstance   TravelInstance @relation(fields: [travelInstanceId], references: [id])
@@ -183,10 +200,11 @@ model Rating {
 
 model TravelInstance {
   id             Int          @id @default(autoincrement())
+  startDate      DateTime     @db.Date()
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
   travelRecipe   TravelRecipe @relation(fields: [travelRecipeId], references: [id])
   travelRecipeId Int
-  dataRange      DateRange    @relation(fields: [dateRangeId], references: [id])
-  dateRangeId    Int
 
   travelInstanceElements ElementTravelInstance[]
 }

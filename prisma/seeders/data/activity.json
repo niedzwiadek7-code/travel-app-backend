@@ -1,0 +1,192 @@
+[
+  {
+    "id": 1,
+    "accepted": true,
+    "name": "Afrykarium we Wrocławiu",
+    "description": "Podczas wizyty spędzisz czas obserwując żywe kolory pielęgnic z jezior Tanganika i Malawi. Zwiedzać można także niezwykłe Odrarium, prezentujące zwierzęta i rośliny z dorzecza Odry. Wśród innych atrakcji jest także wybieg dla wilków, żbików i rysi. Dodatkowo będzie okazja by odwiedzić Ptaszarnię, gdzie znajdują się egzotyczne ptaki, takie jak zagrożone wyginięciem dzioborożce palawańskie.",
+    "activityTypeId": 3,
+    "placeId": 1,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 71.50
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 2,
+    "accepted": true,
+    "name": "Pokaz fontanny multimedialnej z transportem",
+    "description": "Uczestnicy tej wieczornej wycieczki we Wrocławiu będą mogli obejrzeć wyjątkowy pokaz fontann. Po odebraniu z placu Solnego zobaczą po drodze kościół Świętego Krzyża, Wyspę Piaskową, kościół św. Marcina, Ostrów Tumski i ogród botaniczny. Po dotarciu na miejsce obejrzą trwający 25 minut pokaz fontanny multimedialnej przy Hali Stulecia.",
+    "activityTypeId": 3,
+    "placeId": 2,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 155.28
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 3,
+    "accepted": true,
+    "name": "Piesza wycieczka po Starym Mieście",
+    "description": "",
+    "activityTypeId": 3,
+    "placeId": 3,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 0.00
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 4,
+    "accepted": true,
+    "name": "Maraton po pubach we Wrocławiu",
+    "description": "Uczestnicy tej wycieczki odwiedzą jedne z najlepszych pubów i klubów we Wrocławiu, który słynie z aktywnego życia nocnego. W trakcie wieczoru wypiją wliczone w cenę piwo i kieliszki wódki w kilku klubach dla VIP-ów. W barach spróbują też tradycyjnych polskich przekąsek i przysmaków.",
+    "activityTypeId": 3,
+    "placeId": 3,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 88.73
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 5,
+    "accepted": true,
+    "name": "Całodniowa wycieczka z Wrocławia do kościoła Pokoju",
+    "description": "W Domu Dzwonnika zapraszamy na bezpłatną wystawę „Wiara jak serce ze spiżu. Skarby Kościoła Pokoju w Świdnicy.” Ekspozycja po raz pierwszy pokazuje przedmioty związane z kościołem luterańskim, na przestrzeni kilku wieków: rękopisy, Biblie sprzed 350 lat, obrazy, barokowe naczynia liturgiczne, portrety pastorów, zbiory modlitw, epitafia. Ze względu na ich wartość, dotąd mieli do nich dostęp tylko naukowcy i konserwatorzy. Teraz mogą je obejrzeć wszyscy zainteresowani.",
+    "activityTypeId": 3,
+    "placeId": 4,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 15.00
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 6,
+    "accepted": true,
+    "name": "Państwowe Muzeum Auschwitz-Birkenau w Oświęcimiu",
+    "description": "Muzeum utworzone w 1947 r. staraniem byłych więźniów KL Auschwitz w celu zachowania „po wsze czasy” pozostałości po byłym niemieckim nazistowskim obozie koncentracyjnym i zagłady Auschwitz-Birkenau.",
+    "activityTypeId": 3,
+    "placeId": 5,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 0.00
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 7,
+    "accepted": true,
+    "name": "Całodniowa wycieczka po Dolnym Śląsku",
+    "description": "Podczas całodniowej wycieczki będzie można poznać najważniejsze atrakcje i zabytki Dolnego Śląska. Po odbiorze uczestników z hotelu, zwiedzanie rozpoczyna się od Ostrowa Tumskiego we Wrocławiu. Miejsce znane jest z historycznej zabudowy, a także licznych kawiarni i restauracji. Następny przystanek jest w Karpaczu, gdzie można zwiedzić zbudowany w stylu norweskim kościół Wang. Karpacz to także jeden z najbardziej popularnych ośrodków polskiej turystyki pieszej i narciarskiej. Będzie tam można podziwiać panoramę z punktu widokowego na skoczni narciarskiej, a także wybrać się na spacer do Dzikiego Wodospadu. Podczas wycieczki będzie okazja, by odkryć zarówno naturalne piękno Karkonoszy, jak i zobaczyć rozsiane po górskiej okolicy pozostałości późnośredniowiecznych fortec. Przed powrotem do Wrocławia w programie wycieczki jest jeszcze zwiedzanie dworów w Dolinie Pałaców i Ogrodów oraz ruin średniowiecznych zamków.",
+    "activityTypeId": 3,
+    "placeId": 6,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 475.25
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 8,
+    "accepted": true,
+    "name": "Scandic Wrocław",
+    "description": "Czterogwiazdkowy hotel Scandic Wrocław wyróżnia się dogodną lokalizacją w centrum Wrocławia, zaledwie 650 metrów od stacji kolejowej Wrocław Główny. Ten przyjazny dla środowiska hotel oferuje klimatyzowane pokoje z telewizorem z płaskim ekranem oraz bezpłatnym Wi-Fi. O poranku w obiekcie serwowane jest urozmaicone śniadanie w formie bufetu, w którego skład wchodzą produkty organiczne. Hotelowa restauracja i bar „Stockholm eat & drink” oferuje specjalne dania dla dzieci. Wszystkie pokoje są wyposażone w zestaw do parzenia kawy i herbaty oraz obejmują miejsce do pracy. W każdym z nich znajduje się nowoczesna łazienka. Zaprojektowano je z troską o środowisko i wyposażono w kosze do segregacji odpadów. W całym hotelu obowiązuje bezwzględny zakaz palenia.",
+    "activityTypeId": 2,
+    "placeId": 7,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 280.00
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 9,
+    "accepted": true,
+    "name": "PKP Kalisz -> Wrocław Główny",
+    "description": "",
+    "activityTypeId": 1,
+    "placeId": 8,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 18.75
+          }
+        ]
+      }
+    },
+    "activityParameter": {
+      "createMany": {
+        "data": [
+          {
+            "activityTypeParameterId": 1,
+            "value": "10"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": 10,
+    "accepted": true,
+    "name": "Ragu Pracownia Makaronu",
+    "description": "La pasta è la vita – usłyszymy z ust niejednej Włoszki i niejednego Włocha. Okazuje się, że bez makaronu nie potrafi się obejść także Wrocław, i to do tego stopnia, że powstała tu wyjątkowa manufaktura makaronu, czyli Ragu. Położona w pobliżu urokliwego ogrodu botanicznego restauracja serwuje śródziemnomorskie delicje, powstające z oryginalnych składników, które docierają na jej zaplecze wprost z Grecji, Hiszpanii i Włoch. Kuchnia wydaje tu legendarne już gnocchi truflowe z palonym masłem czy niezwykłe desery, jak pudding w stylu budino ze słonym karmelem. Twórca projektu, Piotr Arasymowicz, trafił w dziesiątkę. Mamy bowiem w Ragu klimat fine dining, a przy tym emblematyczny gwar tętniącego życiem bistro i casualowy bar ze zdecydowaną selekcją drinków.",
+    "activityTypeId": 4,
+    "placeId": 9,
+    "price": {
+      "createMany": {
+        "data": [
+          {
+            "startDate": "2022-07-07T18:11:41.572Z",
+            "price": 0.00
+          }
+        ]
+      }
+    }
+  }
+]

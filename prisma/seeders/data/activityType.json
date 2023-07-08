@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Podróż"
+  },
+  {
+    "id": 2,
+    "name": "Nocleg"
+  },
+  {
+    "id": 3,
+    "name": "Atrakcja"
+  },
+  {
+    "id": 4,
+    "name": "Restauracja"
+  }
+]
