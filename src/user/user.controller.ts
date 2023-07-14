@@ -1,5 +1,5 @@
 import {
-  Controller, Get, UseGuards,
+  Controller, Get, Param, UseGuards,
 } from '@nestjs/common'
 import { JwtGuard } from 'src/auth/guard'
 import { User } from '../typeorm'
@@ -16,6 +16,11 @@ export class UserController {
   @Get()
   get(@GetUser() user: User) {
     return user
+  }
+
+  @Get(':id')
+  getById(@Param('id') id: number) {
+    return this.userService.getById(id)
   }
 
   @Get('travels')

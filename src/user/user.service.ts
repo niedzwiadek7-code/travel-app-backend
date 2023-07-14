@@ -1,17 +1,27 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { TravelRecipe as TravelEntity } from '../typeorm'
+import { TravelRecipe, User } from '../typeorm'
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(TravelEntity)
-    private readonly travelService: Repository<TravelEntity>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(TravelRecipe)
+    private readonly travelRecipeRepository: Repository<TravelRecipe>,
   ) {}
 
+  async getById(id: number) {
+    return this.userRepository.findOne({
+      where: {
+        id,
+      },
+    })
+  }
+
   async getTravels(id: number) {
-    const query = this.travelService
+    const query = this.travelRecipeRepository
       .createQueryBuilder('travel')
       .innerJoinAndSelect('travel.place', 'place')
       .innerJoinAndSelect('travel.travelElements', 'travelElement')
