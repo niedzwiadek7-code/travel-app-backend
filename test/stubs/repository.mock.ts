@@ -8,8 +8,12 @@ import {
   Repository,
 } from 'typeorm'
 
+interface BaseEntity {
+  id?: number
+}
+
 @Injectable()
-export class MockRepository<Entity extends { id?: number }> extends Repository<Entity> {
+export class MockRepository<Entity extends BaseEntity> extends Repository<Entity> {
   actualCounter = 1
 
   private items: Entity[] = []
@@ -62,4 +66,11 @@ export class MockRepository<Entity extends { id?: number }> extends Repository<E
       generatedMaps: [],
     }
   }
+}
+
+export async function seedRepository<Entity>(repo: Repository<Entity>, items: Entity[]) {
+  const promises = Promise.all(
+    items.map((item: Entity) => repo.save(item)),
+  )
+  await promises
 }

@@ -5,7 +5,12 @@ import {
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
 import { Question } from './Question'
-import { UserRole } from './UserRole'
+
+export enum UserRole {
+  USER = 'USER',
+  TRAVEL_AGENCY = 'TRAVEL_AGENCY',
+  ADMIN = 'ADMIN',
+}
 
 @Entity()
 export class User {
@@ -32,8 +37,11 @@ export class User {
   })
     password: string
 
-  @ManyToOne(() => UserRole)
-  @JoinTable()
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER,
+  })
     role: UserRole
 
   @OneToMany(() => TravelRecipe, (travel) => travel.user)
