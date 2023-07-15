@@ -26,37 +26,22 @@ describe('UserService', () => {
 
     userService = module.get<UserService>(UserService)
     userRepository = module.get<Repository<User>>(getRepositoryToken(User))
+
+    await userRepository.save(
+      {
+        firstName: 'firstName',
+        lastName: 'lastName',
+        email: 'email@email.com',
+        password: 'password',
+      },
+    )
+
+    console.log(userRepository)
   })
 
-  describe('Get', () => {
-    it('should return an array of labels', async () => {
-      await userRepository.save({
-        id: 1,
-        firstName: 'Damian',
-        lastName: 'Kliber',
-        email: 'damiankliber@gmail.com',
-        password: 'password',
-      })
+  it('getById', async () => {
+    const fetchedUser = await userService.getById(1)
 
-      const all = await userRepository.find()
-
-      const fetchedUser = await userService.getById(1)
-
-      console.log(fetchedUser)
-
-      // console.log(all)
-
-      // const a = await userRepository.find({
-      //   where: {
-      //     id: 1,
-      //   },
-      // })
-      // console.log('kjldfjksfjlksdfjlksd')
-      // console.log(a)
-      // const result = ['test']
-      // jest.spyOn(userService, 'findAll').mockImplementation(() => result)
-      //
-      // expect(await labelController.root()).toBe(result)
-    })
+    console.log(fetchedUser)
   })
 })

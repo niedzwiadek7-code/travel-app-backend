@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { Injectable } from '@nestjs/common'
 import {
   DeepPartial,
@@ -7,8 +9,16 @@ import {
 } from 'typeorm'
 
 @Injectable()
-export class MockRepository<Entity> extends Repository<Entity> {
+export class MockRepository<Entity extends { id?: number }> extends Repository<Entity> {
+  actualCounter = 1
+
   private items: Entity[] = []
+
+  increaseActualCounter() {
+    do {
+      this.actualCounter += 1
+    } while (this.items.find((e) => e.id === this.actualCounter))
+  }
 
   public async find(): Promise<Entity[]> {
     return this.items
@@ -25,6 +35,10 @@ export class MockRepository<Entity> extends Repository<Entity> {
   }
 
   public async save<T extends DeepPartial<Entity>>(item: T): Promise<T & Entity> {
+    if (!item.id) {
+      this.increaseActualCounter()
+      item.id = this.actualCounter
+    }
     this.items.push(item as Entity)
     return item as T & Entity
   }
