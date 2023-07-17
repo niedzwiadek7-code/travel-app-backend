@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn, Column,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
 import { DateRange } from './DateRange'
@@ -12,8 +12,16 @@ export class TravelInstance {
   @PrimaryGeneratedColumn()
     id: number
 
+  @Column({
+    type: 'integer',
+  })
+    dayNumber: number
+
   @ManyToOne(() => TravelRecipe, (travelRecipe) => travelRecipe.travelInstances)
     travelRecipe: TravelRecipe
+
+  @Column()
+    travelRecipeId: number
 
   @ManyToOne(() => DateRange)
   @JoinTable()

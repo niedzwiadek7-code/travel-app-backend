@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { TravelRecipe, User } from '../typeorm'
+import {TravelInstance, TravelRecipe, User } from '../typeorm'
 
 @Injectable()
 export class UserService {
@@ -10,6 +10,8 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(TravelRecipe)
     private readonly travelRecipeRepository: Repository<TravelRecipe>,
+    @InjectRepository(TravelInstance)
+    private readonly travelInstanceRepository: Repository<TravelInstance>,
   ) {}
 
   async getById(id: number) {
@@ -20,15 +22,12 @@ export class UserService {
     })
   }
 
-  async getTravels(id: number) {
-    const query = this.travelRecipeRepository
-      .createQueryBuilder('travel')
-      .innerJoinAndSelect('travel.place', 'place')
-      .innerJoinAndSelect('travel.travelElements', 'travelElement')
-      .innerJoinAndSelect('travelElement.activity', 'activity')
-      .innerJoinAndSelect('travelElement.photos', 'elementTravelPhoto')
-      .where('userId = :id', { id })
-
-    return query.getMany()
+  async getTravelsRecipe(id: number) {
+    return this.travelRecipeRepository.find({
+      where: {
+        userId: id,
+      },
+      relations: ['place'],
+    })
   }
 }

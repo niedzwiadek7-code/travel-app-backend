@@ -25,6 +25,6 @@ export class UserController {
 
   @Get('travels')
   async getTravels(@GetUser() user: User) {
-    return this.userService.getTravels(user.id)
+    return this.userService.getTravelsRecipe(user.id)
   }
 }

@@ -3,7 +3,9 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm'
 import { UserService } from './user.service'
 import { createTestConfiguration } from '../../test/utils/createMemDB'
-import entities, {Place, TravelRecipe, User} from '../typeorm'
+import entities, {
+  Place, TravelInstance, TravelRecipe, User,
+} from '../typeorm'
 
 describe('UserService', () => {
   let module: TestingModule
@@ -55,7 +57,7 @@ describe('UserService', () => {
     module = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot(createTestConfiguration(entities)),
-        TypeOrmModule.forFeature([User, TravelRecipe, Place]),
+        TypeOrmModule.forFeature([User, TravelRecipe, Place, TravelInstance]),
       ],
       providers: [UserService],
     }).compile()
@@ -78,19 +80,38 @@ describe('UserService', () => {
   it('getById', async () => {
     const result = await userService.getById(1)
 
-    // // {
-    // {
-
-    // }
-    // // }
-
-    expect(result).toBe({
+    expect(JSON.stringify(result)).toBe(JSON.stringify({
       id: 1,
       firstName: 'Damian',
       lastName: 'Kliber',
       email: 'damiankliber@localhost.com',
       password: 'password',
       role: 'USER',
-    })
+    }))
+  })
+
+  it('getTravelsRecipe', async () => {
+    const result = await userService.getTravelsRecipe(2)
+
+    expect(JSON.stringify(result)).toBe(
+      JSON.stringify([
+        {
+          id: 1,
+          name: 'Wycieczka',
+          userId: 2,
+          placeId: 1,
+          place: {
+            id: 1,
+            name: 'Nazwa',
+            longitude: '30',
+            latitude: '45',
+            address: 'Some Address 14',
+            zipCode: '45-456',
+            city: 'Wrocław',
+            country: 'Polska',
+          },
+        },
+      ]),
+    )
   })
 })
