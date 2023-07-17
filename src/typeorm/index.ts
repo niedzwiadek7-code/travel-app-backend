@@ -33,7 +33,6 @@ export {
   ActivityTypeParameter,
   ActivityParameter,
   Price,
-  UserRole,
   TravelInstance,
   ElementTravelInstance,
 }
@@ -42,7 +41,7 @@ const entities = [
   User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
   Question, Answer, DateRange, TimeRange, Rating, CategoryRating,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
-  UserRole, TravelInstance, ElementTravelInstance,
+  TravelInstance, ElementTravelInstance,
 ]
 
 export default entities

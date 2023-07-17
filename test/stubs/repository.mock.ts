@@ -38,6 +38,10 @@ export class MockRepository<Entity extends BaseEntity> extends Repository<Entity
     return obj
   }
 
+  public create(item: DeepPartial<Entity>): Entity {
+    return item as Entity
+  }
+
   public async save<T extends DeepPartial<Entity>>(item: T): Promise<T & Entity> {
     if (!item.id) {
       this.increaseActualCounter()
@@ -68,9 +72,15 @@ export class MockRepository<Entity extends BaseEntity> extends Repository<Entity
   }
 }
 
-export async function seedRepository<Entity>(repo: Repository<Entity>, items: Entity[]) {
+export async function seedRepository<Entity>(
+  repo: Repository<Entity>,
+  items: DeepPartial<Entity>[],
+) {
   const promises = Promise.all(
-    items.map((item: Entity) => repo.save(item)),
+    items.map((item: Entity) => {
+      const transformedItem = repo.create(item)
+      return repo.save(transformedItem)
+    }),
   )
   await promises
 }

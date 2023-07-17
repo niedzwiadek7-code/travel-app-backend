@@ -22,9 +22,15 @@ export class TravelRecipe {
   @ManyToOne(() => User, (user) => user.travels)
     user: User
 
+  @Column()
+    userId: number
+
   @ManyToOne(() => Place)
   @JoinTable()
     place: Place
+
+  @Column()
+    placeId: number
 
   @OneToMany(() => ElementTravel, (elementTravel) => elementTravel.travel)
     travelElements: ElementTravel[]
