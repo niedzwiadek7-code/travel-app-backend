@@ -19,7 +19,7 @@ export const createTestConfiguration = (
   entities: Entity[],
 ): TypeOrmModuleOptions => ({
   type: 'sqlite',
-  database: ':memory',
+  database: 'memory',
   entities,
   dropSchema: true,
   synchronize: true,
