@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module'
 import { PlaceModule } from './place/place.module'
 import { TravelModule } from './travel/travel.module'
 import { QuestionModule } from './question/question.module'
+import { ActivityModule } from './activity/activity.module';
 import entities from './typeorm'
 
 @Module({
@@ -29,6 +30,7 @@ import entities from './typeorm'
     PlaceModule,
     TravelModule,
     QuestionModule,
+    ActivityModule,
   ],
 })
 export class AppModule {}

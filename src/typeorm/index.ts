@@ -17,6 +17,9 @@ import { ActivityParameter } from './ActivityParameter'
 import { UserRole } from './UserRole'
 import { TravelInstance } from './TravelInstance'
 import { ElementTravelInstance } from './ElementTravelInstance'
+import { Accommodation } from './Accommodation'
+import { AccommodationPrice } from './AccommodationPrice'
+import { AccommodationElementTravel } from './AccommodationElementTravel'
 
 export {
   User,
@@ -36,13 +39,17 @@ export {
   UserRole,
   TravelInstance,
   ElementTravelInstance,
+  AccommodationPrice,
+  Accommodation,
+  AccommodationElementTravel,
 }
 
 const entities = [
   User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
   Question, Answer, DateRange, TimeRange, Rating, CategoryRating,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
-  UserRole, TravelInstance, ElementTravelInstance,
+  UserRole, TravelInstance, ElementTravelInstance, AccommodationPrice,
+  Accommodation, AccommodationElementTravel,
 ]
 
 export default entities

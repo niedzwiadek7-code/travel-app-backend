@@ -7,6 +7,7 @@ import { Question } from './Question'
 import { Rating } from './Rating'
 import { Price } from './Price'
 import { ActivityType } from './ActivityType'
+import { ActivityParameter } from './ActivityParameter'
 
 @Entity()
 export class Activity {
@@ -26,12 +27,13 @@ export class Activity {
 
   @Column({
     nullable: false,
+    length: '5000',
   })
     description: string
 
   @ManyToOne(() => ActivityType)
   @JoinTable()
-    activityType: Promise<ActivityType>
+    activityType: ActivityType
 
   @Column()
     activityTypeId: string
@@ -44,4 +46,7 @@ export class Activity {
 
   @OneToMany(() => Rating, (rating) => rating.activity)
     ratings: Rating[]
+
+  @OneToMany(() => ActivityParameter, (activityParameter) => activityParameter.activity)
+    activityParameters: ActivityParameter[]
 }

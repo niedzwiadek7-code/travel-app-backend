@@ -21,12 +21,12 @@ export class Place {
     latitude: string | null
 
   @Column({
-    nullable: false,
+    nullable: true,
   })
     address: string
 
   @Column({
-    nullable: false,
+    nullable: true,
   })
     zipCode: string
 

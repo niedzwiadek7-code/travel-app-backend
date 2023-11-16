@@ -16,6 +16,9 @@ export class ActivityTypeParameter {
   })
     name: string
 
+  @Column()
+    activityTypeId: string
+
   @ManyToOne(() => ActivityType, (activityType) => activityType.activityTypeParameters)
     activityType: ActivityType
 

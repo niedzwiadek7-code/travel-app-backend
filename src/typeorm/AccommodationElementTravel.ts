@@ -4,33 +4,21 @@ import {
   Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
-import { Activity } from './Activity'
+import { Accommodation } from './Accommodation'
 
 @Entity()
-export class ElementTravel {
+export class AccommodationElementTravel {
   @PrimaryGeneratedColumn()
     id: number
 
   @Column()
-    dayCount: number
-
-  @Column('time')
-    from: Date
-
-  @Column('time')
-    to: Date
+    numberOfDays: number
 
   @Column({
     nullable: true,
     type: 'float',
   })
     price: number
-
-  @Column({
-    nullable: true,
-    type: 'int',
-  })
-    numberOfPeople: number
 
   @Column({
     nullable: false,
@@ -45,9 +33,9 @@ export class ElementTravel {
     travel: TravelRecipe
 
   @Column()
-    activityId: string
+    accommodationId: string
 
-  @ManyToOne(() => Activity)
+  @ManyToOne(() => Accommodation)
   @JoinTable()
-    activity: Activity
+    accommodation: Accommodation
 }

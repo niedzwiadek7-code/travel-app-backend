@@ -3,10 +3,10 @@
 import {
   Column, Entity, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Activity } from './Activity'
+import { Accommodation } from './Accommodation'
 
 @Entity()
-export class Price {
+export class AccommodationPrice {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -23,8 +23,8 @@ export class Price {
     startDate: Date
 
   @Column()
-    activityId: string
+    accommodationId: string
 
-  @ManyToOne(() => Activity, (activity) => activity.prices)
-    activity: Activity
+  @ManyToOne(() => Accommodation, (accommodation) => accommodation.prices)
+    accommodation: Accommodation
 }
