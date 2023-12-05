@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller, Get, Param, Post, Put, Query, UseGuards,
+  Controller, Get, Param, Post, Put, UseGuards,
 } from '@nestjs/common'
 import { TravelService } from './travel.service'
 import { TravelDto } from './dto/travel.dto'
@@ -14,14 +14,14 @@ export class TravelController {
     private readonly travelService: TravelService,
   ) {}
 
-  @Get(':id')
+  @Get('find/:id')
   get(@Param('id') id: string) {
     return this.travelService.getTravel(id)
   }
 
-  @Get('element/:id')
-  getElement(@Param('id') id: string) {
-    return this.travelService.getTravelElement(id)
+  @Get('user-list')
+  getUserTravels() {
+    return this.travelService.getUserTravels('1')
   }
 
   @Post()

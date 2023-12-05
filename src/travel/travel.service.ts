@@ -97,18 +97,34 @@ export class TravelService {
     return transformedObj
   }
 
-  getTravelElement(id: string) {
-    const query = this.elementTravelRepository
-      .createQueryBuilder('travelElement')
-      .innerJoinAndSelect('travelElement.activity', 'activity')
-      .leftJoinAndSelect('travelElement.photos', 'elementTravelPhoto')
-      .leftJoinAndSelect('activity.questions', 'question')
-      .leftJoinAndSelect('question.author', 'questionAuthor')
-      .leftJoinAndSelect('question.answers', 'answer')
-      .leftJoinAndSelect('answer.author', 'answerAuthor')
-      .where('travelElement.id = :id', { id })
+  async getUserTravels(userId: string) {
+    const results = await this.travelRepository.find({
+      where: {
+        userId,
+      },
+      relations: [
+        'travelElements',
+        'travelElements.activity',
+        'travelElements.activity.activityType',
+        'accommodationTravelElements',
+        'accommodationTravelElements.accommodation',
+      ],
+    })
 
-    return query.getOne()
+    return results.map((result) => ({
+      id: result.id,
+      name: result.name,
+      countDays: result.countDays,
+      elements: result.travelElements.map((elem) => ({
+        price: elem.price,
+        activityType: elem.activity.activityType.name,
+        name: elem.activity.name,
+      })),
+      accommodations: result.accommodationTravelElements.map((elem) => ({
+        price: elem.price,
+        name: elem.accommodation.name,
+      })),
+    }))
   }
 
   async createTravel(body: TravelDto, userId: string) {
