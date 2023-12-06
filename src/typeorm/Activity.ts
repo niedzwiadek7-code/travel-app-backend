@@ -8,6 +8,7 @@ import { Rating } from './Rating'
 import { Price } from './Price'
 import { ActivityType } from './ActivityType'
 import { ActivityParameter } from './ActivityParameter'
+import { ElementTravelInstance } from './ElementTravelInstance'
 
 @Entity()
 export class Activity {
@@ -49,4 +50,7 @@ export class Activity {
 
   @OneToMany(() => ActivityParameter, (activityParameter) => activityParameter.activity)
     activityParameters: ActivityParameter[]
+
+  @OneToMany(() => ElementTravelInstance, (elementTravelInstance) => elementTravelInstance.activity)
+    elementTravelInstances: ElementTravelInstance[]
 }

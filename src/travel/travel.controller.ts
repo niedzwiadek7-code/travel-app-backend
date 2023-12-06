@@ -3,7 +3,7 @@ import {
   Controller, Get, Param, Post, Put, UseGuards,
 } from '@nestjs/common'
 import { TravelService } from './travel.service'
-import { TravelDto } from './dto/travel.dto'
+import { TravelDto, PlanATravelDto } from './dto'
 import { GetUser } from '../auth/decorator'
 import { JwtGuard } from '../auth/guard'
 
@@ -22,6 +22,14 @@ export class TravelController {
   @Get('user-list')
   getUserTravels() {
     return this.travelService.getUserTravels('1')
+  }
+
+  @Post('plan-a-travel')
+  planATravel(
+  @GetUser('id') userId: string,
+    @Body() body: PlanATravelDto,
+  ) {
+    return this.travelService.planATravel(body, userId)
   }
 
   @Post()

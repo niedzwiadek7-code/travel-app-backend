@@ -1,23 +1,35 @@
 /* eslint-disable import/no-cycle */
 
 import {
+  Column,
   Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
-import { DateRange } from './DateRange'
 import { ElementTravelInstance } from './ElementTravelInstance'
+import { User } from './User'
 
 @Entity()
 export class TravelInstance {
   @PrimaryGeneratedColumn()
     id: number
 
+  @Column()
+    userId: string
+
+  @ManyToOne(() => User, (user) => user.travelInstances)
+    user: User
+
+  @Column()
+    travelRecipeId: string
+
   @ManyToOne(() => TravelRecipe, (travelRecipe) => travelRecipe.travelInstances)
     travelRecipe: TravelRecipe
 
-  @ManyToOne(() => DateRange)
-  @JoinTable()
-    dateRange: DateRange
+  @Column('date')
+    from: Date
+
+  @Column('date')
+    to: Date
 
   @OneToMany(
     () => ElementTravelInstance,

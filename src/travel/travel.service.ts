@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import * as dayjs from 'dayjs'
 import {
   TravelRecipe as TravelEntity,
   ElementTravel as ElementTravelEntity,
   AccommodationElementTravel as AccommodationElementTravelEntity,
+  TravelInstance, ElementTravelInstance,
 } from '../typeorm'
-import { TravelDto } from './dto/travel.dto'
+import { PlanATravelDto, TravelDto } from './dto'
+import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
 
 @Injectable()
 export class TravelService {
@@ -17,6 +20,12 @@ export class TravelService {
     private readonly elementTravelRepository: Repository<ElementTravelEntity>,
     @InjectRepository(AccommodationElementTravelEntity)
     private readonly accommodationElementTravelEntity: Repository<AccommodationElementTravelEntity>,
+    @InjectRepository(TravelInstance)
+    private readonly travelInstanceRepository: Repository<TravelInstance>,
+    @InjectRepository(ElementTravelInstance)
+    private readonly elementTravelInstanceRepository: Repository<ElementTravelInstance>,
+    @InjectRepository(ElementTravelPhoto)
+    private readonly elementTravelPhotoRepository: Repository<ElementTravelPhoto>,
   ) {}
 
   async getTravel(id: string) {
@@ -201,5 +210,52 @@ export class TravelService {
     await this.accommodationElementTravelEntity.save(accommodationsElements)
 
     return result
+  }
+
+  async planATravel(body: PlanATravelDto, userId: string) {
+    const travelRecipe = await this.travelRepository.findOne({
+      where: {
+        id: parseInt(body.travelRecipeId, 10),
+      },
+      relations: ['travelElements', 'travelElements.activity'],
+    })
+
+    const travelInstance = this.travelInstanceRepository.create({
+      userId,
+      travelRecipeId: body.travelRecipeId,
+      from: dayjs(body.startDate).toISOString(),
+      to: dayjs(body.startDate).add(travelRecipe.countDays - 1, 'days').toISOString(),
+    })
+    const travelInstanceResult = await this.travelInstanceRepository.save(travelInstance)
+
+    for (const travelElement of travelRecipe.travelElements) {
+      const getTime = (timeStr) => {
+        const timeElements = timeStr.split(':')
+        return dayjs()
+          .set('hours', timeElements[0])
+          .set('minute', timeElements[1])
+      }
+
+      const from = getTime(travelElement.from)
+      const to = getTime(travelElement.to)
+
+      const elementTravelInstance = this.elementTravelInstanceRepository.create({
+        from: dayjs(body.startDate)
+          .add(travelElement.dayCount - 1, 'days')
+          .set('hour', from.get('hours'))
+          .set('minute', from.get('minutes'))
+          .toISOString(),
+        to: dayjs(body.startDate)
+          .add(travelElement.dayCount - 1, 'days')
+          .set('hour', to.get('hours'))
+          .set('minute', to.get('minutes'))
+          .toISOString(),
+        travelInstanceId: travelInstanceResult.id.toString(),
+        activityId: travelElement.activity.id.toString(),
+      })
+      await this.elementTravelInstanceRepository.save(elementTravelInstance)
+    }
+
+    return travelInstanceResult
   }
 }
