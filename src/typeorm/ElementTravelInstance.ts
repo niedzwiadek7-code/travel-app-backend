@@ -8,6 +8,7 @@ import { ElementTravelPhoto } from './ElementTravelPhoto'
 import { DateRange } from './DateRange'
 import { TravelInstance } from './TravelInstance'
 import { Activity } from './Activity'
+import { ElementTravel } from './ElementTravel'
 
 @Entity()
 export class ElementTravelInstance {
@@ -41,4 +42,12 @@ export class ElementTravelInstance {
 
   @ManyToOne(() => Activity, (activity) => activity.elementTravelInstances)
     activity: Activity
+
+  @Column({
+    nullable: true,
+  })
+    elementTravelId?: string
+
+  @ManyToOne(() => ElementTravel)
+    elementTravel?: ElementTravel
 }

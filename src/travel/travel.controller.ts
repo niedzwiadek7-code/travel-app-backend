@@ -19,6 +19,11 @@ export class TravelController {
     return this.travelService.getTravel(id)
   }
 
+  @Get('find/instance/:id')
+  getInstance(@Param('id') id: string) {
+    return this.travelService.getTravelInstance(id)
+  }
+
   @Get('user-list')
   getUserTravels() {
     return this.travelService.getUserTravels('1')

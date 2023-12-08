@@ -252,10 +252,63 @@ export class TravelService {
           .toISOString(),
         travelInstanceId: travelInstanceResult.id.toString(),
         activityId: travelElement.activity.id.toString(),
+        elementTravelId: travelElement.id.toString(),
       })
       await this.elementTravelInstanceRepository.save(elementTravelInstance)
     }
 
     return travelInstanceResult
+  }
+
+  async getTravelInstance(id: string) {
+    const travelInstance = await this.travelInstanceRepository.findOne({
+      where: {
+        id: parseInt(id, 10),
+      },
+      relations: [
+        'travelElements',
+        'travelElements.activity',
+        'travelElements.activity.activityType',
+        'travelElements.elementTravel',
+        'travelRecipe',
+      ],
+    })
+
+    return {
+      id: travelInstance.id,
+      from: travelInstance.from,
+      to: travelInstance.to,
+      travelElements: travelInstance.travelElements.map((elemInstance) => {
+        const obj = {
+          id: elemInstance.id,
+          passed: elemInstance.passed,
+          from: elemInstance.from,
+          to: elemInstance.to,
+          activity: {
+            id: elemInstance.activity.id,
+            name: elemInstance.activity.name,
+            description: elemInstance.activity.description,
+            activityType: elemInstance.activity.activityType.name,
+          },
+          elementTravel: undefined,
+        }
+
+        if (elemInstance.elementTravel) {
+          obj.elementTravel = {
+            id: elemInstance.elementTravel.id,
+            price: elemInstance.elementTravel.price,
+            numberOfPeople: elemInstance.elementTravel.numberOfPeople,
+            description: elemInstance.elementTravel.description,
+          }
+        }
+
+        return obj
+      }),
+      travelRecipe: {
+        id: travelInstance.travelRecipe.id,
+        name: travelInstance.travelRecipe.name,
+        countDays: travelInstance.travelRecipe.countDays,
+      },
+    }
   }
 }
