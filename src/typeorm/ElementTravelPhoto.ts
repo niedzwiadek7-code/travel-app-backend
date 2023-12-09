@@ -15,6 +15,9 @@ export class ElementTravelPhoto {
   })
     url: string
 
+  @Column()
+    elementTravelId: string
+
   @ManyToOne(() => ElementTravelInstance, (elementTravel) => elementTravel.photos)
     elementTravel: ElementTravelInstance
 }

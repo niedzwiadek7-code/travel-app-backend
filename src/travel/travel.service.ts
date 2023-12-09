@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
@@ -10,6 +10,7 @@ import {
 } from '../typeorm'
 import { PlanATravelDto, TravelDto } from './dto'
 import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
+import { MulterFile } from '../model'
 
 @Injectable()
 export class TravelService {
@@ -310,5 +311,22 @@ export class TravelService {
         countDays: travelInstance.travelRecipe.countDays,
       },
     }
+  }
+
+  async passTravelElement(id: string, files: MulterFile[]) {
+    await this.elementTravelInstanceRepository.save({
+      id: parseInt(id, 10),
+      passed: true,
+    })
+
+    for (const file of files) {
+      const photoObj = this.elementTravelPhotoRepository.create({
+        elementTravelId: id,
+        url: file.filename,
+      })
+      await this.elementTravelPhotoRepository.save(photoObj)
+    }
+
+    return HttpStatus.OK
   }
 }

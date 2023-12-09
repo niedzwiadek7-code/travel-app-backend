@@ -1,11 +1,13 @@
 import {
-  Body,
-  Controller, Get, Param, Post, Put, UseGuards,
+  Body, Controller, Get, Param, Post, Put, UploadedFiles, UseGuards, UseInterceptors,
 } from '@nestjs/common'
+import { FilesInterceptor } from '@nestjs/platform-express'
 import { TravelService } from './travel.service'
 import { TravelDto, PlanATravelDto } from './dto'
 import { GetUser } from '../auth/decorator'
 import { JwtGuard } from '../auth/guard'
+import { multerConfigOptions } from '../config/multerConfigOptions'
+import { MulterFile } from '../model'
 
 @UseGuards(JwtGuard)
 @Controller('travel')
@@ -51,5 +53,14 @@ export class TravelController {
     @Param('id') id: string,
   ) {
     return this.travelService.updateTravel(body, id)
+  }
+
+  @Put('pass-travel-element/:id')
+  @UseInterceptors(FilesInterceptor('images', 100, multerConfigOptions))
+  passTravelElement(
+  @Param('id') id: string,
+    @UploadedFiles() files: MulterFile[],
+  ) {
+    return this.travelService.passTravelElement(id, files)
   }
 }

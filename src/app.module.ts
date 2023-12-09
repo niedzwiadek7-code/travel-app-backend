@@ -1,16 +1,22 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
 import { AuthModule } from './auth/auth.module'
 import { UserModule } from './user/user.module'
 import { PlaceModule } from './place/place.module'
 import { TravelModule } from './travel/travel.module'
 import { QuestionModule } from './question/question.module'
-import { ActivityModule } from './activity/activity.module';
+import { ActivityModule } from './activity/activity.module'
 import entities from './typeorm'
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'upload'),
+      serveRoot: '/uploads',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env'],
