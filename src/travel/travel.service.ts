@@ -271,6 +271,7 @@ export class TravelService {
         'travelElements.activity',
         'travelElements.activity.activityType',
         'travelElements.elementTravel',
+        'travelElements.photos',
         'travelRecipe',
       ],
     })
@@ -291,6 +292,7 @@ export class TravelService {
             description: elemInstance.activity.description,
             activityType: elemInstance.activity.activityType.name,
           },
+          photos: elemInstance.photos.map((photo) => `uploads/${photo.url}`),
           elementTravel: undefined,
         }
 
@@ -327,6 +329,11 @@ export class TravelService {
       await this.elementTravelPhotoRepository.save(photoObj)
     }
 
+    return HttpStatus.OK
+  }
+
+  async cancelTravelElementInstance(id: string) {
+    await this.elementTravelInstanceRepository.delete({ id: parseInt(id, 10) })
     return HttpStatus.OK
   }
 }

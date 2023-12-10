@@ -63,4 +63,11 @@ export class TravelController {
   ) {
     return this.travelService.passTravelElement(id, files)
   }
+
+  @Post('travel-instance/element/cancel/:id')
+  cancelTravelElementInstance(
+  @Param('id') id: string,
+  ) {
+    return this.travelService.cancelTravelElementInstance(id)
+  }
 }
