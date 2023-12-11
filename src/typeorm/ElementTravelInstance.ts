@@ -34,7 +34,11 @@ export class ElementTravelInstance {
   @Column()
     travelInstanceId: string
 
-  @ManyToOne(() => TravelInstance, (travelInstance) => travelInstance.travelElements)
+  @ManyToOne(
+    () => TravelInstance,
+    (travelInstance) => travelInstance.travelElements,
+    { onDelete: 'CASCADE' },
+  )
     travelInstance: TravelInstance
 
   @Column()

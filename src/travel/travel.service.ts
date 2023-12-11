@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
+import { use } from 'passport'
 import {
   TravelRecipe as TravelEntity,
   ElementTravel as ElementTravelEntity,
@@ -332,8 +333,67 @@ export class TravelService {
     return HttpStatus.OK
   }
 
+  async getAllInstances(userId: string) {
+    const travelInstances = await this.travelInstanceRepository.find({
+      where: {
+        userId,
+      },
+      relations: [
+        'travelElements',
+        'travelElements.activity',
+        'travelElements.activity.activityType',
+        'travelElements.elementTravel',
+        'travelElements.photos',
+        'travelRecipe',
+      ],
+    })
+
+    return travelInstances.map((travelInstance) => ({
+      id: travelInstance.id,
+      from: travelInstance.from,
+      to: travelInstance.to,
+      travelElements: travelInstance.travelElements.map((elemInstance) => {
+        const obj = {
+          id: elemInstance.id,
+          passed: elemInstance.passed,
+          from: elemInstance.from,
+          to: elemInstance.to,
+          activity: {
+            id: elemInstance.activity.id,
+            name: elemInstance.activity.name,
+            description: elemInstance.activity.description,
+            activityType: elemInstance.activity.activityType.name,
+          },
+          photos: elemInstance.photos.map((photo) => `uploads/${photo.url}`),
+          elementTravel: undefined,
+        }
+
+        if (elemInstance.elementTravel) {
+          obj.elementTravel = {
+            id: elemInstance.elementTravel.id,
+            price: elemInstance.elementTravel.price,
+            numberOfPeople: elemInstance.elementTravel.numberOfPeople,
+            description: elemInstance.elementTravel.description,
+          }
+        }
+
+        return obj
+      }),
+      travelRecipe: {
+        id: travelInstance.travelRecipe.id,
+        name: travelInstance.travelRecipe.name,
+        countDays: travelInstance.travelRecipe.countDays,
+      },
+    }))
+  }
+
   async cancelTravelElementInstance(id: string) {
     await this.elementTravelInstanceRepository.delete({ id: parseInt(id, 10) })
+    return HttpStatus.OK
+  }
+
+  async deleteTravelInstance(id: string) {
+    await this.travelInstanceRepository.delete({ id: parseInt(id, 10) })
     return HttpStatus.OK
   }
 }

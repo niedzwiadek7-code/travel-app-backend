@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Get, Param, Post, Put, UploadedFiles, UseGuards, UseInterceptors,
+  Body, Controller, Delete, Get, Param, Post, Put, UploadedFiles, UseGuards, UseInterceptors,
 } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { TravelService } from './travel.service'
@@ -69,5 +69,19 @@ export class TravelController {
   @Param('id') id: string,
   ) {
     return this.travelService.cancelTravelElementInstance(id)
+  }
+
+  @Get('instance/all')
+  getAllInstance(
+  @GetUser('id') id: string,
+  ) {
+    return this.travelService.getAllInstances(id)
+  }
+
+  @Delete('/instance/delete/:id')
+  deleteInstance(
+  @Param('id') id: string,
+  ) {
+    return this.travelService.deleteTravelInstance(id)
   }
 }

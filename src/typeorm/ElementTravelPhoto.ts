@@ -18,6 +18,10 @@ export class ElementTravelPhoto {
   @Column()
     elementTravelId: string
 
-  @ManyToOne(() => ElementTravelInstance, (elementTravel) => elementTravel.photos)
+  @ManyToOne(
+    () => ElementTravelInstance,
+    (elementTravel) => elementTravel.photos,
+    { onDelete: 'CASCADE' },
+  )
     elementTravel: ElementTravelInstance
 }
