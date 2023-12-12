@@ -105,7 +105,7 @@ export class TravelService {
         id: accommodation.accommodation.id,
         name: accommodation.accommodation.name,
         description: accommodation.accommodation.description,
-        accommodation: accommodation.accommodation.place,
+        place: accommodation.accommodation.place,
       },
     }))
 
