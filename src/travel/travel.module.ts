@@ -7,7 +7,7 @@ import {
   ElementTravel,
   AccommodationElementTravel,
   TravelInstance,
-  ElementTravelInstance,
+  ElementTravelInstance, AccommodationElementTravelInstance, AccommodationElementTravelPhoto,
 } from '../typeorm'
 import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
 
@@ -16,6 +16,7 @@ import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
     TypeOrmModule.forFeature([
       TravelRecipe, ElementTravel, AccommodationElementTravel,
       TravelInstance, ElementTravelInstance, ElementTravelPhoto,
+      AccommodationElementTravelInstance, AccommodationElementTravelPhoto,
     ]),
   ],
   controllers: [TravelController],

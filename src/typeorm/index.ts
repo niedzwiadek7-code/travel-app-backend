@@ -20,6 +20,8 @@ import { ElementTravelInstance } from './ElementTravelInstance'
 import { Accommodation } from './Accommodation'
 import { AccommodationPrice } from './AccommodationPrice'
 import { AccommodationElementTravel } from './AccommodationElementTravel'
+import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
+import { AccommodationElementTravelPhoto } from './AccommodationElementTravelPhoto'
 
 export {
   User,
@@ -42,6 +44,8 @@ export {
   AccommodationPrice,
   Accommodation,
   AccommodationElementTravel,
+  AccommodationElementTravelInstance,
+  AccommodationElementTravelPhoto,
 }
 
 const entities = [
@@ -49,7 +53,8 @@ const entities = [
   Question, Answer, DateRange, TimeRange, Rating, CategoryRating,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
   UserRole, TravelInstance, ElementTravelInstance, AccommodationPrice,
-  Accommodation, AccommodationElementTravel,
+  Accommodation, AccommodationElementTravel, AccommodationElementTravelInstance,
+  AccommodationElementTravelPhoto,
 ]
 
 export default entities

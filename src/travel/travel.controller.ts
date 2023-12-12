@@ -84,4 +84,20 @@ export class TravelController {
   ) {
     return this.travelService.deleteTravelInstance(id)
   }
+
+  @Post('travel-instance/accommodation/cancel/:id')
+  cancelAccommodationElementInstance(
+  @Param('id') id: string,
+  ) {
+    return this.travelService.cancelAccommodationElementInstance(id)
+  }
+
+  @Put('pass-accommodation-element/:id')
+  @UseInterceptors(FilesInterceptor('images', 100, multerConfigOptions))
+  passAccommodationElement(
+  @Param('id') id: string,
+    @UploadedFiles() files: MulterFile[],
+  ) {
+    return this.travelService.passAccommodationElement(id, files)
+  }
 }

@@ -4,6 +4,7 @@ import {
   Column, Entity, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { AccommodationPrice } from './AccommodationPrice'
+import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
 
 @Entity()
 export class Accommodation {
@@ -34,4 +35,10 @@ export class Accommodation {
 
   @OneToMany(() => AccommodationPrice, (price) => price.accommodation)
     prices: AccommodationPrice[]
+
+  @OneToMany(
+    () => AccommodationElementTravelInstance,
+    (elementTravelInstance) => elementTravelInstance.accommodation,
+  )
+    elementTravelInstances: AccommodationElementTravelInstance
 }

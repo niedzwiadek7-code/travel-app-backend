@@ -7,6 +7,7 @@ import {
 import { TravelRecipe } from './TravelRecipe'
 import { ElementTravelInstance } from './ElementTravelInstance'
 import { User } from './User'
+import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
 
 @Entity()
 export class TravelInstance {
@@ -36,4 +37,10 @@ export class TravelInstance {
     (elementTravelInstance) => elementTravelInstance.travelInstance,
   )
     travelElements: ElementTravelInstance[]
+
+  @OneToMany(
+    () => AccommodationElementTravelInstance,
+    (elementTravelInstance) => elementTravelInstance.travelInstance,
+  )
+    accommodationElements: AccommodationElementTravelInstance[]
 }

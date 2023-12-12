@@ -7,7 +7,7 @@ import {
   TravelRecipe as TravelEntity,
   ElementTravel as ElementTravelEntity,
   AccommodationElementTravel as AccommodationElementTravelEntity,
-  TravelInstance, ElementTravelInstance,
+  TravelInstance, ElementTravelInstance, AccommodationElementTravelInstance, AccommodationElementTravelPhoto,
 } from '../typeorm'
 import { PlanATravelDto, TravelDto } from './dto'
 import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
@@ -28,6 +28,10 @@ export class TravelService {
     private readonly elementTravelInstanceRepository: Repository<ElementTravelInstance>,
     @InjectRepository(ElementTravelPhoto)
     private readonly elementTravelPhotoRepository: Repository<ElementTravelPhoto>,
+    @InjectRepository(AccommodationElementTravelInstance)
+    private readonly accommodationElementTravelInstance: Repository<AccommodationElementTravelInstance>,
+    @InjectRepository(AccommodationElementTravelPhoto)
+    private readonly accommodationElementTravelPhoto: Repository<AccommodationElementTravelPhoto>,
   ) {}
 
   async getTravel(id: string) {
@@ -219,7 +223,7 @@ export class TravelService {
       where: {
         id: parseInt(body.travelRecipeId, 10),
       },
-      relations: ['travelElements', 'travelElements.activity'],
+      relations: ['travelElements', 'travelElements.activity', 'accommodationTravelElements', 'accommodationTravelElements.accommodation'],
     })
 
     const travelInstance = this.travelInstanceRepository.create({
@@ -259,6 +263,15 @@ export class TravelService {
       await this.elementTravelInstanceRepository.save(elementTravelInstance)
     }
 
+    for (const accommodationTravelElement of travelRecipe.accommodationTravelElements) {
+      const accommodationTravelElementInstance = this.accommodationElementTravelInstance.create({
+        travelInstanceId: travelInstanceResult.id.toString(),
+        accommodationId: accommodationTravelElement.accommodation.id.toString(),
+        elementTravelId: accommodationTravelElement.id.toString(),
+      })
+      await this.accommodationElementTravelInstance.save(accommodationTravelElementInstance)
+    }
+
     return travelInstanceResult
   }
 
@@ -274,6 +287,10 @@ export class TravelService {
         'travelElements.elementTravel',
         'travelElements.photos',
         'travelRecipe',
+        'accommodationElements',
+        'accommodationElements.accommodation',
+        'accommodationElements.elementTravel',
+        'accommodationElements.photos',
       ],
     })
 
@@ -313,6 +330,32 @@ export class TravelService {
         name: travelInstance.travelRecipe.name,
         countDays: travelInstance.travelRecipe.countDays,
       },
+      accommodationElements: travelInstance.accommodationElements.map((elem) => {
+        const obj = {
+          id: elem.id,
+          passed: elem.passed,
+          accommodation: {
+            id: elem.accommodation.id,
+            name: elem.accommodation.name,
+            description: elem.accommodation.description,
+            activityType: 'accommodation',
+            place: elem.accommodation.place,
+          },
+          elementTravel: undefined,
+          photos: elem.photos.map((photo) => `uploads/${photo.url}`),
+        }
+
+        if (elem.elementTravel) {
+          obj.elementTravel = {
+            id: elem.elementTravel.id,
+            price: elem.elementTravel.price,
+            numberOfDays: elem.elementTravel.numberOfDays,
+            description: elem.elementTravel.description,
+          }
+        }
+
+        return obj
+      }),
     }
   }
 
@@ -394,6 +437,28 @@ export class TravelService {
 
   async deleteTravelInstance(id: string) {
     await this.travelInstanceRepository.delete({ id: parseInt(id, 10) })
+    return HttpStatus.OK
+  }
+
+  async cancelAccommodationElementInstance(id: string) {
+    await this.accommodationElementTravelInstance.delete({ id: parseInt(id, 10) })
+    return HttpStatus.OK
+  }
+
+  async passAccommodationElement(id: string, files: MulterFile[]) {
+    await this.accommodationElementTravelInstance.save({
+      id: parseInt(id, 10),
+      passed: true,
+    })
+
+    for (const file of files) {
+      const photoObj = this.accommodationElementTravelPhoto.create({
+        elementTravelId: id,
+        url: file.filename,
+      })
+      await this.accommodationElementTravelPhoto.save(photoObj)
+    }
+
     return HttpStatus.OK
   }
 }
