@@ -4,7 +4,7 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { TravelService } from './travel.service'
 import {
-  TravelDto, PlanATravelDto, AddActivityToTravelInstanceDto, AddAccommodationToTravelInstanceDto,
+  TravelDto, PlanATravelDto, AddActivityToTravelInstanceDto, AddAccommodationToTravelInstanceDto, PassElementDto,
 } from './dto'
 import { GetUser } from '../auth/decorator'
 import { JwtGuard } from '../auth/guard'
@@ -60,9 +60,9 @@ export class TravelController {
   @Put('pass-travel-element/:id')
   @UseInterceptors(FilesInterceptor('images', 100, multerConfigOptions))
   passTravelElement(
-  @Param('id') id: string,
-    @UploadedFiles() files: MulterFile[],
-  ) {
+    @Param('id') id: string,
+      @UploadedFiles() files: MulterFile[],
+  ): Promise<PassElementDto> {
     return this.travelService.passTravelElement(id, files)
   }
 
@@ -97,9 +97,9 @@ export class TravelController {
   @Put('pass-accommodation-element/:id')
   @UseInterceptors(FilesInterceptor('images', 100, multerConfigOptions))
   passAccommodationElement(
-  @Param('id') id: string,
-    @UploadedFiles() files: MulterFile[],
-  ) {
+    @Param('id') id: string,
+      @UploadedFiles() files: MulterFile[],
+  ): Promise<PassElementDto> {
     return this.travelService.passAccommodationElement(id, files)
   }
 

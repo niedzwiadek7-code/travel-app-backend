@@ -10,7 +10,7 @@ import {
   AccommodationElementTravelPhoto,
 } from '../typeorm'
 import {
-  AddAccommodationToTravelInstanceDto, AddActivityToTravelInstanceDto, PlanATravelDto, TravelDto,
+  AddAccommodationToTravelInstanceDto, AddActivityToTravelInstanceDto, PassElementDto, PlanATravelDto, TravelDto,
 } from './dto'
 import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
 import { MulterFile } from '../model'
@@ -361,13 +361,16 @@ export class TravelService {
     }
   }
 
-  async passTravelElement(id: string, files: MulterFile[]) {
+  async passTravelElement(id: string, files: MulterFile[]): Promise<PassElementDto> {
     await this.elementTravelInstanceRepository.save({
       id: parseInt(id, 10),
       passed: true,
     })
 
+    const urls = []
+
     for (const file of files) {
+      urls.push(`uploads/${file.filename}`)
       const photoObj = this.elementTravelPhotoRepository.create({
         elementTravelId: id,
         url: file.filename,
@@ -375,7 +378,9 @@ export class TravelService {
       await this.elementTravelPhotoRepository.save(photoObj)
     }
 
-    return HttpStatus.OK
+    return {
+      urls,
+    }
   }
 
   async getAllInstances(userId: string) {
@@ -447,13 +452,16 @@ export class TravelService {
     return HttpStatus.OK
   }
 
-  async passAccommodationElement(id: string, files: MulterFile[]) {
+  async passAccommodationElement(id: string, files: MulterFile[]): Promise<PassElementDto> {
     await this.accommodationElementTravelInstance.save({
       id: parseInt(id, 10),
       passed: true,
     })
 
+    const urls = []
+
     for (const file of files) {
+      urls.push(`uploads/${file.filename}`)
       const photoObj = this.accommodationElementTravelPhoto.create({
         elementTravelId: id,
         url: file.filename,
@@ -461,7 +469,9 @@ export class TravelService {
       await this.accommodationElementTravelPhoto.save(photoObj)
     }
 
-    return HttpStatus.OK
+    return {
+      urls,
+    }
   }
 
   async addActivityToTravelInstance(travelId: string, body: AddActivityToTravelInstanceDto) {
