@@ -89,8 +89,22 @@ export class ActivityService {
     return this.activityTypeRepository.find()
   }
 
-  async getAllActivities() {
+  async getAllActivities(source: 'system' | 'user' | 'all', userId: string) {
+    const whereObj: Record<string, any> = {}
+
+    switch (source) {
+      case 'system':
+        whereObj.accepted = true
+        break
+      case 'user':
+        whereObj.userId = userId
+        break
+      default:
+        break
+    }
+
     const results = await this.activityRepository.find({
+      where: whereObj,
       relations: ['activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices'],
     })
 
@@ -216,12 +230,13 @@ export class ActivityService {
     await this.priceRepository.save(price)
   }
 
-  async createAccommodation(body: ActivityDto) {
+  async createAccommodation(body: ActivityDto, userId: string) {
     const accommodation = this.accommodationRepository.create({
       accepted: false,
       name: body.name,
       place: body.place,
       description: body.description,
+      userId,
     })
     const result = await this.accommodationRepository.save(accommodation)
 
@@ -235,7 +250,7 @@ export class ActivityService {
     return result
   }
 
-  async createActivity(body: ActivityDto) {
+  async createActivity(body: ActivityDto, userId: string) {
     const activityTypeResult = await this.activityTypeRepository.findOne({
       where: {
         name: body.activityType,
@@ -248,6 +263,7 @@ export class ActivityService {
       name: body.name,
       activityTypeId,
       description: body.description,
+      userId,
     })
     const result = await this.activityRepository.save(activity)
     const activityId = result.id
@@ -269,8 +285,22 @@ export class ActivityService {
     return result
   }
 
-  async getAllAccommodations() {
+  async getAllAccommodations(source: 'system' | 'user' | 'all', userId: string) {
+    const whereObj: Record<string, any> = {}
+
+    switch (source) {
+      case 'system':
+        whereObj.accepted = true
+        break
+      case 'user':
+        whereObj.userId = userId
+        break
+      default:
+        break
+    }
+
     const results = await this.accommodationRepository.find({
+      where: whereObj,
       relations: ['prices'],
     })
 

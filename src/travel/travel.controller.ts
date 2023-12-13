@@ -3,7 +3,9 @@ import {
 } from '@nestjs/common'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { TravelService } from './travel.service'
-import { TravelDto, PlanATravelDto } from './dto'
+import {
+  TravelDto, PlanATravelDto, AddActivityToTravelInstanceDto, AddAccommodationToTravelInstanceDto,
+} from './dto'
 import { GetUser } from '../auth/decorator'
 import { JwtGuard } from '../auth/guard'
 import { multerConfigOptions } from '../config/multerConfigOptions'
@@ -99,5 +101,21 @@ export class TravelController {
     @UploadedFiles() files: MulterFile[],
   ) {
     return this.travelService.passAccommodationElement(id, files)
+  }
+
+  @Post('travel-instance/activity/add/:travelId')
+  addActivityToTravelInstance(
+  @Param('travelId') travelId: string,
+    @Body() body: AddActivityToTravelInstanceDto,
+  ) {
+    return this.travelService.addActivityToTravelInstance(travelId, body)
+  }
+
+  @Post('travel-instance/accommodation/add/:travelId')
+  addAccommodationToTravelInstance(
+  @Param('travelId') travelId: string,
+    @Body() body: AddAccommodationToTravelInstanceDto,
+  ) {
+    return this.travelService.addAccommodationToTravelInstance(travelId, body)
   }
 }

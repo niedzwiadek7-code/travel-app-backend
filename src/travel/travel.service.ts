@@ -2,14 +2,16 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
-import { use } from 'passport'
 import {
   TravelRecipe as TravelEntity,
   ElementTravel as ElementTravelEntity,
   AccommodationElementTravel as AccommodationElementTravelEntity,
-  TravelInstance, ElementTravelInstance, AccommodationElementTravelInstance, AccommodationElementTravelPhoto,
+  TravelInstance, ElementTravelInstance, AccommodationElementTravelInstance,
+  AccommodationElementTravelPhoto,
 } from '../typeorm'
-import { PlanATravelDto, TravelDto } from './dto'
+import {
+  AddAccommodationToTravelInstanceDto, AddActivityToTravelInstanceDto, PlanATravelDto, TravelDto,
+} from './dto'
 import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
 import { MulterFile } from '../model'
 
@@ -460,5 +462,26 @@ export class TravelService {
     }
 
     return HttpStatus.OK
+  }
+
+  async addActivityToTravelInstance(travelId: string, body: AddActivityToTravelInstanceDto) {
+    const elementTravelInstance = this.elementTravelInstanceRepository.create({
+      travelInstanceId: travelId,
+      activityId: body.activityId,
+      from: body.from,
+      to: body.to,
+    })
+    return this.elementTravelInstanceRepository.save(elementTravelInstance)
+  }
+
+  async addAccommodationToTravelInstance(
+    travelId: string,
+    body: AddAccommodationToTravelInstanceDto,
+  ) {
+    const elementTravelInstance = this.accommodationElementTravelInstance.create({
+      travelInstanceId: travelId,
+      accommodationId: body.accommodationId,
+    })
+    return this.accommodationElementTravelInstance.save(elementTravelInstance)
   }
 }

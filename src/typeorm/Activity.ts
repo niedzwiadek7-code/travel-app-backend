@@ -3,12 +3,15 @@
 import {
   Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
+import { use } from 'passport'
 import { Question } from './Question'
 import { Rating } from './Rating'
 import { Price } from './Price'
 import { ActivityType } from './ActivityType'
 import { ActivityParameter } from './ActivityParameter'
 import { ElementTravelInstance } from './ElementTravelInstance'
+import { User } from './User'
+import { Accommodation } from './Accommodation'
 
 @Entity()
 export class Activity {
@@ -53,4 +56,10 @@ export class Activity {
 
   @OneToMany(() => ElementTravelInstance, (elementTravelInstance) => elementTravelInstance.activity)
     elementTravelInstances: ElementTravelInstance[]
+
+  @Column()
+    userId: string
+
+  @ManyToOne(() => User, (user) => user.activities)
+    user: User
 }

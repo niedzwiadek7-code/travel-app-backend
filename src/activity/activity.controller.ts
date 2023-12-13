@@ -1,8 +1,10 @@
 import {
-  Body, Controller, Get, Param, Post,
+  Body, Controller, Get, Param, Post, Query, UseGuards,
 } from '@nestjs/common'
 import { ActivityService } from './activity.service'
 import { ActivityDto } from './dto'
+import { JwtGuard } from '../auth/guard'
+import { GetUser } from '../auth/decorator'
 
 @Controller('activity')
 export class ActivityController {
@@ -10,14 +12,23 @@ export class ActivityController {
     private readonly activityService: ActivityService,
   ) {}
 
+  @UseGuards(JwtGuard)
   @Get('all')
-  getAll() {
-    return this.activityService.getAllActivities()
+  getAll(
+  @Query() all: string,
+    @Query('source') source: 'system' | 'user' | 'all',
+    @GetUser('id') userId: string,
+  ) {
+    return this.activityService.getAllActivities(source, userId)
   }
 
+  @UseGuards(JwtGuard)
   @Get('accommodation/all')
-  getAllAccommodations() {
-    return this.activityService.getAllAccommodations()
+  getAllAccommodations(
+  @Query('source') source: 'system' | 'user' | 'all',
+    @GetUser('id') userId: string,
+  ) {
+    return this.activityService.getAllAccommodations(source, userId)
   }
 
   @Get('find/:id')
@@ -35,17 +46,19 @@ export class ActivityController {
     return this.activityService.getAllActivityTypes()
   }
 
+  @UseGuards(JwtGuard)
   @Post()
   createActivity(
-  @Body() body: ActivityDto,
+  @GetUser('id') userId: string,
+    @Body() body: ActivityDto,
   ) {
     switch (body.activityType) {
       case 'Nocleg':
       case 'accommodation':
-        return this.activityService.createAccommodation(body)
+        return this.activityService.createAccommodation(body, userId)
         break
       default:
-        return this.activityService.createActivity(body)
+        return this.activityService.createActivity(body, userId)
     }
   }
 }

@@ -7,6 +7,8 @@ import { TravelRecipe } from './TravelRecipe'
 import { Question } from './Question'
 import { UserRole } from './UserRole'
 import { TravelInstance } from './TravelInstance'
+import { Activity } from './Activity'
+import { Accommodation } from './Accommodation'
 
 @Entity()
 export class User {
@@ -45,4 +47,10 @@ export class User {
 
   @OneToMany(() => Question, (question) => question.author)
     questions: Question[]
+
+  @OneToMany(() => Activity, (activity) => activity.user)
+    activities: Activity[]
+
+  @OneToMany(() => Accommodation, (accommodation) => accommodation.user)
+    accommodations: Accommodation[]
 }

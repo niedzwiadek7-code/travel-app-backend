@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { AccommodationPrice } from './AccommodationPrice'
 import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
+import { User } from './User'
 
 @Entity()
 export class Accommodation {
@@ -41,4 +42,10 @@ export class Accommodation {
     (elementTravelInstance) => elementTravelInstance.accommodation,
   )
     elementTravelInstances: AccommodationElementTravelInstance
+
+  @Column()
+    userId: string
+
+  @ManyToOne(() => User, (user) => user.accommodations)
+    user: User
 }
