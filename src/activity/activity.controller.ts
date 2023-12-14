@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, Param, Post, Query, UseGuards,
+  Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards,
 } from '@nestjs/common'
 import { ActivityService } from './activity.service'
 import { ActivityDto, QueryActivity } from './dto'
@@ -56,9 +56,23 @@ export class ActivityController {
       case 'Nocleg':
       case 'accommodation':
         return this.activityService.createAccommodation(body, userId)
-        break
       default:
         return this.activityService.createActivity(body, userId)
+    }
+  }
+
+  @UseGuards(JwtGuard)
+  @Put(':id')
+  putActivity(
+  @Param('id') id: string,
+    @Body() body: ActivityDto,
+  ) {
+    switch (body.activityType) {
+      case 'Nocleg':
+      case 'accommodation':
+        return this.activityService.putAccommodation(id, body)
+      default:
+        return this.activityService.putActivity(id, body)
     }
   }
 

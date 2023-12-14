@@ -362,4 +362,178 @@ export class ActivityService {
     await this.accommodationRepository.softDelete({ id: parseInt(id, 10) })
     return HttpStatus.ACCEPTED
   }
+
+  async putAccommodation(id: string, body: ActivityDto) {
+    const result = await this.accommodationRepository.save({
+      id: parseInt(id, 10),
+      name: body.name,
+      place: body.place,
+      description: body.description,
+    })
+
+    const price = this.accommodationPriceRepository.create({
+      price: body.price,
+      startDate: new Date(),
+      accommodationId: id,
+    })
+    await this.accommodationPriceRepository.save(price)
+
+    return result
+  }
+
+  async putRestaurant(body: ActivityDto, activityTypeId: string, activityId: string) {
+    const placeTypeParameterId = (await this.activityTypeParameterRepository.findOne({
+      where: {
+        activityTypeId,
+      },
+    })).id.toString()
+
+    const placeParameterId = (await this.activityParameterRepository.findOne({
+      where: {
+        activityId,
+        activityTypeParameterId: placeTypeParameterId,
+      },
+    })).id
+
+    await this.activityParameterRepository.save({
+      id: placeParameterId,
+      value: body.place,
+      activityTypeParameterId: placeTypeParameterId,
+      activityId,
+    })
+  }
+
+  async putTravel(body: ActivityDto, activityTypeId: string, activityId: string) {
+    const fromTypeParameterId = (await this.activityTypeParameterRepository.findOne({
+      where: {
+        activityTypeId,
+        name: 'from',
+      },
+    })).id.toString()
+
+    const fromParameterId = (await this.activityParameterRepository.findOne({
+      where: {
+        activityId,
+        activityTypeParameterId: fromTypeParameterId,
+      },
+    })).id
+
+    const toTypeParameterId = (await this.activityTypeParameterRepository.findOne({
+      where: {
+        activityTypeId,
+        name: 'to',
+      },
+    })).id.toString()
+
+    const toParameterId = (await this.activityParameterRepository.findOne({
+      where: {
+        activityId,
+        activityTypeParameterId: toTypeParameterId,
+      },
+    })).id
+
+    await this.activityParameterRepository.save([
+      {
+        id: fromParameterId,
+        value: body.from,
+        activityTypeParameterId: fromTypeParameterId,
+        activityId,
+      },
+      {
+        id: toParameterId,
+        value: body.to,
+        activityTypeParameterId: toTypeParameterId,
+        activityId,
+      },
+    ])
+
+    const price = this.priceRepository.create({
+      price: body.price,
+      startDate: new Date(),
+      activityId,
+    })
+    await this.priceRepository.save(price)
+  }
+
+  async putAttraction(body: ActivityDto, activityTypeId: string, activityId: string) {
+    const placeTypeParameterId = (await this.activityTypeParameterRepository.findOne({
+      where: {
+        activityTypeId,
+        name: 'place',
+      },
+    })).id.toString()
+
+    const placeParameterId = (await this.activityParameterRepository.findOne({
+      where: {
+        activityId,
+        activityTypeParameterId: placeTypeParameterId,
+      },
+    })).id
+
+    const priceTypeTypeParameterId = (await this.activityTypeParameterRepository.findOne({
+      where: {
+        activityTypeId,
+        name: 'priceType',
+      },
+    })).id.toString()
+
+    const priceTypeParameterId = (await this.activityParameterRepository.findOne({
+      where: {
+        activityId,
+        activityTypeParameterId: priceTypeTypeParameterId,
+      },
+    })).id
+
+    await this.activityParameterRepository.save([
+      {
+        id: placeParameterId,
+        value: body.place,
+        activityTypeParameterId: placeTypeParameterId,
+        activityId,
+      },
+      {
+        id: priceTypeParameterId,
+        value: body.priceType,
+        activityTypeParameterId: priceTypeTypeParameterId,
+        activityId,
+      },
+    ])
+
+    const price = this.priceRepository.create({
+      price: body.price,
+      startDate: new Date(),
+      activityId,
+    })
+    await this.priceRepository.save(price)
+  }
+
+  async putActivity(id: string, body: ActivityDto) {
+    const activityTypeResultId = (await this.activityTypeRepository.findOne({
+      where: {
+        name: body.activityType,
+      },
+    })).id.toString()
+
+    const result = await this.activityRepository.save({
+      id: parseInt(id, 10),
+      name: body.name,
+      description: body.description,
+    })
+
+    switch (body.activityType) {
+      case 'Restauracja':
+        await this.putRestaurant(body, activityTypeResultId, id)
+        break
+      case 'Podróż':
+        await this.putTravel(body, activityTypeResultId, id)
+        break
+      case 'Atrakcja':
+        await this.putAttraction(body, activityTypeResultId, id)
+        break
+      default:
+        break
+    }
+
+    return result
+  }
 }
