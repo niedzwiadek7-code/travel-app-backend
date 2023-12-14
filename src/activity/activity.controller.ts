@@ -1,8 +1,8 @@
 import {
-  Body, Controller, Get, Param, Post, Query, UseGuards,
+  Body, Controller, Delete, Get, Param, Post, Query, UseGuards,
 } from '@nestjs/common'
 import { ActivityService } from './activity.service'
-import { ActivityDto } from './dto'
+import { ActivityDto, QueryActivity } from './dto'
 import { JwtGuard } from '../auth/guard'
 import { GetUser } from '../auth/decorator'
 
@@ -16,7 +16,7 @@ export class ActivityController {
   @Get('all')
   getAll(
   @Query() all: string,
-    @Query('source') source: 'system' | 'user' | 'all',
+    @Query('source') source: QueryActivity,
     @GetUser('id') userId: string,
   ) {
     return this.activityService.getAllActivities(source, userId)
@@ -25,7 +25,7 @@ export class ActivityController {
   @UseGuards(JwtGuard)
   @Get('accommodation/all')
   getAllAccommodations(
-  @Query('source') source: 'system' | 'user' | 'all',
+  @Query('source') source: QueryActivity,
     @GetUser('id') userId: string,
   ) {
     return this.activityService.getAllAccommodations(source, userId)
@@ -60,5 +60,37 @@ export class ActivityController {
       default:
         return this.activityService.createActivity(body, userId)
     }
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('accept/:id')
+  acceptActivity(
+  @Param('id') id: string,
+  ) {
+    return this.activityService.acceptActivity(id)
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('accommodation/accept/:id')
+  acceptAccommodation(
+  @Param('id') id: string,
+  ) {
+    return this.activityService.acceptAccommodation(id)
+  }
+
+  @UseGuards(JwtGuard)
+  @Delete('restore/:id')
+  restoreActivity(
+  @Param('id') id: string,
+  ) {
+    return this.activityService.restoreActivity(id)
+  }
+
+  @UseGuards(JwtGuard)
+  @Delete('accommodation/restore/:id')
+  restoreAccommodation(
+  @Param('id') id: string,
+  ) {
+    return this.activityService.restoreAccommodation(id)
   }
 }

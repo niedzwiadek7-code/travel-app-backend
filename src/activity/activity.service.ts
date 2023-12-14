@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
@@ -11,7 +11,7 @@ import {
   ActivityTypeParameter as ActivityTypeParameterEntity,
   Price as PriceEntity,
 } from '../typeorm'
-import { ActivityDto } from './dto'
+import { ActivityDto, QueryActivity } from './dto'
 
 dayjs.extend(isSameOrAfter)
 
@@ -56,6 +56,7 @@ export class ActivityService {
       where: {
         id: parseInt(id, 10),
       },
+      withDeleted: true,
       relations: ['activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices'],
     })
 
@@ -89,7 +90,7 @@ export class ActivityService {
     return this.activityTypeRepository.find()
   }
 
-  async getAllActivities(source: 'system' | 'user' | 'all', userId: string) {
+  async getAllActivities(source: QueryActivity, userId: string) {
     const whereObj: Record<string, any> = {}
 
     switch (source) {
@@ -98,6 +99,9 @@ export class ActivityService {
         break
       case 'user':
         whereObj.userId = userId
+        break
+      case 'toAccept':
+        whereObj.accepted = false
         break
       default:
         break
@@ -285,7 +289,7 @@ export class ActivityService {
     return result
   }
 
-  async getAllAccommodations(source: 'system' | 'user' | 'all', userId: string) {
+  async getAllAccommodations(source: QueryActivity, userId: string) {
     const whereObj: Record<string, any> = {}
 
     switch (source) {
@@ -294,6 +298,9 @@ export class ActivityService {
         break
       case 'user':
         whereObj.userId = userId
+        break
+      case 'toAccept':
+        whereObj.accepted = false
         break
       default:
         break
@@ -328,5 +335,31 @@ export class ActivityService {
       description: result.description,
       price: parseFloat(getPrice(result).price),
     }
+  }
+
+  async acceptActivity(id: string) {
+    await this.activityRepository.save({
+      id: parseInt(id, 10),
+      accepted: true,
+    })
+    return HttpStatus.OK
+  }
+
+  async acceptAccommodation(id: string) {
+    await this.accommodationRepository.save({
+      id: parseInt(id, 10),
+      accepted: true,
+    })
+    return HttpStatus.OK
+  }
+
+  async restoreActivity(id: string) {
+    await this.activityRepository.softDelete({ id: parseInt(id, 10) })
+    return HttpStatus.ACCEPTED
+  }
+
+  async restoreAccommodation(id: string) {
+    await this.accommodationRepository.softDelete({ id: parseInt(id, 10) })
+    return HttpStatus.ACCEPTED
   }
 }

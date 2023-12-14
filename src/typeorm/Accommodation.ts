@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { AccommodationPrice } from './AccommodationPrice'
 import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
@@ -48,4 +48,7 @@ export class Accommodation {
 
   @ManyToOne(() => User, (user) => user.accommodations)
     user: User
+
+  @DeleteDateColumn()
+    deleteAt?: Date
 }

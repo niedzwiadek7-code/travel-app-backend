@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, DeleteDateColumn, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { use } from 'passport'
 import { Question } from './Question'
@@ -62,4 +62,7 @@ export class Activity {
 
   @ManyToOne(() => User, (user) => user.activities)
     user: User
+
+  @DeleteDateColumn()
+    deleteAt?: Date
 }
