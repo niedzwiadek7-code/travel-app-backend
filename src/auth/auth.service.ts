@@ -5,13 +5,15 @@ import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { AuthDto, RegisterDto } from './dto'
-import { User as UserEntity } from '../typeorm'
+import { Role, User as UserEntity } from '../typeorm'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
     private jwtService: JwtService,
     private config: ConfigService,
   ) {}
@@ -38,11 +40,23 @@ export class AuthService {
 
   async signup(dto: RegisterDto) {
     const hash = await argon.hash(dto.password)
-    const user = await this.userRepository.create({
+
+    const roleResult = (await this.roleRepository.findOne({
+      where: {
+        role: 'user',
+      },
+    }))
+
+    const role = new Role()
+    role.id = roleResult.id
+    role.role = roleResult.role
+
+    const user = this.userRepository.create({
       firstName: dto.firstName,
       lastName: dto.lastName,
       email: dto.email,
       password: hash,
+      roles: [role],
     })
     await this.userRepository.save(user)
 

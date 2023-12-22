@@ -14,7 +14,7 @@ import { CategoryRating } from './CategoryRating'
 import { ActivityType } from './ActivityType'
 import { ActivityTypeParameter } from './ActivityTypeParameter'
 import { ActivityParameter } from './ActivityParameter'
-import { UserRole } from './UserRole'
+import { Role } from './Role'
 import { TravelInstance } from './TravelInstance'
 import { ElementTravelInstance } from './ElementTravelInstance'
 import { Accommodation } from './Accommodation'
@@ -38,7 +38,7 @@ export {
   ActivityTypeParameter,
   ActivityParameter,
   Price,
-  UserRole,
+  Role,
   TravelInstance,
   ElementTravelInstance,
   AccommodationPrice,
@@ -52,7 +52,7 @@ const entities = [
   User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
   Question, Answer, DateRange, TimeRange, Rating, CategoryRating,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
-  UserRole, TravelInstance, ElementTravelInstance, AccommodationPrice,
+  Role, TravelInstance, ElementTravelInstance, AccommodationPrice,
   Accommodation, AccommodationElementTravel, AccommodationElementTravelInstance,
   AccommodationElementTravelPhoto,
 ]

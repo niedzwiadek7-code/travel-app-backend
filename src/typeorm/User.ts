@@ -1,11 +1,11 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipe } from './TravelRecipe'
 import { Question } from './Question'
-import { UserRole } from './UserRole'
+import { Role } from './Role'
 import { TravelInstance } from './TravelInstance'
 import { Activity } from './Activity'
 import { Accommodation } from './Accommodation'
@@ -35,9 +35,9 @@ export class User {
   })
     password: string
 
-  @ManyToOne(() => UserRole)
+  @ManyToMany(() => Role)
   @JoinTable()
-    role: UserRole
+    roles: Role[]
 
   @OneToMany(() => TravelRecipe, (travel) => travel.user)
     travels: TravelRecipe[]
