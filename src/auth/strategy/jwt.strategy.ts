@@ -28,8 +28,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       where: {
         id: payload.sub,
       },
+      relations: ['roles'],
     })
     delete user.password
-    return user
+    return {
+      ...user,
+      roles: user.roles.map((role) => role.role),
+    }
   }
 }
