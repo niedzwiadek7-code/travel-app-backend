@@ -4,11 +4,11 @@ import {
   Column, Entity, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { User } from './User'
-import { Activity } from './Activity'
-import { ElementTravelInstance } from './ElementTravelInstance'
+import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
+import { Accommodation } from './Accommodation'
 
 @Entity()
-export class Rating {
+export class AccommodationRating {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -25,16 +25,16 @@ export class Rating {
     authorId: string
 
   @Column()
-    activityId: string
+    accommodationId: string
 
-  @ManyToOne(() => Activity, (activity) => activity.ratings)
-    activity: Activity
+  @ManyToOne(() => Accommodation, (accommodation) => accommodation.ratings)
+    accommodation: Accommodation
 
   @Column()
     elementTravelId: string
 
-  @OneToOne(() => ElementTravelInstance, (instance) => instance.rating)
-    elementTravel: ElementTravelInstance
+  @OneToOne(() => AccommodationElementTravelInstance, (instance) => instance.rating)
+    elementTravel: AccommodationElementTravelInstance
 
   @Column({
     type: 'boolean',

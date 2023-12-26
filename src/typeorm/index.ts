@@ -10,7 +10,6 @@ import { DateRange } from './DateRange'
 import { TimeRange } from './TimeRange'
 import { Rating } from './Rating'
 import { Price } from './Price'
-import { CategoryRating } from './CategoryRating'
 import { ActivityType } from './ActivityType'
 import { ActivityTypeParameter } from './ActivityTypeParameter'
 import { ActivityParameter } from './ActivityParameter'
@@ -22,6 +21,7 @@ import { AccommodationPrice } from './AccommodationPrice'
 import { AccommodationElementTravel } from './AccommodationElementTravel'
 import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
 import { AccommodationElementTravelPhoto } from './AccommodationElementTravelPhoto'
+import { AccommodationRating } from './AccommodationRating'
 
 export {
   User,
@@ -33,7 +33,6 @@ export {
   Answer,
   DateRange,
   TimeRange,
-  CategoryRating,
   ActivityType,
   ActivityTypeParameter,
   ActivityParameter,
@@ -46,15 +45,17 @@ export {
   AccommodationElementTravel,
   AccommodationElementTravelInstance,
   AccommodationElementTravelPhoto,
+  AccommodationRating,
+  Rating,
 }
 
 const entities = [
   User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
-  Question, Answer, DateRange, TimeRange, Rating, CategoryRating,
+  Question, Answer, DateRange, TimeRange, Rating,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
   Role, TravelInstance, ElementTravelInstance, AccommodationPrice,
   Accommodation, AccommodationElementTravel, AccommodationElementTravelInstance,
-  AccommodationElementTravelPhoto,
+  AccommodationElementTravelPhoto, AccommodationRating,
 ]
 
 export default entities

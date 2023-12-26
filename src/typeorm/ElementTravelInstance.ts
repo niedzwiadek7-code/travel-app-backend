@@ -2,13 +2,13 @@
 
 import {
   Column,
-  Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { ElementTravelPhoto } from './ElementTravelPhoto'
-import { DateRange } from './DateRange'
 import { TravelInstance } from './TravelInstance'
 import { Activity } from './Activity'
 import { ElementTravel } from './ElementTravel'
+import { Rating } from './Rating'
 
 @Entity()
 export class ElementTravelInstance {
@@ -54,4 +54,12 @@ export class ElementTravelInstance {
 
   @ManyToOne(() => ElementTravel)
     elementTravel?: ElementTravel
+
+  @Column({
+    nullable: true,
+  })
+    ratingId?: string
+
+  @OneToOne(() => Rating, (rating) => rating.elementTravel)
+    rating?: Rating
 }

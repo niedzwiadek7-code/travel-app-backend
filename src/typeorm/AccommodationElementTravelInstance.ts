@@ -2,12 +2,13 @@
 
 import {
   Column,
-  Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelInstance } from './TravelInstance'
 import { AccommodationElementTravelPhoto } from './AccommodationElementTravelPhoto'
 import { Accommodation } from './Accommodation'
 import { AccommodationElementTravel } from './AccommodationElementTravel'
+import { AccommodationRating } from './AccommodationRating'
 
 @Entity()
 export class AccommodationElementTravelInstance {
@@ -53,4 +54,7 @@ export class AccommodationElementTravelInstance {
 
   @ManyToOne(() => AccommodationElementTravel)
     elementTravel?: AccommodationElementTravel
+
+  @OneToOne(() => AccommodationRating, (rating) => rating.accommodation)
+    rating: AccommodationRating
 }

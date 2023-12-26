@@ -6,6 +6,8 @@ import {
 import { AccommodationPrice } from './AccommodationPrice'
 import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
 import { User } from './User'
+import { Rating } from './Rating'
+import { AccommodationRating } from './AccommodationRating'
 
 @Entity()
 export class Accommodation {
@@ -36,6 +38,9 @@ export class Accommodation {
 
   @OneToMany(() => AccommodationPrice, (price) => price.accommodation)
     prices: AccommodationPrice[]
+
+  @OneToMany(() => AccommodationRating, (rating) => rating.accommodation)
+    ratings: Rating[]
 
   @OneToMany(
     () => AccommodationElementTravelInstance,
