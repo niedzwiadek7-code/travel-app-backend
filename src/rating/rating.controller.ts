@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Post, UseGuards,
+  Body, Controller, Get, Param, Post, UseGuards,
 } from '@nestjs/common'
 import { RatingService } from './rating.service'
 import { PutActivityDto } from './dto'
@@ -25,5 +25,19 @@ export class RatingController {
       default:
         return this.ratingService.putActivityRating(body, userId)
     }
+  }
+
+  @Get('find/:elementTravelId')
+  get(
+  @Param('elementTravelId') elementTravelId: string,
+  ) {
+    return this.ratingService.getRating(elementTravelId)
+  }
+
+  @Get('find/accommodation/:elementTravelId')
+  getAccommodation(
+  @Param('elementTravelId') elementTravelId: string,
+  ) {
+    return this.ratingService.getAccommodationRating(elementTravelId)
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { PutActivityDto } from './dto'
@@ -73,5 +73,39 @@ export class RatingService {
     }
 
     return this.accommodationRatingRepository.save(rating)
+  }
+
+  async getRating(id: string) {
+    const result = await this.ratingRepository.findOne({
+      where: {
+        elementTravelId: id,
+      },
+    })
+
+    if (!result) {
+      return null
+    }
+
+    return {
+      text: result.text,
+      sharePhotos: result.sharePhotos,
+    }
+  }
+
+  async getAccommodationRating(id: string) {
+    const result = await this.accommodationRatingRepository.findOne({
+      where: {
+        elementTravelId: id,
+      },
+    })
+
+    if (!result) {
+      return null
+    }
+
+    return {
+      text: result.text,
+      sharePhotos: result.sharePhotos,
+    }
   }
 }
