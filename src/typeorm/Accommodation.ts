@@ -40,7 +40,7 @@ export class Accommodation {
     prices: AccommodationPrice[]
 
   @OneToMany(() => AccommodationRating, (rating) => rating.accommodation)
-    ratings: Rating[]
+    ratings: AccommodationRating[]
 
   @OneToMany(
     () => AccommodationElementTravelInstance,

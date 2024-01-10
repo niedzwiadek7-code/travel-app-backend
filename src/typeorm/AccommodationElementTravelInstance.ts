@@ -2,7 +2,7 @@
 
 import {
   Column,
-  Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn,
+  Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, JoinColumn,
 } from 'typeorm'
 import { TravelInstance } from './TravelInstance'
 import { AccommodationElementTravelPhoto } from './AccommodationElementTravelPhoto'
@@ -56,5 +56,6 @@ export class AccommodationElementTravelInstance {
     elementTravel?: AccommodationElementTravel
 
   @OneToOne(() => AccommodationRating, (rating) => rating.accommodation)
+  @JoinColumn()
     rating: AccommodationRating
 }

@@ -57,7 +57,10 @@ export class ActivityService {
         id: parseInt(id, 10),
       },
       withDeleted: true,
-      relations: ['activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices'],
+      relations: [
+        'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
+        'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+      ],
     })
 
     const activityType = await result.activityType
@@ -75,6 +78,19 @@ export class ActivityService {
       description: result.description,
       activityType: activityType.name,
       ...customParameters,
+      ratings: result.ratings.map((rate) => {
+        const obj = {
+          author: rate.author,
+          text: rate.text,
+          photos: [],
+        }
+
+        if (rate.sharePhotos) {
+          obj.photos = rate.elementTravel.photos.map((photo) => photo.url)
+        }
+
+        return obj
+      }),
     }
 
     const price = getPrice(result)
@@ -109,7 +125,10 @@ export class ActivityService {
 
     const results = await this.activityRepository.find({
       where: whereObj,
-      relations: ['activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices'],
+      relations: [
+        'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
+        'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+      ],
     })
 
     const transformedResults = []
@@ -131,6 +150,19 @@ export class ActivityService {
         description: result.description,
         activityType: activityType.name,
         ...customParameters,
+        ratings: result.ratings.map((rate) => {
+          const obj = {
+            author: rate.author,
+            text: rate.text,
+            photos: [],
+          }
+
+          if (rate.sharePhotos) {
+            obj.photos = rate.elementTravel.photos.map((photo) => photo.url)
+          }
+
+          return obj
+        }),
       }
 
       const price = getPrice(result)
@@ -308,7 +340,9 @@ export class ActivityService {
 
     const results = await this.accommodationRepository.find({
       where: whereObj,
-      relations: ['prices'],
+      relations: [
+        'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+      ],
     })
 
     return results.map((result) => ({
@@ -317,6 +351,19 @@ export class ActivityService {
       place: result.place,
       description: result.description,
       price: parseFloat(getPrice(result).price),
+      ratings: result.ratings.map((resultObj) => {
+        const obj = {
+          author: resultObj.author,
+          text: resultObj.text,
+          photos: [],
+        }
+
+        if (resultObj.sharePhotos) {
+          obj.photos = resultObj.elementTravel.photos.map((photo) => photo.url)
+        }
+
+        return obj
+      }),
     }))
   }
 
@@ -325,7 +372,9 @@ export class ActivityService {
       where: {
         id: parseInt(id, 10),
       },
-      relations: ['prices'],
+      relations: [
+        'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+      ],
     })
 
     return {
@@ -334,6 +383,19 @@ export class ActivityService {
       place: result.place,
       description: result.description,
       price: parseFloat(getPrice(result).price),
+      ratings: result.ratings.map((resultObj) => {
+        const obj = {
+          author: resultObj.author,
+          text: resultObj.text,
+          photos: [],
+        }
+
+        if (resultObj.sharePhotos) {
+          obj.photos = resultObj.elementTravel.photos.map((photo) => photo.url)
+        }
+
+        return obj
+      }),
     }
   }
 

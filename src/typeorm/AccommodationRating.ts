@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn,
+  Column, Entity, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn, JoinColumn,
 } from 'typeorm'
 import { User } from './User'
 import { AccommodationElementTravelInstance } from './AccommodationElementTravelInstance'
@@ -34,6 +34,7 @@ export class AccommodationRating {
     elementTravelId: string
 
   @OneToOne(() => AccommodationElementTravelInstance, (instance) => instance.rating)
+  @JoinColumn()
     elementTravel: AccommodationElementTravelInstance
 
   @Column({
