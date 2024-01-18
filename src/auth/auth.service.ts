@@ -1,4 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import {
+  BadRequestException, ConflictException, HttpStatus, Injectable, UnauthorizedException,
+} from '@nestjs/common'
 import * as argon from 'argon2'
 import { JwtService } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
@@ -58,7 +60,14 @@ export class AuthService {
       password: hash,
       roles: [role],
     })
-    await this.userRepository.save(user)
+    try {
+      await this.userRepository.save(user)
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException(err)
+      }
+      throw new BadRequestException(err)
+    }
 
     return this.signToken(user.id, user.email)
   }
