@@ -29,8 +29,10 @@ export class TravelController {
   }
 
   @Get('user-list')
-  getUserTravels() {
-    return this.travelService.getUserTravels('1')
+  getUserTravels(
+  @GetUser('id') userId: string,
+  ) {
+    return this.travelService.getUserTravels(userId)
   }
 
   @Post('plan-a-travel')
