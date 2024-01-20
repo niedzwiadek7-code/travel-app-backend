@@ -398,6 +398,10 @@ export class TravelService {
         'travelElements.elementTravel',
         'travelElements.photos',
         'travelRecipe',
+        'accommodationElements',
+        'accommodationElements.accommodation',
+        'accommodationElements.elementTravel',
+        'accommodationElements.photos',
       ],
       withDeleted: true,
     })
@@ -438,6 +442,32 @@ export class TravelService {
         name: travelInstance.travelRecipe.name,
         countDays: travelInstance.travelRecipe.countDays,
       },
+      accommodationElements: travelInstance.accommodationElements.map((elem) => {
+        const obj = {
+          id: elem.id,
+          passed: elem.passed,
+          accommodation: {
+            id: elem.accommodation.id,
+            name: elem.accommodation.name,
+            description: elem.accommodation.description,
+            activityType: 'accommodation',
+            place: elem.accommodation.place,
+          },
+          elementTravel: undefined,
+          photos: elem.photos.map((photo) => `uploads/${photo.url}`),
+        }
+
+        if (elem.elementTravel) {
+          obj.elementTravel = {
+            id: elem.elementTravel.id,
+            price: elem.elementTravel.price,
+            numberOfDays: elem.elementTravel.numberOfDays,
+            description: elem.elementTravel.description,
+          }
+        }
+
+        return obj
+      }),
     }))
   }
 
