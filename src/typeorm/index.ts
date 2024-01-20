@@ -6,8 +6,6 @@ import { Activity } from './Activity'
 import { ElementTravelPhoto } from './ElementTravelPhoto'
 import { Question } from './Question'
 import { Answer } from './Answer'
-import { DateRange } from './DateRange'
-import { TimeRange } from './TimeRange'
 import { Rating } from './Rating'
 import { Price } from './Price'
 import { ActivityType } from './ActivityType'
@@ -31,8 +29,6 @@ export {
   Activity,
   Question,
   Answer,
-  DateRange,
-  TimeRange,
   ActivityType,
   ActivityTypeParameter,
   ActivityParameter,
@@ -51,7 +47,7 @@ export {
 
 const entities = [
   User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
-  Question, Answer, DateRange, TimeRange, Rating,
+  Question, Answer, Rating,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
   Role, TravelInstance, ElementTravelInstance, AccommodationPrice,
   Accommodation, AccommodationElementTravel, AccommodationElementTravelInstance,
