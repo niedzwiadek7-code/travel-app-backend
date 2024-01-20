@@ -50,6 +50,7 @@ export class TravelService {
         'accommodationTravelElements',
         'accommodationTravelElements.accommodation',
       ],
+      withDeleted: true,
     })
 
     const transformedObj: Record<string, any> = {
@@ -126,6 +127,7 @@ export class TravelService {
         'accommodationTravelElements',
         'accommodationTravelElements.accommodation',
       ],
+      withDeleted: true,
     })
 
     return results.map((result) => ({
@@ -294,6 +296,7 @@ export class TravelService {
         'accommodationElements.elementTravel',
         'accommodationElements.photos',
       ],
+      withDeleted: true,
     })
 
     return {
@@ -396,6 +399,7 @@ export class TravelService {
         'travelElements.photos',
         'travelRecipe',
       ],
+      withDeleted: true,
     })
 
     return travelInstances.map((travelInstance) => ({

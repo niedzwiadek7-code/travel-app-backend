@@ -129,6 +129,7 @@ export class ActivityService {
         'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
         'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
       ],
+      withDeleted: source === 'user',
     })
 
     const transformedResults = []
@@ -343,6 +344,7 @@ export class ActivityService {
       relations: [
         'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
       ],
+      withDeleted: source === 'user',
     })
 
     return results.map((result) => ({
