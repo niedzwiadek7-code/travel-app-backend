@@ -1,6 +1,5 @@
 import { User } from './User'
 import { TravelRecipe } from './TravelRecipe'
-import { Place } from './Place'
 import { ElementTravel } from './ElementTravel'
 import { Activity } from './Activity'
 import { ElementTravelPhoto } from './ElementTravelPhoto'
@@ -24,7 +23,6 @@ import { AccommodationRating } from './AccommodationRating'
 export {
   User,
   TravelRecipe,
-  Place,
   ElementTravel,
   Activity,
   Question,
@@ -46,8 +44,8 @@ export {
 }
 
 const entities = [
-  User, TravelRecipe, Place, ElementTravel, Activity, ElementTravelPhoto,
-  Question, Answer, Rating,
+  User, TravelRecipe, ElementTravel, Activity,
+  Question, Answer, Rating, ElementTravelPhoto,
   ActivityType, ActivityTypeParameter, ActivityParameter, Price,
   Role, TravelInstance, ElementTravelInstance, AccommodationPrice,
   Accommodation, AccommodationElementTravel, AccommodationElementTravelInstance,
