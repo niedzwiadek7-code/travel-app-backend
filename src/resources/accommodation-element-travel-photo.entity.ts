@@ -3,10 +3,10 @@
 import {
   Column, Entity, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ElementTravelInstance } from './ElementTravelInstance'
+import { AccommodationElementTravelInstanceEntity } from './accommodation-element-travel-instance.entity'
 
 @Entity()
-export class ElementTravelPhoto {
+export class AccommodationElementTravelPhotoEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -19,9 +19,9 @@ export class ElementTravelPhoto {
     elementTravelId: string
 
   @ManyToOne(
-    () => ElementTravelInstance,
+    () => AccommodationElementTravelInstanceEntity,
     (elementTravel) => elementTravel.photos,
     { onDelete: 'CASCADE' },
   )
-    elementTravel: ElementTravelInstance
+    elementTravel: AccommodationElementTravelInstanceEntity
 }

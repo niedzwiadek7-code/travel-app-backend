@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { join } from 'path'
@@ -9,7 +9,7 @@ import { TravelModule } from './travel/travel.module'
 import { QuestionModule } from './question/question.module'
 import { ActivityModule } from './activity/activity.module'
 import { RatingModule } from './rating/rating.module'
-import entities from './typeorm'
+import { dataSourceOptions } from './db/data-source'
 
 @Module({
   imports: [
@@ -21,18 +21,13 @@ import entities from './typeorm'
       isGlobal: true,
       envFilePath: ['.env'],
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: dataSourceOptions,
+      inject: [ConfigService],
+    }),
     AuthModule,
     UserModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      database: process.env.DATABASE_NAME,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
-      entities,
-      synchronize: true,
-    }),
     TravelModule,
     QuestionModule,
     ActivityModule,

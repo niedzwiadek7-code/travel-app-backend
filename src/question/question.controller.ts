@@ -5,7 +5,7 @@ import { QuestionService } from './question.service'
 import { JwtGuard } from '../auth/guard'
 import { AnswerDto } from './dto'
 import { GetUser } from '../auth/decorator'
-import { User } from '../typeorm'
+import { UserEntity } from '../resources'
 
 @Controller('question')
 export class QuestionController {
@@ -22,7 +22,7 @@ export class QuestionController {
   @Post('answer/:id')
   createAnswer(
   @Body() body: AnswerDto,
-    @GetUser() user: User,
+    @GetUser() user: UserEntity,
     @Param('id') id: string,
   ) {
     return this.questionService.addAnswer(body, id, user)

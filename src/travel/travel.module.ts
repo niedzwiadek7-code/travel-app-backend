@@ -3,20 +3,20 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { TravelController } from './travel.controller'
 import { TravelService } from './travel.service'
 import {
-  TravelRecipe,
-  ElementTravel,
-  AccommodationElementTravel,
-  TravelInstance,
-  ElementTravelInstance, AccommodationElementTravelInstance, AccommodationElementTravelPhoto,
-} from '../typeorm'
-import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
+  TravelRecipeEntity,
+  ElementTravelEntity,
+  AccommodationElementTravelEntity,
+  TravelInstanceEntity,
+  ElementTravelInstanceEntity, AccommodationElementTravelInstanceEntity, AccommodationElementTravelPhotoEntity,
+} from '../resources'
+import { ElementTravelPhotoEntity } from '../resources/element-travel-photo.entity'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      TravelRecipe, ElementTravel, AccommodationElementTravel,
-      TravelInstance, ElementTravelInstance, ElementTravelPhoto,
-      AccommodationElementTravelInstance, AccommodationElementTravelPhoto,
+      TravelRecipeEntity, ElementTravelEntity, AccommodationElementTravelEntity,
+      TravelInstanceEntity, ElementTravelInstanceEntity, ElementTravelPhotoEntity,
+      AccommodationElementTravelInstanceEntity, AccommodationElementTravelPhotoEntity,
     ]),
   ],
   controllers: [TravelController],

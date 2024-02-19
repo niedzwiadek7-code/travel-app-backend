@@ -4,13 +4,13 @@ import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import {
-  Accommodation, AccommodationPrice,
-  Activity as ActivityEntity,
-  ActivityParameter as ActivityParameterEntity,
-  ActivityType as ActivityTypeEntity,
-  ActivityTypeParameter as ActivityTypeParameterEntity,
-  Price as PriceEntity,
-} from '../typeorm'
+  AccommodationEntity, AccommodationPriceEntity,
+  ActivityEntity as ActivityEntity,
+  ActivityParameterEntity as ActivityParameterEntity,
+  ActivityTypeEntity as ActivityTypeEntity,
+  ActivityTypeParameterEntity as ActivityTypeParameterEntity,
+  PriceEntity as PriceEntity,
+} from '../resources'
 import { ActivityDto, QueryActivity } from './dto'
 
 dayjs.extend(isSameOrAfter)
@@ -45,10 +45,10 @@ export class ActivityService {
     private readonly activityParameterRepository: Repository<ActivityParameterEntity>,
     @InjectRepository(PriceEntity)
     private readonly priceRepository: Repository<PriceEntity>,
-    @InjectRepository(Accommodation)
-    private readonly accommodationRepository: Repository<Accommodation>,
-    @InjectRepository(AccommodationPrice)
-    private readonly accommodationPriceRepository: Repository<AccommodationPrice>,
+    @InjectRepository(AccommodationEntity)
+    private readonly accommodationRepository: Repository<AccommodationEntity>,
+    @InjectRepository(AccommodationPriceEntity)
+    private readonly accommodationPriceRepository: Repository<AccommodationPriceEntity>,
   ) {}
 
   async getActivity(id: string) {

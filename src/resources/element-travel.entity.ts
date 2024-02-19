@@ -3,11 +3,11 @@
 import {
   Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { TravelRecipe } from './TravelRecipe'
-import { Activity } from './Activity'
+import { TravelRecipeEntity } from './travel-recipe.entity'
+import { ActivityEntity } from './activity.entity'
 
 @Entity()
-export class ElementTravel {
+export class ElementTravelEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -41,13 +41,13 @@ export class ElementTravel {
   @Column()
     travelId: string
 
-  @ManyToOne(() => TravelRecipe, (travel) => travel.travelElements)
-    travel: TravelRecipe
+  @ManyToOne(() => TravelRecipeEntity, (travel) => travel.travelElements)
+    travel: TravelRecipeEntity
 
   @Column()
     activityId: string
 
-  @ManyToOne(() => Activity)
+  @ManyToOne(() => ActivityEntity)
   @JoinTable()
-    activity: Activity
+    activity: ActivityEntity
 }

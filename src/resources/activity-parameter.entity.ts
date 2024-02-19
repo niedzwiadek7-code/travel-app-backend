@@ -3,11 +3,11 @@
 import {
   Column, Entity, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ActivityTypeParameter } from './ActivityTypeParameter'
-import { Activity } from './Activity'
+import { ActivityTypeParameterEntity } from './activity-type-parameter.entity'
+import { ActivityEntity } from './activity.entity'
 
 @Entity()
-export class ActivityParameter {
+export class ActivityParameterEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -20,17 +20,17 @@ export class ActivityParameter {
     activityId: string
 
   @ManyToOne(
-    () => Activity,
+    () => ActivityEntity,
     (activity) => activity.activityParameters,
   )
-    activity: Activity
+    activity: ActivityEntity
 
   @Column()
     activityTypeParameterId: string
 
   @ManyToOne(
-    () => ActivityTypeParameter,
+    () => ActivityTypeParameterEntity,
     (activityTypeParameter) => activityTypeParameter.activityParameters,
   )
-    activityTypeParameter: ActivityTypeParameter
+    activityTypeParameter: ActivityTypeParameterEntity
 }

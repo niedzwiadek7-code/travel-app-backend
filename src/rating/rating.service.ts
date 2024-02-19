@@ -3,20 +3,20 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { PutActivityDto } from './dto'
 import {
-  AccommodationElementTravelInstance, AccommodationRating, ElementTravelInstance, Rating,
-} from '../typeorm'
+  AccommodationElementTravelInstanceEntity, AccommodationRatingEntity, ElementTravelInstanceEntity, RatingEntity,
+} from '../resources'
 
 @Injectable()
 export class RatingService {
   constructor(
-    @InjectRepository(Rating)
-    private readonly ratingRepository: Repository<Rating>,
-    @InjectRepository(ElementTravelInstance)
-    private readonly elementTravelInstanceRepository: Repository<ElementTravelInstance>,
-    @InjectRepository(AccommodationRating)
-    private readonly accommodationRatingRepository: Repository<AccommodationRating>,
-    @InjectRepository(AccommodationElementTravelInstance)
-    private readonly accommodationElementTravelInstanceRepository: Repository<AccommodationElementTravelInstance>,
+    @InjectRepository(RatingEntity)
+    private readonly ratingRepository: Repository<RatingEntity>,
+    @InjectRepository(ElementTravelInstanceEntity)
+    private readonly elementTravelInstanceRepository: Repository<ElementTravelInstanceEntity>,
+    @InjectRepository(AccommodationRatingEntity)
+    private readonly accommodationRatingRepository: Repository<AccommodationRatingEntity>,
+    @InjectRepository(AccommodationElementTravelInstanceEntity)
+    private readonly accommodationElementTravelInstanceRepository: Repository<AccommodationElementTravelInstanceEntity>,
   ) {}
 
   async putActivityRating(body: PutActivityDto, userId: string) {

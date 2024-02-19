@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Question as QuestionEntity, User, Answer as AnswerEntity } from '../typeorm'
+import { QuestionEntity as QuestionEntity, UserEntity, AnswerEntity as AnswerEntity } from '../resources'
 import { AnswerDto } from './dto'
 
 @Injectable()
@@ -22,7 +22,7 @@ export class QuestionService {
     })
   }
 
-  async addAnswer(body: AnswerDto, questionId: string, user: User) {
+  async addAnswer(body: AnswerDto, questionId: string, user: UserEntity) {
     const answerObj = new AnswerEntity()
     answerObj.answer = body.answer
     answerObj.questionId = questionId

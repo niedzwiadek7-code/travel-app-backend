@@ -3,15 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { RatingController } from './rating.controller'
 import { RatingService } from './rating.service'
 import {
-  AccommodationElementTravelInstance, AccommodationRating, ElementTravelInstance, Rating,
-} from '../typeorm'
+  AccommodationElementTravelInstanceEntity, AccommodationRatingEntity, ElementTravelInstanceEntity, RatingEntity,
+} from '../resources'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature(
       [
-        Rating, AccommodationRating, ElementTravelInstance,
-        AccommodationElementTravelInstance,
+        RatingEntity, AccommodationRatingEntity, ElementTravelInstanceEntity,
+        AccommodationElementTravelInstanceEntity,
       ],
     ),
   ],

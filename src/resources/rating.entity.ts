@@ -3,12 +3,12 @@
 import {
   Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { User } from './User'
-import { Activity } from './Activity'
-import { ElementTravelInstance } from './ElementTravelInstance'
+import { UserEntity } from './user.entity'
+import { ActivityEntity } from './activity.entity'
+import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 
 @Entity()
-export class Rating {
+export class RatingEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -17,9 +17,9 @@ export class Rating {
   })
     text: string
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => UserEntity)
   @JoinTable()
-    author: User
+    author: UserEntity
 
   @Column()
     authorId: string
@@ -27,15 +27,15 @@ export class Rating {
   @Column()
     activityId: string
 
-  @ManyToOne(() => Activity, (activity) => activity.ratings)
-    activity: Activity
+  @ManyToOne(() => ActivityEntity, (activity) => activity.ratings)
+    activity: ActivityEntity
 
   @Column()
     elementTravelId: string
 
-  @OneToOne(() => ElementTravelInstance, (instance) => instance.rating)
+  @OneToOne(() => ElementTravelInstanceEntity, (instance) => instance.rating)
   @JoinColumn()
-    elementTravel: ElementTravelInstance
+    elementTravel: ElementTravelInstanceEntity
 
   @Column({
     type: 'boolean',

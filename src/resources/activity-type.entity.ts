@@ -3,10 +3,10 @@
 import {
   Column, Entity, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ActivityTypeParameter } from './ActivityTypeParameter'
+import { ActivityTypeParameterEntity } from './activity-type-parameter.entity'
 
 @Entity()
-export class ActivityType {
+export class ActivityTypeEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -16,8 +16,8 @@ export class ActivityType {
     name: string
 
   @OneToMany(
-    () => ActivityTypeParameter,
+    () => ActivityTypeParameterEntity,
     (activityTypeParameter) => activityTypeParameter.activityType,
   )
-    activityTypeParameters: ActivityTypeParameter[]
+    activityTypeParameters: ActivityTypeParameterEntity[]
 }

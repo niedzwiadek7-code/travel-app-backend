@@ -3,16 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import * as dayjs from 'dayjs'
 import {
-  TravelRecipe as TravelEntity,
-  ElementTravel as ElementTravelEntity,
-  AccommodationElementTravel as AccommodationElementTravelEntity,
-  TravelInstance, ElementTravelInstance, AccommodationElementTravelInstance,
-  AccommodationElementTravelPhoto,
-} from '../typeorm'
+  TravelRecipeEntity as TravelEntity,
+  ElementTravelEntity as ElementTravelEntity,
+  AccommodationElementTravelEntity,
+  TravelInstanceEntity, ElementTravelInstanceEntity, AccommodationElementTravelInstanceEntity,
+  AccommodationElementTravelPhotoEntity,
+} from '../resources'
 import {
   AddAccommodationToTravelInstanceDto, AddActivityToTravelInstanceDto, PassElementDto, PlanATravelDto, TravelDto,
 } from './dto'
-import { ElementTravelPhoto } from '../typeorm/ElementTravelPhoto'
+import { ElementTravelPhotoEntity } from '../resources/element-travel-photo.entity'
 import { MulterFile } from '../model'
 
 @Injectable()
@@ -24,16 +24,16 @@ export class TravelService {
     private readonly elementTravelRepository: Repository<ElementTravelEntity>,
     @InjectRepository(AccommodationElementTravelEntity)
     private readonly accommodationElementTravelEntity: Repository<AccommodationElementTravelEntity>,
-    @InjectRepository(TravelInstance)
-    private readonly travelInstanceRepository: Repository<TravelInstance>,
-    @InjectRepository(ElementTravelInstance)
-    private readonly elementTravelInstanceRepository: Repository<ElementTravelInstance>,
-    @InjectRepository(ElementTravelPhoto)
-    private readonly elementTravelPhotoRepository: Repository<ElementTravelPhoto>,
-    @InjectRepository(AccommodationElementTravelInstance)
-    private readonly accommodationElementTravelInstance: Repository<AccommodationElementTravelInstance>,
-    @InjectRepository(AccommodationElementTravelPhoto)
-    private readonly accommodationElementTravelPhoto: Repository<AccommodationElementTravelPhoto>,
+    @InjectRepository(TravelInstanceEntity)
+    private readonly travelInstanceRepository: Repository<TravelInstanceEntity>,
+    @InjectRepository(ElementTravelInstanceEntity)
+    private readonly elementTravelInstanceRepository: Repository<ElementTravelInstanceEntity>,
+    @InjectRepository(ElementTravelPhotoEntity)
+    private readonly elementTravelPhotoRepository: Repository<ElementTravelPhotoEntity>,
+    @InjectRepository(AccommodationElementTravelInstanceEntity)
+    private readonly accommodationElementTravelInstance: Repository<AccommodationElementTravelInstanceEntity>,
+    @InjectRepository(AccommodationElementTravelPhotoEntity)
+    private readonly accommodationElementTravelPhoto: Repository<AccommodationElementTravelPhotoEntity>,
   ) {}
 
   async getTravel(id: string) {

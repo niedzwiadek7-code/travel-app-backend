@@ -7,15 +7,15 @@ import { ConfigService } from '@nestjs/config'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { AuthDto, RegisterDto } from './dto'
-import { Role, User as UserEntity } from '../typeorm'
+import { RoleEntity, UserEntity as UserEntity } from '../resources'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(Role)
-    private readonly roleRepository: Repository<Role>,
+    @InjectRepository(RoleEntity)
+    private readonly roleRepository: Repository<RoleEntity>,
     private jwtService: JwtService,
     private config: ConfigService,
   ) {}
@@ -49,7 +49,7 @@ export class AuthService {
       },
     }))
 
-    const role = new Role()
+    const role = new RoleEntity()
     role.id = roleResult.id
     role.role = roleResult.role
 
