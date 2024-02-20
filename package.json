@@ -20,9 +20,11 @@
     "pretest:e2e": "yarn db:test:restart",
     "test:e2e": "dotenv  -e .env.test -- jest --watch --no-cache --config ./test/jest-e2e.json",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "typeorm:migration:generate:unix": "yarn typeorm migration:generate src/migrations/$npm_config_name -d src/db/migration.config.ts",
-    "typeorm:migration:generate:win": "yarn typeorm migration:generate src/migrations/%npm_config_name% -d src/db/migration.config.ts",
-    "typeorm:migration:run": "yarn typeorm migration:run -d src/db/migration.config.ts"
+    "typeorm:migration:generate:unix": "yarn typeorm migration:generate src/db/migrations/$npm_config_name -d src/db/migration.config.ts --outputJs",
+    "typeorm:migration:generate:win": "yarn typeorm migration:generate src/db/migrations/%npm_config_name% -d src/db/migration.config.ts --outputJs",
+    "typeorm:migration:run": "yarn typeorm migration:run -d src/db/migration.config.ts",
+    "typeorm:seed:run": "yarn build && ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/db/migration.config.ts",
+    "typeorm:seed:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:create --root='./src/db/seeds'"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -47,7 +49,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "typeorm": "^0.3.20",
-    "typeorm-extension": "^3.4.0",
+    "typeorm-extension": "^3.5.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

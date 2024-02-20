@@ -1,7 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { ConfigService } from '@nestjs/config'
+import { DataSourceOptions } from 'typeorm'
+import { SeederOptions } from 'typeorm-extension'
 
-export const dataSourceOptions = (configService: ConfigService): TypeOrmModuleOptions => ({
+export const dataSourceOptions = (configService: ConfigService): DataSourceOptions & SeederOptions => ({
   type: 'postgres',
   host: configService.get('DATABASE_HOST'),
   port: +configService.get('DATABASE_PORT'),
@@ -13,5 +15,6 @@ export const dataSourceOptions = (configService: ConfigService): TypeOrmModuleOp
   schema: configService.get('DATABASE_SCHEMA'),
 
   migrationsTableName: 'migrations',
-  migrations: ['src/migrations/*.ts'],
+  migrations: ['src/db/migrations/*.js'],
+  seeds: ['dist/db/seeds/**/*.js'],
 })

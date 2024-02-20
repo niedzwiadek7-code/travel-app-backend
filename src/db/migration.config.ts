@@ -1,6 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm'
+import { SeederOptions } from 'typeorm-extension'
 
-const ormConfig: DataSourceOptions = {
+const ormConfig: DataSourceOptions & SeederOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
   port: +process.env.DB_PORT,
@@ -13,8 +14,9 @@ const ormConfig: DataSourceOptions = {
   schema: process.env.DB_SCHEMA,
   migrationsTableName: 'migrations',
   migrations: [
-    'src/migrations/*.ts',
+    'src/db/migrations/*.js',
   ],
+  seeds: ['dist/db/seeds/**/*.js'],
 }
 
 const datasource = new DataSource(ormConfig)
