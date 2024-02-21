@@ -19,5 +19,8 @@ export class User1708470892343 implements Seeder {
       email: 'damiankliber@gmail.com',
       password: 'haslo123',
     })
+
+    const userFactory = factoryManager.get(UserEntity)
+    await userFactory.saveMany(5)
   }
 }

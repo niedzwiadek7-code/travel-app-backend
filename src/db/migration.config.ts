@@ -17,6 +17,7 @@ const ormConfig: DataSourceOptions & SeederOptions = {
     'src/db/migrations/*.js',
   ],
   seeds: ['dist/db/seeds/**/*.js'],
+  factories: ['dist/db/factories/**/*.js'],
 }
 
 const datasource = new DataSource(ormConfig)

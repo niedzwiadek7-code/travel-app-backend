@@ -1,4 +1,3 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { ConfigService } from '@nestjs/config'
 import { DataSourceOptions } from 'typeorm'
 import { SeederOptions } from 'typeorm-extension'
@@ -17,4 +16,5 @@ export const dataSourceOptions = (configService: ConfigService): DataSourceOptio
   migrationsTableName: 'migrations',
   migrations: ['src/db/migrations/*.js'],
   seeds: ['dist/db/seeds/**/*.js'],
+  factories: ['dist/db/factories/**/*.js'],
 })
