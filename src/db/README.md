@@ -45,14 +45,14 @@ Run the following commands to create a seed file. Resulting file will be created
 
 ```bash
 # Create seed file
-$ yarn typeorm:seed:run --name=SeedName
+$ yarn typeorm:seed:create --name=SeedName
 ```
 
 Run the following commands to run the seed. This should run the seed in the database.
 
 ```bash
 # Run seed
-$ yarn typeorm:seed:create
+$ yarn typeorm:seed:run
 ```
 
 You can use factory to create many records at once. You can create a factory file in `src/factories` folder.
