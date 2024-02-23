@@ -26,10 +26,8 @@ Run the following commands to create a migration file. Replace `MigrationName` w
 # Generate migration
 
 # Unix systems
-$ npm run typeorm:migration:generate:unix --name=MigrationName
+$ yarn typeorm:migration:generate
 
-# Windows systems
-$ npm run typeorm:migration:generate:win --name=MigrationName
 ```
 
 Run the following commands to run the migration. This should run missing migrations in the database.
