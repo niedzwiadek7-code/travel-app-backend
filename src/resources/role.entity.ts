@@ -15,7 +15,10 @@ export class RoleEntity {
   })
     role: string
 
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(
+    () => UserEntity,
+    (user) => user.roles
+  )
   @JoinTable()
     users: UserEntity[]
 }

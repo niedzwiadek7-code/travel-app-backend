@@ -36,7 +36,11 @@ export class UserEntity {
   })
     password: string
 
-  @ManyToMany(() => RoleEntity)
+  @ManyToMany(
+    () => RoleEntity,
+    (role) => role.users,
+    { cascade: true },
+  )
   @JoinTable()
     roles: RoleEntity[]
 
