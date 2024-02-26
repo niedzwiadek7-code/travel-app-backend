@@ -23,7 +23,8 @@
     "typeorm:migration:generate": "yarn typeorm migration:generate src/db/migrations/migration -d src/db/migration.config.ts --outputJs",
     "typeorm:migration:run": "yarn typeorm migration:run -d src/db/migration.config.ts",
     "typeorm:seed:run": "yarn build && ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/db/migration.config.ts",
-    "typeorm:seed:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:create --root='./src/db/seeds'"
+    "typeorm:seed:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:create --root='./src/db/seeds'",
+    "vercel:env:get": "vercel env pull ignoreme/prod/.env"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
