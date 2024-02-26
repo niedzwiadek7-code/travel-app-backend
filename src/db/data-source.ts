@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config'
 import { DataSourceOptions } from 'typeorm'
 import { SeederOptions } from 'typeorm-extension'
+import entities from '../resources'
 
 export const dataSourceOptions = (configService: ConfigService): DataSourceOptions & SeederOptions => ({
   type: 'postgres',
@@ -9,7 +10,7 @@ export const dataSourceOptions = (configService: ConfigService): DataSourceOptio
   database: configService.get('DATABASE_NAME'),
   username: configService.get('DATABASE_USERNAME'),
   password: configService.get('DATABASE_PASSWORD'),
-  entities: ['dist/resources/**/*.entity.js'],
+  entities,
   synchronize: !(configService.get('ENV') === 'production'),
   schema: configService.get('DATABASE_SCHEMA'),
 
@@ -17,4 +18,5 @@ export const dataSourceOptions = (configService: ConfigService): DataSourceOptio
   migrations: ['src/db/migrations/*.js'],
   seeds: ['dist/db/seeds/**/*.js'],
   factories: ['dist/db/factories/**/*.js'],
+  ssl: {},
 })

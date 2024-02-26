@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import * as dayjs from 'dayjs'
+import dayjs = require('dayjs')
 import {
   TravelRecipeEntity as TravelEntity,
   ElementTravelEntity as ElementTravelEntity,

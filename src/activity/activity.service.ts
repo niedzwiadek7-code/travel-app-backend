@@ -1,8 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import * as dayjs from 'dayjs'
-import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import dayjs = require('dayjs')
+import isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
 import {
   AccommodationEntity, AccommodationPriceEntity,
   ActivityEntity as ActivityEntity,

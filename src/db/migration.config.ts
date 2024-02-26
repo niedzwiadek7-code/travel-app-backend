@@ -18,6 +18,7 @@ const ormConfig: DataSourceOptions & SeederOptions = {
   ],
   seeds: ['dist/db/seeds/**/*.js'],
   factories: ['dist/db/factories/**/*.js'],
+  ssl: {},
 }
 
 const datasource = new DataSource(ormConfig)
