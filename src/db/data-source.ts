@@ -18,5 +18,5 @@ export const dataSourceOptions = (configService: ConfigService): DataSourceOptio
   migrations: ['src/db/migrations/*.js'],
   seeds: ['dist/db/seeds/**/*.js'],
   factories: ['dist/db/factories/**/*.js'],
-  ssl: {},
+  ssl: configService.get('ENV') === 'development' ? false : {},
 })

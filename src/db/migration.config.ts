@@ -18,7 +18,7 @@ const ormConfig: DataSourceOptions & SeederOptions = {
   ],
   seeds: ['dist/db/seeds/**/*.js'],
   factories: ['dist/db/factories/**/*.js'],
-  ssl: {},
+  ssl: process.env.NODE_ENV === 'development' ? false : {},
 }
 
 const datasource = new DataSource(ormConfig)
