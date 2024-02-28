@@ -16,24 +16,35 @@ export class AnswerEntity {
   })
     answer: string
 
-  @ManyToOne(() => QuestionEntity, (question) => question.answers)
+  @ManyToOne(
+    () => QuestionEntity,
+    (question) => question.answers,
+    { onDelete: 'CASCADE' },
+  )
     question: Promise<QuestionEntity>
 
   @Column()
     questionId: string
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(
+    () => UserEntity,
+    { onDelete: 'CASCADE' },
+  )
   @JoinTable()
-    author: Promise<UserEntity>
+    author: UserEntity
 
   @Column()
     authorId: string
 
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(
+    () => UserEntity,
+  )
   @JoinTable()
     likes: UserEntity[]
 
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(
+    () => UserEntity,
+  )
   @JoinTable()
     dislikes: UserEntity[]
 }

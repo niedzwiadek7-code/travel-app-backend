@@ -19,7 +19,11 @@ export class ActivityTypeParameterEntity {
   @Column()
     activityTypeId: string
 
-  @ManyToOne(() => ActivityTypeEntity, (activityType) => activityType.activityTypeParameters)
+  @ManyToOne(
+    () => ActivityTypeEntity,
+    (activityType) => activityType.activityTypeParameters,
+    { onDelete: 'CASCADE' },
+  )
     activityType: ActivityTypeEntity
 
   @OneToMany(

@@ -17,20 +17,35 @@ export class QuestionEntity {
   })
     question: string
 
-  @ManyToOne(() => ActivityEntity, (activity) => activity.questions)
+  @ManyToOne(
+    () => ActivityEntity,
+    (activity) => activity.questions,
+    { onDelete: 'CASCADE' },
+  )
     activity: ActivityEntity
 
-  @ManyToOne(() => UserEntity, (user) => user.questions)
+  @ManyToOne(
+    () => UserEntity,
+    (user) => user.questions,
+    { onDelete: 'CASCADE' },
+  )
     author: UserEntity
 
-  @OneToMany(() => AnswerEntity, (answer) => answer.question)
+  @OneToMany(
+    () => AnswerEntity,
+    (answer) => answer.question,
+  )
     answers: AnswerEntity[]
 
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(
+    () => UserEntity,
+  )
   @JoinTable()
     likes: UserEntity[]
 
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(
+    () => UserEntity,
+  )
   @JoinTable()
     dislikes: UserEntity[]
 }

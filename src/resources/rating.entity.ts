@@ -17,7 +17,9 @@ export class RatingEntity {
   })
     text: string
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(
+    () => UserEntity,
+  )
   @JoinTable()
     author: UserEntity
 
@@ -27,13 +29,21 @@ export class RatingEntity {
   @Column()
     activityId: string
 
-  @ManyToOne(() => ActivityEntity, (activity) => activity.ratings)
+  @ManyToOne(
+    () => ActivityEntity,
+    (activity) => activity.ratings,
+    { onDelete: 'CASCADE' },
+  )
     activity: ActivityEntity
 
   @Column()
     elementTravelId: string
 
-  @OneToOne(() => ElementTravelInstanceEntity, (instance) => instance.rating)
+  @OneToOne(
+    () => ElementTravelInstanceEntity,
+    (instance) => instance.rating,
+    { onDelete: 'CASCADE' },
+  )
   @JoinColumn()
     elementTravel: ElementTravelInstanceEntity
 

@@ -25,6 +25,10 @@ export class PriceEntity {
   @Column()
     activityId: string
 
-  @ManyToOne(() => ActivityEntity, (activity) => activity.prices)
+  @ManyToOne(
+    () => ActivityEntity,
+    (activity) => activity.prices,
+    { onDelete: 'CASCADE' },
+  )
     activity: ActivityEntity
 }

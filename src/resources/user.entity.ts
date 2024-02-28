@@ -44,18 +44,33 @@ export class UserEntity {
   @JoinTable()
     roles: RoleEntity[]
 
-  @OneToMany(() => TravelRecipeEntity, (travel) => travel.user)
+  @OneToMany(
+    () => TravelRecipeEntity,
+    (travel) => travel.user,
+  )
     travels: TravelRecipeEntity[]
 
-  @OneToMany(() => TravelInstanceEntity, (travel) => travel.user)
+  @OneToMany(
+    () => TravelInstanceEntity,
+    (travel) => travel.user,
+  )
     travelInstances: TravelInstanceEntity[]
 
-  @OneToMany(() => QuestionEntity, (question) => question.author)
+  @OneToMany(
+    () => QuestionEntity,
+    (question) => question.author,
+  )
     questions: QuestionEntity[]
 
-  @OneToMany(() => ActivityEntity, (activity) => activity.user)
+  @OneToMany(
+    () => ActivityEntity,
+    (activity) => activity.user,
+  )
     activities: ActivityEntity[]
 
-  @OneToMany(() => AccommodationEntity, (accommodation) => accommodation.user)
+  @OneToMany(
+    () => AccommodationEntity,
+    (accommodation) => accommodation.user,
+  )
     accommodations: AccommodationEntity[]
 }

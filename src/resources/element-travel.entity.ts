@@ -41,13 +41,20 @@ export class ElementTravelEntity {
   @Column()
     travelId: string
 
-  @ManyToOne(() => TravelRecipeEntity, (travel) => travel.travelElements)
+  @ManyToOne(
+    () => TravelRecipeEntity,
+    (travel) => travel.travelElements,
+    { onDelete: 'CASCADE' },
+  )
     travel: TravelRecipeEntity
 
   @Column()
     activityId: string
 
-  @ManyToOne(() => ActivityEntity)
+  @ManyToOne(
+    () => ActivityEntity,
+    { onDelete: 'CASCADE' },
+  )
   @JoinTable()
     activity: ActivityEntity
 }

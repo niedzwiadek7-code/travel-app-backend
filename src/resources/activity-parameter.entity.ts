@@ -22,6 +22,7 @@ export class ActivityParameterEntity {
   @ManyToOne(
     () => ActivityEntity,
     (activity) => activity.activityParameters,
+    { onDelete: 'CASCADE' },
   )
     activity: ActivityEntity
 
@@ -31,6 +32,7 @@ export class ActivityParameterEntity {
   @ManyToOne(
     () => ActivityTypeParameterEntity,
     (activityTypeParameter) => activityTypeParameter.activityParameters,
+    { onDelete: 'CASCADE' },
   )
     activityTypeParameter: ActivityTypeParameterEntity
 }

@@ -33,32 +33,54 @@ export class ActivityEntity {
   })
     description: string
 
-  @ManyToOne(() => ActivityTypeEntity)
+  @ManyToOne(
+    () => ActivityTypeEntity,
+    { onDelete: 'CASCADE' },
+  )
   @JoinTable()
     activityType: ActivityTypeEntity
 
   @Column()
     activityTypeId: string
 
-  @OneToMany(() => PriceEntity, (price) => price.activity)
+  @OneToMany(
+    () => PriceEntity,
+    (price) => price.activity,
+  )
     prices: PriceEntity[]
 
-  @OneToMany(() => QuestionEntity, (question) => question.activity)
+  @OneToMany(
+    () => QuestionEntity,
+    (question) => question.activity,
+  )
     questions: QuestionEntity[]
 
-  @OneToMany(() => RatingEntity, (rating) => rating.activity)
+  @OneToMany(
+    () => RatingEntity,
+    (rating) => rating.activity,
+  )
     ratings: RatingEntity[]
 
-  @OneToMany(() => ActivityParameterEntity, (activityParameter) => activityParameter.activity)
+  @OneToMany(
+    () => ActivityParameterEntity,
+    (activityParameter) => activityParameter.activity,
+  )
     activityParameters: ActivityParameterEntity[]
 
-  @OneToMany(() => ElementTravelInstanceEntity, (elementTravelInstance) => elementTravelInstance.activity)
+  @OneToMany(
+    () => ElementTravelInstanceEntity,
+    (elementTravelInstance) => elementTravelInstance.activity,
+  )
     elementTravelInstances: ElementTravelInstanceEntity[]
 
   @Column()
     userId: string
 
-  @ManyToOne(() => UserEntity, (user) => user.activities)
+  @ManyToOne(
+    () => UserEntity,
+    (user) => user.activities,
+    { onDelete: 'CASCADE' },
+  )
     user: UserEntity
 
   @DeleteDateColumn()

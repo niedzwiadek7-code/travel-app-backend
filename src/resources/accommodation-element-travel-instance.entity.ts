@@ -44,6 +44,7 @@ export class AccommodationElementTravelInstanceEntity {
   @ManyToOne(
     () => AccommodationEntity,
     (accommodation) => accommodation.elementTravelInstances,
+    { onDelete: 'CASCADE' },
   )
     accommodation: AccommodationEntity
 
@@ -52,10 +53,17 @@ export class AccommodationElementTravelInstanceEntity {
   })
     elementTravelId?: string
 
-  @ManyToOne(() => AccommodationElementTravelEntity)
+  @ManyToOne(
+    () => AccommodationElementTravelEntity,
+    { onDelete: 'SET NULL' },
+  )
     elementTravel?: AccommodationElementTravelEntity
 
-  @OneToOne(() => AccommodationRatingEntity, (rating) => rating.accommodation)
+  @OneToOne(
+    () => AccommodationRatingEntity,
+    (rating) => rating.accommodation,
+    { onDelete: 'SET NULL' },
+  )
   @JoinColumn()
-    rating: AccommodationRatingEntity
+    rating?: AccommodationRatingEntity
 }

@@ -47,7 +47,11 @@ export class ElementTravelInstanceEntity {
   @Column()
     activityId: string
 
-  @ManyToOne(() => ActivityEntity, (activity) => activity.elementTravelInstances)
+  @ManyToOne(
+    () => ActivityEntity,
+    (activity) => activity.elementTravelInstances,
+    { onDelete: 'CASCADE' },
+  )
     activity: ActivityEntity
 
   @Column({
@@ -55,7 +59,10 @@ export class ElementTravelInstanceEntity {
   })
     elementTravelId?: string
 
-  @ManyToOne(() => ElementTravelEntity)
+  @ManyToOne(
+    () => ElementTravelEntity,
+    { onDelete: 'CASCADE' },
+  )
     elementTravel?: ElementTravelEntity
 
   @Column({

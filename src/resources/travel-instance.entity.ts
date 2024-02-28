@@ -17,13 +17,21 @@ export class TravelInstanceEntity {
   @Column()
     userId: string
 
-  @ManyToOne(() => UserEntity, (user) => user.travelInstances)
+  @ManyToOne(
+    () => UserEntity,
+    (user) => user.travelInstances,
+    { onDelete: 'CASCADE' },
+  )
     user: UserEntity
 
   @Column()
     travelRecipeId: string
 
-  @ManyToOne(() => TravelRecipeEntity, (travelRecipe) => travelRecipe.travelInstances)
+  @ManyToOne(
+    () => TravelRecipeEntity,
+    (travelRecipe) => travelRecipe.travelInstances,
+    { onDelete: 'CASCADE' },
+  )
     travelRecipe: TravelRecipeEntity
 
   @Column('date')

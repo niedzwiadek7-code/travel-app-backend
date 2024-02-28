@@ -35,12 +35,21 @@ export class TravelRecipeEntity {
   // @JoinTable()
   //   place: Place
 
-  @OneToMany(() => ElementTravelEntity, (elementTravel) => elementTravel.travel)
+  @OneToMany(
+    () => ElementTravelEntity,
+    (elementTravel) => elementTravel.travel,
+  )
     travelElements: ElementTravelEntity[]
 
-  @OneToMany(() => AccommodationElementTravelEntity, (elementTravel) => elementTravel.travel)
+  @OneToMany(
+    () => AccommodationElementTravelEntity,
+    (elementTravel) => elementTravel.travel,
+  )
     accommodationTravelElements: AccommodationElementTravelEntity[]
 
-  @OneToMany(() => TravelInstanceEntity, (travelInstance) => travelInstance.travelRecipe)
+  @OneToMany(
+    () => TravelInstanceEntity,
+    (travelInstance) => travelInstance.travelRecipe,
+  )
     travelInstances: TravelInstanceEntity[]
 }

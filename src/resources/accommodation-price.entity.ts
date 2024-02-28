@@ -25,6 +25,10 @@ export class AccommodationPriceEntity {
   @Column()
     accommodationId: string
 
-  @ManyToOne(() => AccommodationEntity, (accommodation) => accommodation.prices)
+  @ManyToOne(
+    () => AccommodationEntity,
+    (accommodation) => accommodation.prices,
+    { onDelete: 'CASCADE' },
+  )
     accommodation: AccommodationEntity
 }

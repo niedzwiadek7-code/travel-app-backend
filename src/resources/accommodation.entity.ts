@@ -35,10 +35,16 @@ export class AccommodationEntity {
   })
     description: string
 
-  @OneToMany(() => AccommodationPriceEntity, (price) => price.accommodation)
+  @OneToMany(
+    () => AccommodationPriceEntity,
+    (price) => price.accommodation,
+  )
     prices: AccommodationPriceEntity[]
 
-  @OneToMany(() => AccommodationRatingEntity, (rating) => rating.accommodation)
+  @OneToMany(
+    () => AccommodationRatingEntity,
+    (rating) => rating.accommodation,
+  )
     ratings: AccommodationRatingEntity[]
 
   @OneToMany(
@@ -50,7 +56,11 @@ export class AccommodationEntity {
   @Column()
     userId: string
 
-  @ManyToOne(() => UserEntity, (user) => user.accommodations)
+  @ManyToOne(
+    () => UserEntity,
+    (user) => user.accommodations,
+    { onDelete: 'CASCADE' },
+  )
     user: UserEntity
 
   @DeleteDateColumn()
