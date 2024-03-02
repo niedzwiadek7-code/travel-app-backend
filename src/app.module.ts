@@ -11,6 +11,7 @@ import { ActivityModule } from './activity/activity.module'
 import { RatingModule } from './rating/rating.module'
 import { dataSourceOptions } from './db/data-source'
 import { AppController } from './app.controller';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AppController } from './app.controller';
     QuestionModule,
     ActivityModule,
     RatingModule,
+    CloudinaryModule,
   ],
   controllers: [AppController],
 })

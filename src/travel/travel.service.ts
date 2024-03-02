@@ -1,10 +1,12 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import {
+  BadRequestException, HttpStatus, Injectable, Logger,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { DataSource, Repository } from 'typeorm'
 import dayjs = require('dayjs')
 import {
   TravelRecipeEntity as TravelEntity,
-  ElementTravelEntity as ElementTravelEntity,
+  ElementTravelEntity,
   AccommodationElementTravelEntity,
   TravelInstanceEntity, ElementTravelInstanceEntity, AccommodationElementTravelInstanceEntity,
   AccommodationElementTravelPhotoEntity,
@@ -14,6 +16,7 @@ import {
 } from './dto'
 import { ElementTravelPhotoEntity } from '../resources/element-travel-photo.entity'
 import { MulterFile } from '../model'
+import { CloudinaryService } from '../cloudinary/cloudinary.service'
 
 @Injectable()
 export class TravelService {
@@ -34,6 +37,9 @@ export class TravelService {
     private readonly accommodationElementTravelInstance: Repository<AccommodationElementTravelInstanceEntity>,
     @InjectRepository(AccommodationElementTravelPhotoEntity)
     private readonly accommodationElementTravelPhoto: Repository<AccommodationElementTravelPhotoEntity>,
+    private dataSource: DataSource,
+    private cloudinary: CloudinaryService,
+    private logger: Logger,
   ) {}
 
   async getTravel(id: string) {
@@ -364,21 +370,34 @@ export class TravelService {
     }
   }
 
-  async passTravelElement(id: string, files: MulterFile[]): Promise<PassElementDto> {
-    await this.elementTravelInstanceRepository.save({
-      id: parseInt(id, 10),
-      passed: true,
-    })
-
+  async passTravelElement(id: string, files: Express.Multer.File[]): Promise<PassElementDto> {
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
     const urls = []
 
-    for (const file of files) {
-      urls.push(`uploads/${file.filename}`)
-      const photoObj = this.elementTravelPhotoRepository.create({
-        elementTravelId: id,
-        url: file.filename,
+    try {
+      await queryRunner.startTransaction()
+      await this.elementTravelInstanceRepository.save({
+        id: parseInt(id, 10),
+        passed: true,
       })
-      await this.elementTravelPhotoRepository.save(photoObj)
+
+      const addPhotos = async () => Promise.all(files.map(async (file) => {
+        try {
+          const photoObj = await this.cloudinary.uploadImage(file)
+          urls.push(photoObj.url)
+        } catch (err) {
+          this.logger.error(err)
+        }
+      }))
+
+      await addPhotos()
+    } catch (err) {
+      this.logger.error(err)
+      await queryRunner.rollbackTransaction()
+      throw new BadRequestException()
+    } finally {
+      await queryRunner.release()
     }
 
     return {
@@ -486,21 +505,34 @@ export class TravelService {
     return HttpStatus.OK
   }
 
-  async passAccommodationElement(id: string, files: MulterFile[]): Promise<PassElementDto> {
-    await this.accommodationElementTravelInstance.save({
-      id: parseInt(id, 10),
-      passed: true,
-    })
-
+  async passAccommodationElement(id: string, files: Express.Multer.File[]): Promise<PassElementDto> {
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
     const urls = []
 
-    for (const file of files) {
-      urls.push(`uploads/${file.filename}`)
-      const photoObj = this.accommodationElementTravelPhoto.create({
-        elementTravelId: id,
-        url: file.filename,
+    try {
+      await queryRunner.startTransaction()
+      await this.accommodationElementTravelInstance.save({
+        id: parseInt(id, 10),
+        passed: true,
       })
-      await this.accommodationElementTravelPhoto.save(photoObj)
+
+      const addPhotos = async () => Promise.all(files.map(async (file) => {
+        try {
+          const photoObj = await this.cloudinary.uploadImage(file)
+          urls.push(photoObj.url)
+        } catch (err) {
+          this.logger.error(err)
+        }
+      }))
+
+      await addPhotos()
+    } catch (err) {
+      this.logger.error(err)
+      await queryRunner.rollbackTransaction()
+      throw new BadRequestException()
+    } finally {
+      await queryRunner.release()
     }
 
     return {

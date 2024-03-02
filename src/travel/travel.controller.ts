@@ -60,10 +60,10 @@ export class TravelController {
   }
 
   @Put('pass-travel-element/:id')
-  @UseInterceptors(FilesInterceptor('images', 100, multerConfigOptions))
+  @UseInterceptors(FilesInterceptor('images', 100))
   passTravelElement(
     @Param('id') id: string,
-      @UploadedFiles() files: MulterFile[],
+      @UploadedFiles() files: Express.Multer.File[],
   ): Promise<PassElementDto> {
     return this.travelService.passTravelElement(id, files)
   }
@@ -97,10 +97,10 @@ export class TravelController {
   }
 
   @Put('pass-accommodation-element/:id')
-  @UseInterceptors(FilesInterceptor('images', 100, multerConfigOptions))
+  @UseInterceptors(FilesInterceptor('images', 100))
   passAccommodationElement(
     @Param('id') id: string,
-      @UploadedFiles() files: MulterFile[],
+      @UploadedFiles() files: Express.Multer.File[],
   ): Promise<PassElementDto> {
     return this.travelService.passAccommodationElement(id, files)
   }
