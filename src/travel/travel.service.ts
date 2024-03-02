@@ -385,6 +385,10 @@ export class TravelService {
       const addPhotos = async () => Promise.all(files.map(async (file) => {
         try {
           const photoObj = await this.cloudinary.uploadImage(file)
+          await this.elementTravelPhotoRepository.save({
+            elementTravelId: id,
+            url: photoObj.url,
+          })
           urls.push(photoObj.url)
         } catch (err) {
           this.logger.error(err)
@@ -505,7 +509,10 @@ export class TravelService {
     return HttpStatus.OK
   }
 
-  async passAccommodationElement(id: string, files: Express.Multer.File[]): Promise<PassElementDto> {
+  async passAccommodationElement(
+    id: string,
+    files: Express.Multer.File[],
+  ): Promise<PassElementDto> {
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     const urls = []
@@ -520,6 +527,10 @@ export class TravelService {
       const addPhotos = async () => Promise.all(files.map(async (file) => {
         try {
           const photoObj = await this.cloudinary.uploadImage(file)
+          await this.elementTravelPhotoRepository.save({
+            elementTravelId: id,
+            url: photoObj.url,
+          })
           urls.push(photoObj.url)
         } catch (err) {
           this.logger.error(err)
