@@ -10,7 +10,7 @@ export class User1708470892343 implements Seeder {
     dataSource: DataSource,
     factoryManager: SeederFactoryManager,
   ): Promise<any> {
-    await dataSource.query(`TRUNCATE TABLE "${process.env.DB_SCHEMA}"."user_entity" RESTART IDENTITY CASCADE`)
+    await dataSource.query(`TRUNCATE TABLE "${process.env.DATABASE_SCHEMA}"."user_entity" RESTART IDENTITY CASCADE`)
 
     const repository = dataSource.getRepository(UserEntity)
     const roleRepository = dataSource.getRepository(RoleEntity)
@@ -51,7 +51,9 @@ export class User1708470892343 implements Seeder {
       },
     ])
 
-    // const userFactory = factoryManager.get(UserEntity)
-    // await userFactory.saveMany(5)
+    const factorySize = process.env.FACTORY_SIZE ? parseInt(process.env.FACTORY_SIZE, 10) : 0
+
+    const userFactory = factoryManager.get(UserEntity)
+    await userFactory.saveMany(factorySize)
   }
 }
