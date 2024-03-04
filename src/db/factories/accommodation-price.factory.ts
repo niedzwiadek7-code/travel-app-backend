@@ -3,11 +3,13 @@ import { AccommodationPriceEntity } from '../../resources'
 
 export default setSeederFactory(AccommodationPriceEntity, (faker) => {
   const accommodationPrice = new AccommodationPriceEntity()
-  accommodationPrice.price = faker.datatype.float({
+  accommodationPrice.price = faker.number.float({
     min: 10,
     max: 1000,
-    precision: 0.01,
+    multipleOf: 0.01,
   })
-  accommodationPrice.startDate = faker.date.past(1)
+  accommodationPrice.startDate = faker.date.past({
+    years: 1,
+  })
   return accommodationPrice
 })

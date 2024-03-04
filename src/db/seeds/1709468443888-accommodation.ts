@@ -20,7 +20,6 @@ export class Accommodation1709468443888 implements Seeder {
       select: ['id'],
     })).map((user) => user.id)
     const accommodationsRepository = dataSource.getRepository(AccommodationEntity)
-    const accommodationPricesRepository = dataSource.getRepository(AccommodationPriceEntity)
 
     const accommodationFactory = factoryManager.get(AccommodationEntity)
     const accommodationPriceFactory = factoryManager.get(AccommodationPriceEntity)
@@ -31,28 +30,25 @@ export class Accommodation1709468443888 implements Seeder {
         .map(async () => {
           const made = await accommodationFactory.make({
             userId: faker.helpers.arrayElement(userIds).toString(),
+            prices: [],
           })
+
+          const countOfPrices = faker.number.int({
+            min: 1,
+            max: 5,
+          })
+
+          await Promise.all(Array(countOfPrices)
+            .fill('')
+            .map(async () => {
+              const price = await accommodationPriceFactory.make()
+              made.prices.push(price)
+            }))
+
           return accommodationsRepository.create(made)
         }),
     )
 
-    const result = await accommodationsRepository.save(accommodations)
-
-    const prices = (await Promise.all(result.map(async (accommodation) => {
-      const countOfPrices = faker.datatype.number({
-        min: 1,
-        max: 5,
-      })
-      return Promise.all(Array(countOfPrices)
-        .fill('')
-        .map(async () => {
-          const price = await accommodationPriceFactory.make({
-            accommodationId: accommodation.id.toString(),
-          })
-          return accommodationPricesRepository.create(price)
-        }))
-    }))).flat()
-
-    await accommodationPricesRepository.save(prices)
+    await accommodationsRepository.save(accommodations)
   }
 }

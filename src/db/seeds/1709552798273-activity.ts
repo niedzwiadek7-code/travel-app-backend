@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm'
 import { Seeder, SeederFactoryManager } from 'typeorm-extension'
-import { de, faker } from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import {
   ActivityEntity, ActivityParameterEntity, ActivityTypeEntity, ActivityTypeParameterEntity, PriceEntity, UserEntity,
 } from '../../resources'
@@ -30,7 +30,6 @@ export class Activity1709552798273 implements Seeder {
     const activityParametersRepository = dataSource.getRepository(ActivityParameterEntity)
 
     const activityRepository = dataSource.getRepository(ActivityEntity)
-    const activityPriceRepository = dataSource.getRepository(PriceEntity)
 
     const activityFactory = factoryManager.get(ActivityEntity)
     const priceFactory = factoryManager.get(PriceEntity)
@@ -40,7 +39,7 @@ export class Activity1709552798273 implements Seeder {
         case 'place':
         case 'from':
         case 'to':
-          return faker.address.city()
+          return faker.location.city()
         case 'priceType':
           return faker.helpers.arrayElement(['per_hour', 'per_entry'])
         default:
@@ -70,7 +69,7 @@ export class Activity1709552798273 implements Seeder {
             made.activityParameters.push(parameter)
           }))
 
-          const countOfPrices = faker.datatype.number({
+          const countOfPrices = faker.number.int({
             min: 1,
             max: 5,
           })

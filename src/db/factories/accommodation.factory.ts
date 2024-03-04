@@ -8,7 +8,7 @@ export default setSeederFactory(AccommodationEntity, (faker) => {
     min: 1,
     max: 5,
   })
-  accommodation.place = faker.address.city()
+  accommodation.place = faker.location.city()
   accommodation.description = faker.lorem.paragraphs({
     min: 1,
     max: 3,
