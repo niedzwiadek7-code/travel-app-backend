@@ -15,20 +15,29 @@ export class ActivityController {
   @UseGuards(JwtGuard)
   @Get('all')
   getAll(
-  @Query() all: string,
-    @Query('source') source: QueryActivity,
+  @Query('source') source: QueryActivity,
+    @Query('take') take: number,
+    @Query('skip') skip: number,
     @GetUser('id') userId: string,
   ) {
-    return this.activityService.getAllActivities(source, userId)
+    return this.activityService.getAllActivities(source, userId, {
+      take,
+      skip,
+    })
   }
 
   @UseGuards(JwtGuard)
   @Get('accommodation/all')
   getAllAccommodations(
   @Query('source') source: QueryActivity,
+    @Query('take') take: number,
+    @Query('skip') skip: number,
     @GetUser('id') userId: string,
   ) {
-    return this.activityService.getAllAccommodations(source, userId)
+    return this.activityService.getAllAccommodations(source, userId, {
+      take,
+      skip,
+    })
   }
 
   @Get('find/:id')

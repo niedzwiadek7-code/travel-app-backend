@@ -1,2 +1,6 @@
 export * from './activity.dto'
 export * from './query-activity'
+export * from './paginate-input'
+export * from './paginate'
+export * from './activity'
+export * from './accommodation'

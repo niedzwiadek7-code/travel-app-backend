@@ -5,13 +5,16 @@ import dayjs = require('dayjs')
 import isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
 import {
   AccommodationEntity, AccommodationPriceEntity,
-  ActivityEntity as ActivityEntity,
-  ActivityParameterEntity as ActivityParameterEntity,
-  ActivityTypeEntity as ActivityTypeEntity,
-  ActivityTypeParameterEntity as ActivityTypeParameterEntity,
-  PriceEntity as PriceEntity,
+  ActivityEntity,
+  ActivityParameterEntity,
+  ActivityTypeEntity,
+  ActivityTypeParameterEntity,
+  PriceEntity,
 } from '../resources'
-import { ActivityDto, QueryActivity } from './dto'
+import {
+  ActivityDto, ActivityFormat, Paginate, PaginateInput, QueryActivity,
+  AccommodationFormat,
+} from './dto'
 
 dayjs.extend(isSameOrAfter)
 
@@ -51,32 +54,19 @@ export class ActivityService {
     private readonly accommodationPriceRepository: Repository<AccommodationPriceEntity>,
   ) {}
 
-  async getActivity(id: string) {
-    const result = await this.activityRepository.findOne({
-      where: {
-        id: parseInt(id, 10),
-      },
-      withDeleted: true,
-      relations: [
-        'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
-        'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
-      ],
-    })
-
-    const activityType = await result.activityType
-
+  transformActivity(result: ActivityEntity): ActivityFormat {
     const customParameters = {}
 
     result.activityParameters.forEach((param) => {
       customParameters[param.activityTypeParameter.name] = param.value
     })
 
-    const resultObj: Record<string, any> = {
+    return {
       id: result.id,
       accepted: result.accepted,
       name: result.name,
       description: result.description,
-      activityType: activityType.name,
+      activityType: result.activityType.name,
       ...customParameters,
       ratings: result.ratings.map((rate) => {
         const obj = {
@@ -91,22 +81,53 @@ export class ActivityService {
 
         return obj
       }),
+      price: parseFloat(getPrice(result).price),
     }
+  }
 
-    const price = getPrice(result)
+  transformAccommodation(result: AccommodationEntity): AccommodationFormat {
+    return {
+      id: result.id,
+      name: result.name,
+      place: result.place,
+      description: result.description,
+      price: parseFloat(getPrice(result).price),
+      ratings: result.ratings.map((resultObj) => {
+        const obj = {
+          author: resultObj.author,
+          text: resultObj.text,
+          photos: [],
+        }
 
-    if (price) {
-      resultObj.price = parseFloat(price.price)
+        if (resultObj.sharePhotos) {
+          obj.photos = resultObj.elementTravel.photos.map((photo) => photo.url)
+        }
+
+        return obj
+      }),
     }
+  }
 
-    return resultObj
+  async getActivity(id: string): Promise<ActivityFormat> {
+    const result = await this.activityRepository.findOne({
+      where: {
+        id: parseInt(id, 10),
+      },
+      withDeleted: true,
+      relations: [
+        'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
+        'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+      ],
+    })
+
+    return this.transformActivity(result)
   }
 
   async getAllActivityTypes() {
     return this.activityTypeRepository.find()
   }
 
-  async getAllActivities(source: QueryActivity, userId: string) {
+  getWhereObj(source: QueryActivity, userId: string) {
     const whereObj: Record<string, any> = {}
 
     switch (source) {
@@ -123,59 +144,31 @@ export class ActivityService {
         break
     }
 
-    const results = await this.activityRepository.find({
+    return whereObj
+  }
+
+  async getAllActivities(
+    source: QueryActivity,
+    userId: string,
+    pagination: PaginateInput,
+  ): Promise<Paginate<ActivityFormat>> {
+    const whereObj = this.getWhereObj(source, userId)
+
+    const [results, total] = await this.activityRepository.findAndCount({
       where: whereObj,
       relations: [
         'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
         'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
       ],
       withDeleted: source === 'user',
+      take: pagination.take,
+      skip: pagination.skip,
     })
 
-    const transformedResults = []
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const result of results) {
-      const activityType = await result.activityType
-
-      const customParameters = {}
-
-      result.activityParameters.forEach((param) => {
-        customParameters[param.activityTypeParameter.name] = param.value
-      })
-
-      const resultObj: Record<string, any> = {
-        id: result.id,
-        accepted: result.accepted,
-        name: result.name,
-        description: result.description,
-        activityType: activityType.name,
-        ...customParameters,
-        ratings: result.ratings.map((rate) => {
-          const obj = {
-            author: rate.author,
-            text: rate.text,
-            photos: [],
-          }
-
-          if (rate.sharePhotos) {
-            obj.photos = rate.elementTravel.photos.map((photo) => photo.url)
-          }
-
-          return obj
-        }),
-      }
-
-      const price = getPrice(result)
-
-      if (price) {
-        resultObj.price = parseFloat(price.price)
-      }
-
-      transformedResults.push(resultObj)
+    return {
+      data: results.map(this.transformActivity),
+      total,
     }
-
-    return transformedResults
   }
 
   async createRestaurant(body: ActivityDto, activityTypeId: string, activityId: string) {
@@ -322,51 +315,27 @@ export class ActivityService {
     return result
   }
 
-  async getAllAccommodations(source: QueryActivity, userId: string) {
-    const whereObj: Record<string, any> = {}
+  async getAllAccommodations(
+    source: QueryActivity,
+    userId: string,
+    paginate: PaginateInput,
+  ): Promise<Paginate<AccommodationFormat>> {
+    const whereObj = this.getWhereObj(source, userId)
 
-    switch (source) {
-      case 'system':
-        whereObj.accepted = true
-        break
-      case 'user':
-        whereObj.userId = userId
-        break
-      case 'toAccept':
-        whereObj.accepted = false
-        break
-      default:
-        break
-    }
-
-    const results = await this.accommodationRepository.find({
+    const [results, total] = await this.accommodationRepository.findAndCount({
       where: whereObj,
       relations: [
         'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
       ],
       withDeleted: source === 'user',
+      take: paginate.take,
+      skip: paginate.skip,
     })
 
-    return results.map((result) => ({
-      id: result.id,
-      name: result.name,
-      place: result.place,
-      description: result.description,
-      price: parseFloat(getPrice(result).price),
-      ratings: result.ratings.map((resultObj) => {
-        const obj = {
-          author: resultObj.author,
-          text: resultObj.text,
-          photos: [],
-        }
-
-        if (resultObj.sharePhotos) {
-          obj.photos = resultObj.elementTravel.photos.map((photo) => photo.url)
-        }
-
-        return obj
-      }),
-    }))
+    return {
+      data: results.map(this.transformAccommodation),
+      total,
+    }
   }
 
   async getAccommodation(id: string) {
@@ -379,26 +348,7 @@ export class ActivityService {
       ],
     })
 
-    return {
-      id: result.id,
-      name: result.name,
-      place: result.place,
-      description: result.description,
-      price: parseFloat(getPrice(result).price),
-      ratings: result.ratings.map((resultObj) => {
-        const obj = {
-          author: resultObj.author,
-          text: resultObj.text,
-          photos: [],
-        }
-
-        if (resultObj.sharePhotos) {
-          obj.photos = resultObj.elementTravel.photos.map((photo) => photo.url)
-        }
-
-        return obj
-      }),
-    }
+    return this.transformAccommodation(result)
   }
 
   async acceptActivity(id: string) {
