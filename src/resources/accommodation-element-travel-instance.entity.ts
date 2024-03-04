@@ -25,6 +25,7 @@ export class AccommodationElementTravelInstanceEntity {
   @OneToMany(
     () => AccommodationElementTravelPhotoEntity,
     (elementTravelPhoto) => elementTravelPhoto.elementTravel,
+    { cascade: true },
   )
     photos: AccommodationElementTravelPhotoEntity[]
 

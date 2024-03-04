@@ -38,18 +38,21 @@ export class AccommodationEntity {
   @OneToMany(
     () => AccommodationPriceEntity,
     (price) => price.accommodation,
+    { cascade: true },
   )
     prices: AccommodationPriceEntity[]
 
   @OneToMany(
     () => AccommodationRatingEntity,
     (rating) => rating.accommodation,
+    { cascade: true },
   )
     ratings: AccommodationRatingEntity[]
 
   @OneToMany(
     () => AccommodationElementTravelInstanceEntity,
     (elementTravelInstance) => elementTravelInstance.accommodation,
+    { cascade: true },
   )
     elementTravelInstances: AccommodationElementTravelInstanceEntity
 

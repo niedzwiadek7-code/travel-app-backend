@@ -34,6 +34,7 @@ export class QuestionEntity {
   @OneToMany(
     () => AnswerEntity,
     (answer) => answer.question,
+    { cascade: true },
   )
     answers: AnswerEntity[]
 

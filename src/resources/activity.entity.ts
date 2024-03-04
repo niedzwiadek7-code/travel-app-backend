@@ -46,30 +46,35 @@ export class ActivityEntity {
   @OneToMany(
     () => PriceEntity,
     (price) => price.activity,
+    { cascade: true },
   )
     prices: PriceEntity[]
 
   @OneToMany(
     () => QuestionEntity,
     (question) => question.activity,
+    { cascade: true },
   )
     questions: QuestionEntity[]
 
   @OneToMany(
     () => RatingEntity,
     (rating) => rating.activity,
+    { cascade: true },
   )
     ratings: RatingEntity[]
 
   @OneToMany(
     () => ActivityParameterEntity,
     (activityParameter) => activityParameter.activity,
+    { cascade: true },
   )
     activityParameters: ActivityParameterEntity[]
 
   @OneToMany(
     () => ElementTravelInstanceEntity,
     (elementTravelInstance) => elementTravelInstance.activity,
+    { cascade: true },
   )
     elementTravelInstances: ElementTravelInstanceEntity[]
 

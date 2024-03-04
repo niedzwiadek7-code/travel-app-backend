@@ -38,18 +38,21 @@ export class TravelRecipeEntity {
   @OneToMany(
     () => ElementTravelEntity,
     (elementTravel) => elementTravel.travel,
+    { cascade: true },
   )
     travelElements: ElementTravelEntity[]
 
   @OneToMany(
     () => AccommodationElementTravelEntity,
     (elementTravel) => elementTravel.travel,
+    { cascade: true },
   )
     accommodationTravelElements: AccommodationElementTravelEntity[]
 
   @OneToMany(
     () => TravelInstanceEntity,
     (travelInstance) => travelInstance.travelRecipe,
+    { cascade: true },
   )
     travelInstances: TravelInstanceEntity[]
 }

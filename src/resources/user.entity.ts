@@ -47,30 +47,35 @@ export class UserEntity {
   @OneToMany(
     () => TravelRecipeEntity,
     (travel) => travel.user,
+    { cascade: true },
   )
     travels: TravelRecipeEntity[]
 
   @OneToMany(
     () => TravelInstanceEntity,
     (travel) => travel.user,
+    { cascade: true },
   )
     travelInstances: TravelInstanceEntity[]
 
   @OneToMany(
     () => QuestionEntity,
     (question) => question.author,
+    { cascade: true },
   )
     questions: QuestionEntity[]
 
   @OneToMany(
     () => ActivityEntity,
     (activity) => activity.user,
+    { cascade: true },
   )
     activities: ActivityEntity[]
 
   @OneToMany(
     () => AccommodationEntity,
     (accommodation) => accommodation.user,
+    { cascade: true },
   )
     accommodations: AccommodationEntity[]
 }

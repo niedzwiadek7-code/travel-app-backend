@@ -18,6 +18,7 @@ export class ActivityTypeEntity {
   @OneToMany(
     () => ActivityTypeParameterEntity,
     (activityTypeParameter) => activityTypeParameter.activityType,
+    { cascade: true },
   )
     activityTypeParameters: ActivityTypeParameterEntity[]
 }

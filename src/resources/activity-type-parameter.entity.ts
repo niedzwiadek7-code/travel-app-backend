@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { ActivityTypeEntity } from './activity-type.entity'
 import { ActivityParameterEntity } from './activity-parameter.entity'
@@ -29,6 +29,7 @@ export class ActivityTypeParameterEntity {
   @OneToMany(
     () => ActivityParameterEntity,
     (activityParameter) => activityParameter.activityTypeParameter,
+    { cascade: true },
   )
     activityParameters: ActivityParameterEntity[]
 }

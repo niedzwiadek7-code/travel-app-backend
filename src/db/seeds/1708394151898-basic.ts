@@ -12,7 +12,6 @@ export class Basic1708594151898 implements Seeder {
   ): Promise<any> {
     await dataSource.query(`TRUNCATE TABLE "${process.env.DATABASE_SCHEMA}"."role_entity" RESTART IDENTITY CASCADE`)
     await dataSource.query(`TRUNCATE TABLE "${process.env.DATABASE_SCHEMA}"."activity_type_entity" RESTART IDENTITY CASCADE`)
-    await dataSource.query(`TRUNCATE TABLE "${process.env.DATABASE_SCHEMA}"."activity_type_parameter_entity" RESTART IDENTITY CASCADE`)
 
     const roleRepository = dataSource.getRepository(RoleEntity)
 
