@@ -2,20 +2,19 @@
 
 import {
   Column,
-  Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipeEntity } from './travel-recipe.entity'
 import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 import { UserEntity } from './user.entity'
-import { AccommodationElementTravelInstanceEntity } from './accommodation-element-travel-instance.entity'
 
-@Entity()
+@Entity('travel_instance')
 export class TravelInstanceEntity {
   @PrimaryGeneratedColumn()
     id: number
 
   @Column()
-    userId: string
+    userId: number
 
   @ManyToOne(
     () => UserEntity,
@@ -25,7 +24,7 @@ export class TravelInstanceEntity {
     user: UserEntity
 
   @Column()
-    travelRecipeId: string
+    travelRecipeId: number
 
   @ManyToOne(
     () => TravelRecipeEntity,
@@ -43,14 +42,6 @@ export class TravelInstanceEntity {
   @OneToMany(
     () => ElementTravelInstanceEntity,
     (elementTravelInstance) => elementTravelInstance.travelInstance,
-    { cascade: true },
   )
     travelElements: ElementTravelInstanceEntity[]
-
-  @OneToMany(
-    () => AccommodationElementTravelInstanceEntity,
-    (elementTravelInstance) => elementTravelInstance.travelInstance,
-    { cascade: true },
-  )
-    accommodationElements: AccommodationElementTravelInstanceEntity[]
 }

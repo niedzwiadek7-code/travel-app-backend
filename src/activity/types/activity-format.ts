@@ -1,7 +1,11 @@
-import { UserEntity } from '../../resources'
+import { ActivityType } from './activity-type'
 
 interface Rating {
-  author: UserEntity,
+  author: {
+    firstName: string,
+    lastName: string,
+    email: string,
+  },
   text: string,
   photos: Array<string>,
 }
@@ -11,7 +15,7 @@ export interface ActivityFormat {
   accepted: boolean,
   name: string,
   description: string,
-  activityType: string,
+  activityType: ActivityType
   ratings: Array<Rating>,
-  price: number,
+  price?: number,
 }

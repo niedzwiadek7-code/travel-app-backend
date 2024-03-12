@@ -5,7 +5,7 @@ import {
 } from 'typeorm'
 import { UserEntity } from './user.entity'
 
-@Entity()
+@Entity('role')
 export class RoleEntity {
   @PrimaryGeneratedColumn()
     id: number

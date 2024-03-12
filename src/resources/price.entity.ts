@@ -5,7 +5,7 @@ import {
 } from 'typeorm'
 import { ActivityEntity } from './activity.entity'
 
-@Entity()
+@Entity('price')
 export class PriceEntity {
   @PrimaryGeneratedColumn()
     id: number
@@ -17,18 +17,23 @@ export class PriceEntity {
     price: number
 
   @Column({
-    nullable: false,
+    nullable: true,
     type: 'date',
+    default: new Date(),
   })
     startDate: Date
 
   @Column()
-    activityId: string
+    activityId: number
 
   @ManyToOne(
     () => ActivityEntity,
     (activity) => activity.prices,
-    { onDelete: 'CASCADE' },
+    {
+      onDelete: 'CASCADE',
+      eager: true,
+      orphanedRowAction: 'disable',
+    },
   )
     activity: ActivityEntity
 }

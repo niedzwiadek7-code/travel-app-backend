@@ -5,21 +5,25 @@ import { TravelService } from './travel.service'
 import {
   TravelRecipeEntity,
   ElementTravelEntity,
-  AccommodationElementTravelEntity,
+  PhotoEntity,
   TravelInstanceEntity,
-  ElementTravelInstanceEntity, AccommodationElementTravelInstanceEntity, AccommodationElementTravelPhotoEntity,
+  ElementTravelInstanceEntity,
+  ElementTravelLocallyEntity,
+  ElementTravelGloballyEntity,
 } from '../resources'
-import { ElementTravelPhotoEntity } from '../resources/element-travel-photo.entity'
 import { CloudinaryModule } from '../cloudinary/cloudinary.module'
+import { ActivityModule } from '../activity/activity.module'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      TravelRecipeEntity, ElementTravelEntity, AccommodationElementTravelEntity,
-      TravelInstanceEntity, ElementTravelInstanceEntity, ElementTravelPhotoEntity,
-      AccommodationElementTravelInstanceEntity, AccommodationElementTravelPhotoEntity,
+      TravelRecipeEntity, ElementTravelEntity,
+      TravelInstanceEntity, ElementTravelInstanceEntity,
+      PhotoEntity, ElementTravelLocallyEntity,
+      ElementTravelGloballyEntity,
     ]),
     CloudinaryModule,
+    ActivityModule,
   ],
   controllers: [TravelController],
   providers: [TravelService, Logger],

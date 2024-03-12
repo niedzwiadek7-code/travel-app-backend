@@ -6,7 +6,7 @@ import {
 import { QuestionEntity } from './question.entity'
 import { UserEntity } from './user.entity'
 
-@Entity()
+@Entity('answer')
 export class AnswerEntity {
   @PrimaryGeneratedColumn()
     id: number

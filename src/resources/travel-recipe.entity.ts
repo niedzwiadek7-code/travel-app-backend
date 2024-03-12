@@ -1,15 +1,13 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column,
-  Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { UserEntity } from './user.entity'
 import { ElementTravelEntity } from './element-travel.entity'
 import { TravelInstanceEntity } from './travel-instance.entity'
-import { AccommodationElementTravelEntity } from './accommodation-element-travel.entity'
 
-@Entity()
+@Entity('travel_recipe')
 export class TravelRecipeEntity {
   @PrimaryGeneratedColumn()
     id: number
@@ -38,16 +36,8 @@ export class TravelRecipeEntity {
   @OneToMany(
     () => ElementTravelEntity,
     (elementTravel) => elementTravel.travel,
-    { cascade: true },
   )
     travelElements: ElementTravelEntity[]
-
-  @OneToMany(
-    () => AccommodationElementTravelEntity,
-    (elementTravel) => elementTravel.travel,
-    { cascade: true },
-  )
-    accommodationTravelElements: AccommodationElementTravelEntity[]
 
   @OneToMany(
     () => TravelInstanceEntity,

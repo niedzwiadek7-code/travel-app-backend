@@ -1,10 +1,11 @@
 import {
-  Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards,
+  Controller, Delete, Get, Param, Post, Query, UseGuards,
 } from '@nestjs/common'
 import { ActivityService } from './activity.service'
-import { ActivityDto, QueryActivity } from './dto'
+import { QueryActivityDto } from './dto'
 import { JwtGuard } from '../auth/guard'
 import { GetUser } from '../auth/decorator'
+import { ActivityType } from './types'
 
 @Controller('activity')
 export class ActivityController {
@@ -15,74 +16,26 @@ export class ActivityController {
   @UseGuards(JwtGuard)
   @Get('all')
   getAll(
-  @Query('source') source: QueryActivity,
+  @Query('source') source: QueryActivityDto,
     @Query('take') take: number,
     @Query('skip') skip: number,
     @GetUser('id') userId: string,
+    @Query('types') types?: ActivityType[],
   ) {
-    return this.activityService.getAllActivities(source, userId, {
-      take,
-      skip,
-    })
-  }
-
-  @UseGuards(JwtGuard)
-  @Get('accommodation/all')
-  getAllAccommodations(
-  @Query('source') source: QueryActivity,
-    @Query('take') take: number,
-    @Query('skip') skip: number,
-    @GetUser('id') userId: string,
-  ) {
-    return this.activityService.getAllAccommodations(source, userId, {
-      take,
-      skip,
-    })
+    return this.activityService.getAllActivities(
+      source,
+      userId,
+      {
+        take,
+        skip,
+      },
+      types,
+    )
   }
 
   @Get('find/:id')
   get(@Param('id') id: string) {
     return this.activityService.getActivity(id)
-  }
-
-  @Get('/accommodation/find/:id')
-  getAccommodation(@Param('id') id: string) {
-    return this.activityService.getAccommodation(id)
-  }
-
-  @Get('get-types')
-  getTypes() {
-    return this.activityService.getAllActivityTypes()
-  }
-
-  @UseGuards(JwtGuard)
-  @Post()
-  createActivity(
-  @GetUser('id') userId: string,
-    @Body() body: ActivityDto,
-  ) {
-    switch (body.activityType) {
-      case 'Nocleg':
-      case 'accommodation':
-        return this.activityService.createAccommodation(body, userId)
-      default:
-        return this.activityService.createActivity(body, userId)
-    }
-  }
-
-  @UseGuards(JwtGuard)
-  @Put(':id')
-  putActivity(
-  @Param('id') id: string,
-    @Body() body: ActivityDto,
-  ) {
-    switch (body.activityType) {
-      case 'Nocleg':
-      case 'accommodation':
-        return this.activityService.putAccommodation(id, body)
-      default:
-        return this.activityService.putActivity(id, body)
-    }
   }
 
   @UseGuards(JwtGuard)
@@ -94,26 +47,10 @@ export class ActivityController {
   }
 
   @UseGuards(JwtGuard)
-  @Post('accommodation/accept/:id')
-  acceptAccommodation(
-  @Param('id') id: string,
-  ) {
-    return this.activityService.acceptAccommodation(id)
-  }
-
-  @UseGuards(JwtGuard)
   @Delete('restore/:id')
   restoreActivity(
   @Param('id') id: string,
   ) {
     return this.activityService.restoreActivity(id)
-  }
-
-  @UseGuards(JwtGuard)
-  @Delete('accommodation/restore/:id')
-  restoreAccommodation(
-  @Param('id') id: string,
-  ) {
-    return this.activityService.restoreAccommodation(id)
   }
 }

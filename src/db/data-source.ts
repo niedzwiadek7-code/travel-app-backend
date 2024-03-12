@@ -3,7 +3,9 @@ import { DataSourceOptions } from 'typeorm'
 import { SeederOptions } from 'typeorm-extension'
 import entities from '../resources'
 
-export const dataSourceOptions = (configService: ConfigService): DataSourceOptions & SeederOptions => ({
+export const dataSourceOptions = (
+  configService: ConfigService,
+): DataSourceOptions & SeederOptions => ({
   type: 'postgres',
   host: configService.get('DATABASE_HOST'),
   port: +configService.get('DATABASE_PORT'),

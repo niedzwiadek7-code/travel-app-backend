@@ -8,9 +8,8 @@ import { QuestionEntity } from './question.entity'
 import { RoleEntity } from './role.entity'
 import { TravelInstanceEntity } from './travel-instance.entity'
 import { ActivityEntity } from './activity.entity'
-import { AccommodationEntity } from './accommodation.entity'
 
-@Entity()
+@Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
     id: number
@@ -71,11 +70,4 @@ export class UserEntity {
     { cascade: true },
   )
     activities: ActivityEntity[]
-
-  @OneToMany(
-    () => AccommodationEntity,
-    (accommodation) => accommodation.user,
-    { cascade: true },
-  )
-    accommodations: AccommodationEntity[]
 }

@@ -7,7 +7,7 @@ import { ActivityEntity } from './activity.entity'
 import { UserEntity } from './user.entity'
 import { AnswerEntity } from './answer.entity'
 
-@Entity()
+@Entity('question')
 export class QuestionEntity {
   @PrimaryGeneratedColumn()
     id: number

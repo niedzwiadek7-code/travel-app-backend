@@ -5,7 +5,7 @@ import {
   IsInstance, IsNotEmpty, IsNumber, IsOptional, IsString,
 } from 'class-validator'
 
-class DateDto {
+export class DateDto {
   @IsNumber()
   @IsNotEmpty()
     hour: number
@@ -15,7 +15,17 @@ class DateDto {
     minute: number
 }
 
-export class TravelElementDto {
+export class TravelElementGloballyDto {
+  @IsNumber()
+  @IsNumber()
+    from: number
+
+  @IsNumber()
+  @IsNumber()
+    to: number
+}
+
+export class TravelElementLocallyDto {
   @IsNumber()
   @IsNotEmpty()
     dayCount: number
@@ -25,7 +35,9 @@ export class TravelElementDto {
 
   @IsInstance(DateDto)
     to: DateDto
+}
 
+export class TravelElementDto {
   @IsNumber()
   @IsNotEmpty()
     activityId: number
@@ -40,23 +52,14 @@ export class TravelElementDto {
 
   @IsString()
     description: string
-}
 
-class AccommodationElementTravelDto {
-  @IsNumber()
-  @IsNotEmpty()
-    accommodationId: string
+  @IsOptional()
+  @IsInstance(TravelElementGloballyDto)
+    travelElementGlobally?: TravelElementGloballyDto
 
-  @IsNumber()
-  @IsNotEmpty()
-    numberOfDays: number
-
-  @IsNotEmpty()
-  @IsNumber()
-    price: number
-
-  @IsString()
-    description: string
+  @IsOptional()
+  @IsInstance(TravelElementLocallyDto)
+    travelElementLocally?: TravelElementLocallyDto
 }
 
 export class TravelDto {
@@ -70,7 +73,4 @@ export class TravelDto {
 
   @IsArray()
     travelElements: TravelElementDto[]
-
-  @IsArray()
-    accommodations: AccommodationElementTravelDto[]
 }

@@ -5,8 +5,8 @@ import {
 } from 'typeorm'
 import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 
-@Entity()
-export class ElementTravelPhotoEntity {
+@Entity('photo')
+export class PhotoEntity {
   @PrimaryGeneratedColumn()
     id: number
 
@@ -15,13 +15,14 @@ export class ElementTravelPhotoEntity {
   })
     url: string
 
-  @Column()
-    elementTravelId: string
-
   @ManyToOne(
     () => ElementTravelInstanceEntity,
-    (elementTravel) => elementTravel.photos,
-    { onDelete: 'CASCADE' },
+    (elementTravelInstance) => elementTravelInstance.photos,
   )
-    elementTravel: ElementTravelInstanceEntity
+    elementTravelInstance: ElementTravelInstanceEntity
+
+  @Column({
+    nullable: true,
+  })
+    elementTravelInstanceId?: number
 }

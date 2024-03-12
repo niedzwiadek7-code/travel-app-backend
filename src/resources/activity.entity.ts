@@ -1,17 +1,25 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, DeleteDateColumn, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column,
+  DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { QuestionEntity } from './question.entity'
 import { RatingEntity } from './rating.entity'
 import { PriceEntity } from './price.entity'
-import { ActivityTypeEntity } from './activity-type.entity'
-import { ActivityParameterEntity } from './activity-parameter.entity'
 import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 import { UserEntity } from './user.entity'
+import { AccommodationEntity } from './accommodation.entity'
+import { TripEntity } from './trip.entity'
+import { RestaurantEntity } from './restaurant.entity'
+import { AttractionEntity } from './attraction.entity'
+import { ActivityType } from '../activity/types'
 
-@Entity()
+@Entity('activity')
 export class ActivityEntity {
   @PrimaryGeneratedColumn()
     id: number
@@ -33,15 +41,11 @@ export class ActivityEntity {
   })
     description: string
 
-  @ManyToOne(
-    () => ActivityTypeEntity,
-    { onDelete: 'CASCADE' },
-  )
-  @JoinTable()
-    activityType: ActivityTypeEntity
-
-  @Column()
-    activityTypeId: string
+  @Column({
+    nullable: false,
+    enum: ['Restaurant', 'Attraction', 'Trip', 'Accommodation'],
+  })
+    activityType: ActivityType
 
   @OneToMany(
     () => PriceEntity,
@@ -65,13 +69,6 @@ export class ActivityEntity {
     ratings: RatingEntity[]
 
   @OneToMany(
-    () => ActivityParameterEntity,
-    (activityParameter) => activityParameter.activity,
-    { cascade: true },
-  )
-    activityParameters: ActivityParameterEntity[]
-
-  @OneToMany(
     () => ElementTravelInstanceEntity,
     (elementTravelInstance) => elementTravelInstance.activity,
     { cascade: true },
@@ -79,7 +76,7 @@ export class ActivityEntity {
     elementTravelInstances: ElementTravelInstanceEntity[]
 
   @Column()
-    userId: string
+    userId: number
 
   @ManyToOne(
     () => UserEntity,
@@ -87,6 +84,34 @@ export class ActivityEntity {
     { onDelete: 'CASCADE' },
   )
     user: UserEntity
+
+  @OneToOne(
+    () => AccommodationEntity,
+    (accommodation) => accommodation.activity,
+    { cascade: true },
+  )
+    accommodation?: AccommodationEntity
+
+  @OneToOne(
+    () => TripEntity,
+    (trip) => trip.activity,
+    { cascade: true },
+  )
+    trip?: TripEntity
+
+  @OneToOne(
+    () => RestaurantEntity,
+    (restaurant) => restaurant.activity,
+    { cascade: true },
+  )
+    restaurant?: RestaurantEntity
+
+  @OneToOne(
+    () => AttractionEntity,
+    (attraction) => attraction.activity,
+    { cascade: true },
+  )
+    attraction?: AttractionEntity
 
   @DeleteDateColumn()
     deleteAt?: Date

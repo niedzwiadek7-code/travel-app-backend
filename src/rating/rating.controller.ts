@@ -16,28 +16,15 @@ export class RatingController {
   @Post()
   putRating(
   @Body() body: PutActivityDto,
-    @GetUser('id') userId: string,
+    @GetUser('id') userId: number,
   ) {
-    switch (body.activityType) {
-      case 'Nocleg':
-      case 'accommodation':
-        return this.ratingService.putAccommodationRating(body, userId)
-      default:
-        return this.ratingService.putActivityRating(body, userId)
-    }
+    return this.ratingService.putActivityRating(body, userId)
   }
 
   @Get('find/:elementTravelId')
   get(
-  @Param('elementTravelId') elementTravelId: string,
+  @Param('elementTravelId') elementTravelId: number,
   ) {
     return this.ratingService.getRating(elementTravelId)
-  }
-
-  @Get('find/accommodation/:elementTravelId')
-  getAccommodation(
-  @Param('elementTravelId') elementTravelId: string,
-  ) {
-    return this.ratingService.getAccommodationRating(elementTravelId)
   }
 }

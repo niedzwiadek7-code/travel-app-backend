@@ -7,7 +7,7 @@ import { UserEntity } from './user.entity'
 import { ActivityEntity } from './activity.entity'
 import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 
-@Entity()
+@Entity('rating')
 export class RatingEntity {
   @PrimaryGeneratedColumn()
     id: number
@@ -24,10 +24,10 @@ export class RatingEntity {
     author: UserEntity
 
   @Column()
-    authorId: string
+    authorId: number
 
   @Column()
-    activityId: string
+    activityId: number
 
   @ManyToOne(
     () => ActivityEntity,
@@ -37,7 +37,7 @@ export class RatingEntity {
     activity: ActivityEntity
 
   @Column()
-    elementTravelId: string
+    elementTravelId: number
 
   @OneToOne(
     () => ElementTravelInstanceEntity,

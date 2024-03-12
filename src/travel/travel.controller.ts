@@ -4,12 +4,13 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { TravelService } from './travel.service'
 import {
-  TravelDto, PlanATravelDto, AddActivityToTravelInstanceDto, AddAccommodationToTravelInstanceDto, PassElementDto,
+  TravelDto,
+  PlanATravelDto,
+  AddActivityToTravelInstanceDto,
+  PassElementDto,
 } from './dto'
 import { GetUser } from '../auth/decorator'
 import { JwtGuard } from '../auth/guard'
-import { multerConfigOptions } from '../config/multerConfigOptions'
-import { MulterFile } from '../model'
 
 @UseGuards(JwtGuard)
 @Controller('travel')
@@ -20,7 +21,7 @@ export class TravelController {
 
   @Get('find/:id')
   get(@Param('id') id: string) {
-    return this.travelService.getTravel(id)
+    return this.travelService.getTravel(parseInt(id, 10))
   }
 
   @Get('find/instance/:id')
@@ -37,7 +38,7 @@ export class TravelController {
 
   @Post('plan-a-travel')
   planATravel(
-  @GetUser('id') userId: string,
+  @GetUser('id') userId: number,
     @Body() body: PlanATravelDto,
   ) {
     return this.travelService.planATravel(body, userId)
@@ -48,15 +49,16 @@ export class TravelController {
   @Body() body: TravelDto,
     @GetUser('id') userId: string,
   ) {
-    return this.travelService.createTravel(body, userId)
+    return this.travelService.putTravel(body, userId)
   }
 
   @Put(':id')
   updateElement(
-  @Body() body: TravelDto,
-    @Param('id') id: string,
+  @GetUser('id') userId: string,
+    @Body() body: TravelDto,
+    @Param('id') id: number,
   ) {
-    return this.travelService.updateTravel(body, id)
+    return this.travelService.putTravel(body, userId, id)
   }
 
   @Put('pass-travel-element/:id')
@@ -77,9 +79,9 @@ export class TravelController {
 
   @Get('instance/all')
   getAllInstance(
-  @GetUser('id') id: string,
+  @GetUser('id') userId: number,
   ) {
-    return this.travelService.getAllInstances(id)
+    return this.travelService.getAllInstances(userId)
   }
 
   @Delete('/instance/delete/:id')
@@ -89,35 +91,11 @@ export class TravelController {
     return this.travelService.deleteTravelInstance(id)
   }
 
-  @Post('travel-instance/accommodation/cancel/:id')
-  cancelAccommodationElementInstance(
-  @Param('id') id: string,
-  ) {
-    return this.travelService.cancelAccommodationElementInstance(id)
-  }
-
-  @Put('pass-accommodation-element/:id')
-  @UseInterceptors(FilesInterceptor('images', 100))
-  passAccommodationElement(
-    @Param('id') id: string,
-      @UploadedFiles() files: Express.Multer.File[],
-  ): Promise<PassElementDto> {
-    return this.travelService.passAccommodationElement(id, files)
-  }
-
   @Post('travel-instance/activity/add/:travelId')
   addActivityToTravelInstance(
   @Param('travelId') travelId: string,
     @Body() body: AddActivityToTravelInstanceDto,
   ) {
     return this.travelService.addActivityToTravelInstance(travelId, body)
-  }
-
-  @Post('travel-instance/accommodation/add/:travelId')
-  addAccommodationToTravelInstance(
-  @Param('travelId') travelId: string,
-    @Body() body: AddAccommodationToTravelInstanceDto,
-  ) {
-    return this.travelService.addAccommodationToTravelInstance(travelId, body)
   }
 }

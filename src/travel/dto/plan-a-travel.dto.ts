@@ -1,11 +1,11 @@
 import {
-  IsDateString, IsNotEmpty, IsString,
+  IsDateString, IsNotEmpty, IsNumber,
 } from 'class-validator'
 
 export class PlanATravelDto {
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-    travelRecipeId: string
+    travelRecipeId: number
 
   @IsDateString()
   @IsNotEmpty()

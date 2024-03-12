@@ -1,5 +1,5 @@
 import {
-  BadRequestException, ConflictException, HttpStatus, Injectable, UnauthorizedException,
+  BadRequestException, ConflictException, Injectable, UnauthorizedException,
 } from '@nestjs/common'
 import * as argon from 'argon2'
 import { JwtService } from '@nestjs/jwt'

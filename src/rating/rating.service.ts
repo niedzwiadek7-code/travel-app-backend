@@ -1,10 +1,12 @@
-import { HttpStatus, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { DataSource, Repository } from 'typeorm'
 import { PutActivityDto } from './dto'
 import {
-  AccommodationElementTravelInstanceEntity, AccommodationRatingEntity, ElementTravelInstanceEntity, RatingEntity,
+  ElementTravelInstanceEntity,
+  RatingEntity,
 } from '../resources'
+import { RatingFormat } from './types'
 
 @Injectable()
 export class RatingService {
@@ -13,69 +15,52 @@ export class RatingService {
     private readonly ratingRepository: Repository<RatingEntity>,
     @InjectRepository(ElementTravelInstanceEntity)
     private readonly elementTravelInstanceRepository: Repository<ElementTravelInstanceEntity>,
-    @InjectRepository(AccommodationRatingEntity)
-    private readonly accommodationRatingRepository: Repository<AccommodationRatingEntity>,
-    @InjectRepository(AccommodationElementTravelInstanceEntity)
-    private readonly accommodationElementTravelInstanceRepository: Repository<AccommodationElementTravelInstanceEntity>,
+    private readonly dataSource: DataSource,
+    private readonly logger: Logger,
   ) {}
 
-  async putActivityRating(body: PutActivityDto, userId: string) {
-    const elementTravelInstance = await this.elementTravelInstanceRepository.findOne({
-      where: {
-        id: parseInt(body.elementTravelId, 10),
-      },
-    })
-
-    const rating = this.ratingRepository.create({
-      text: body.text,
-      authorId: userId,
-      activityId: elementTravelInstance.activityId,
-      elementTravelId: body.elementTravelId,
-      sharePhotos: body.sharePhotos,
-    })
-
-    const actualRatingObj = await this.ratingRepository.findOne({
-      where: {
-        elementTravelId: body.elementTravelId,
-      },
-    })
-
-    if (actualRatingObj) {
-      rating.id = actualRatingObj.id
+  transformRating(result: RatingEntity): RatingFormat {
+    return {
+      id: result.id,
+      text: result.text,
+      sharePhotos: result.sharePhotos,
     }
-
-    return this.ratingRepository.save(rating)
   }
 
-  async putAccommodationRating(body: PutActivityDto, userId: string) {
-    const elementTravelInstance = await this.accommodationElementTravelInstanceRepository.findOne({
-      where: {
-        id: parseInt(body.elementTravelId, 10),
-      },
-    })
+  async putActivityRating(body: PutActivityDto, userId: number) {
+    const queryRunner = this.dataSource.createQueryRunner()
+    await queryRunner.connect()
 
-    const rating = this.accommodationRatingRepository.create({
-      text: body.text,
-      authorId: userId,
-      accommodationId: elementTravelInstance.accommodationId,
-      elementTravelId: body.elementTravelId,
-      sharePhotos: body.sharePhotos,
-    })
+    let rating: RatingEntity
 
-    const actualRatingObj = await this.accommodationRatingRepository.findOne({
-      where: {
+    try {
+      await queryRunner.startTransaction()
+      const elementTravelInstance = await this.elementTravelInstanceRepository.findOne({
+        where: {
+          id: body.elementTravelId,
+        },
+      })
+
+      const ratingObj: RatingEntity = this.ratingRepository.create({
+        text: body.text,
+        authorId: userId,
+        activityId: elementTravelInstance.activityId,
         elementTravelId: body.elementTravelId,
-      },
-    })
+        sharePhotos: body.sharePhotos,
+      })
+      rating = await this.ratingRepository.save(ratingObj)
 
-    if (actualRatingObj) {
-      rating.id = actualRatingObj.id
+      await queryRunner.commitTransaction()
+    } catch (err) {
+      this.logger.error(err)
+      await queryRunner.rollbackTransaction()
+      throw new BadRequestException(err.message)
     }
 
-    return this.accommodationRatingRepository.save(rating)
+    return this.transformRating(rating)
   }
 
-  async getRating(id: string) {
+  async getRating(id: number): Promise<RatingFormat> {
     const result = await this.ratingRepository.findOne({
       where: {
         elementTravelId: id,
@@ -86,26 +71,6 @@ export class RatingService {
       return null
     }
 
-    return {
-      text: result.text,
-      sharePhotos: result.sharePhotos,
-    }
-  }
-
-  async getAccommodationRating(id: string) {
-    const result = await this.accommodationRatingRepository.findOne({
-      where: {
-        elementTravelId: id,
-      },
-    })
-
-    if (!result) {
-      return null
-    }
-
-    return {
-      text: result.text,
-      sharePhotos: result.sharePhotos,
-    }
+    return this.transformRating(result)
   }
 }

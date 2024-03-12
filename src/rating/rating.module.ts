@@ -1,21 +1,22 @@
-import { Module } from '@nestjs/common'
+import { Logger, Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { RatingController } from './rating.controller'
 import { RatingService } from './rating.service'
 import {
-  AccommodationElementTravelInstanceEntity, AccommodationRatingEntity, ElementTravelInstanceEntity, RatingEntity,
+  ElementTravelInstanceEntity,
+  RatingEntity,
 } from '../resources'
 
 @Module({
   imports: [
     TypeOrmModule.forFeature(
       [
-        RatingEntity, AccommodationRatingEntity, ElementTravelInstanceEntity,
-        AccommodationElementTravelInstanceEntity,
+        RatingEntity,
+        ElementTravelInstanceEntity,
       ],
     ),
   ],
   controllers: [RatingController],
-  providers: [RatingService],
+  providers: [RatingService, Logger],
 })
 export class RatingModule {}

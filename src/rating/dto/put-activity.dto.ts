@@ -1,13 +1,15 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator'
+import {
+  IsBoolean, IsNotEmpty, IsNumber, IsString,
+} from 'class-validator'
 
 export class PutActivityDto {
   @IsString()
   @IsNotEmpty()
     text: string
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-    elementTravelId: string
+    elementTravelId: number
 
   @IsBoolean()
   @IsNotEmpty()

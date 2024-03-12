@@ -4,13 +4,13 @@ import {
   Column,
   Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
-import { ElementTravelPhotoEntity } from './element-travel-photo.entity'
+import { PhotoEntity } from './photo.entity'
 import { TravelInstanceEntity } from './travel-instance.entity'
 import { ActivityEntity } from './activity.entity'
 import { ElementTravelEntity } from './element-travel.entity'
 import { RatingEntity } from './rating.entity'
 
-@Entity()
+@Entity('element_travel_instance')
 export class ElementTravelInstanceEntity {
   @PrimaryGeneratedColumn()
     id: number
@@ -23,17 +23,17 @@ export class ElementTravelInstanceEntity {
     passed: boolean
 
   @OneToMany(
-    () => ElementTravelPhotoEntity,
-    (elementTravelPhoto) => elementTravelPhoto.elementTravel,
+    () => PhotoEntity,
+    (photo) => photo.elementTravelInstance,
     { cascade: true },
   )
-    photos: ElementTravelPhotoEntity[]
+    photos: PhotoEntity[]
 
   @Column({ type: 'timestamp' })
-    from: Date
+    from: string
 
   @Column({ type: 'timestamp' })
-    to: Date
+    to: string
 
   @Column()
     travelInstanceId: string
@@ -41,12 +41,12 @@ export class ElementTravelInstanceEntity {
   @ManyToOne(
     () => TravelInstanceEntity,
     (travelInstance) => travelInstance.travelElements,
-    { onDelete: 'CASCADE' },
+    { cascade: true, onDelete: 'CASCADE' },
   )
     travelInstance: TravelInstanceEntity
 
   @Column()
-    activityId: string
+    activityId: number
 
   @ManyToOne(
     () => ActivityEntity,
@@ -58,7 +58,7 @@ export class ElementTravelInstanceEntity {
   @Column({
     nullable: true,
   })
-    elementTravelId?: string
+    elementTravelId?: number
 
   @ManyToOne(
     () => ElementTravelEntity,
