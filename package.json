@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "doc": "npx @compodoc/compodoc -p tsconfig.build.json -s",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main",
     "start:dev": "nest start --watch",
@@ -69,6 +70,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
+    "compodoc": "^0.0.41",
     "dotenv-cli": "^7.0.0",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "19.0.4",
