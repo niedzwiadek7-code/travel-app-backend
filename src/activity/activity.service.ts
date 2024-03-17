@@ -119,8 +119,8 @@ export class ActivityService {
     const [results, total] = await this.activityRepository.findAndCount({
       where: whereObj,
       relations: [
-        'activityType', 'activityParameters', 'activityParameters.activityTypeParameter', 'prices',
-        'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+        'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
+        'accommodation', 'trip', 'restaurant', 'attraction',
       ],
       withDeleted: source === 'user',
       take: pagination.take,
@@ -129,7 +129,7 @@ export class ActivityService {
 
     return new Paginate<ActivityFormat>(
       total,
-      results.map(this.transformActivity),
+      results.map(this.transformActivity.bind(this)),
     )
   }
 

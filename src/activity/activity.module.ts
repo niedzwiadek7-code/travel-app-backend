@@ -45,6 +45,10 @@ import { TripController } from './trip.controller'
   ],
   exports: [
     ActivityService,
+    AccommodationService,
+    AttractionService,
+    TripService,
+    RestaurantService,
   ],
 })
 export class ActivityModule {}
