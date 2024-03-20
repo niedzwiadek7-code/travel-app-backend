@@ -390,7 +390,7 @@ export class TravelService {
       withDeleted: true,
     })
 
-    return travelInstances.map(this.transformTravelInstance)
+    return travelInstances.map(this.transformTravelInstance.bind(this))
   }
 
   async cancelTravelElementInstance(id: string) {
