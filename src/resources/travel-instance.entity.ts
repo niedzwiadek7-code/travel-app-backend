@@ -7,6 +7,7 @@ import {
 import { TravelRecipeEntity } from './travel-recipe.entity'
 import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 import { UserEntity } from './user.entity'
+import { PhotoEntity } from './photo.entity'
 
 @Entity('travel_instance')
 export class TravelInstanceEntity {
@@ -42,6 +43,14 @@ export class TravelInstanceEntity {
   @OneToMany(
     () => ElementTravelInstanceEntity,
     (elementTravelInstance) => elementTravelInstance.travelInstance,
+    { cascade: true },
   )
     travelElements: ElementTravelInstanceEntity[]
+
+  @OneToMany(
+    () => PhotoEntity,
+    (photo) => photo.elementTravelInstance,
+    { cascade: true },
+  )
+    photos: PhotoEntity[]
 }

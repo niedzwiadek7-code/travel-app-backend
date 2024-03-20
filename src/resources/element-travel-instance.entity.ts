@@ -41,7 +41,11 @@ export class ElementTravelInstanceEntity {
   @ManyToOne(
     () => TravelInstanceEntity,
     (travelInstance) => travelInstance.travelElements,
-    { cascade: true, onDelete: 'CASCADE' },
+    {
+      onDelete: 'CASCADE',
+      eager: true,
+      orphanedRowAction: 'disable',
+    },
   )
     travelInstance: TravelInstanceEntity
 
@@ -66,11 +70,10 @@ export class ElementTravelInstanceEntity {
   )
     elementTravel?: ElementTravelEntity
 
-  @Column({
-    nullable: true,
-  })
-    ratingId?: string
-
-  @OneToOne(() => RatingEntity, (rating) => rating.elementTravel)
+  @OneToOne(
+    () => RatingEntity,
+    (rating) => rating.elementTravel,
+    { cascade: true },
+  )
     rating?: RatingEntity
 }

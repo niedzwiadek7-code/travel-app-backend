@@ -14,8 +14,4 @@ export class PutActivityDto {
   @IsBoolean()
   @IsNotEmpty()
     sharePhotos: boolean
-
-  @IsString()
-  @IsNotEmpty()
-    activityType: string
 }

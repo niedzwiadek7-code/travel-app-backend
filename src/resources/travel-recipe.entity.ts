@@ -36,6 +36,7 @@ export class TravelRecipeEntity {
   @OneToMany(
     () => ElementTravelEntity,
     (elementTravel) => elementTravel.travel,
+    { cascade: true },
   )
     travelElements: ElementTravelEntity[]
 

@@ -55,7 +55,8 @@ export class TravelService {
   transformTravelElementLocally(travelElement: ElementTravelEntity): TravelElementLocallyFormat {
     return {
       id: travelElement.id,
-      activity: this.activityService.transformActivity(travelElement.activity),
+      activity: travelElement.activity
+        && this.activityService.transformActivity(travelElement.activity),
       numberOfPeople: travelElement.numberOfPeople,
       price: travelElement.price,
       description: travelElement.description,
@@ -68,7 +69,8 @@ export class TravelService {
   transformTravelElementGlobally(travelElement: ElementTravelEntity): TravelElementGloballyFormat {
     return {
       id: travelElement.id,
-      activity: this.activityService.transformActivity(travelElement.activity),
+      activity: travelElement.activity
+        && this.activityService.transformActivity(travelElement.activity),
       numberOfPeople: travelElement.numberOfPeople,
       price: travelElement.price,
       description: travelElement.description,
@@ -89,7 +91,7 @@ export class TravelService {
         }
         return DateHandler.compareDates(localObjA.from, localObjB.from)
       })
-      .map(this.transformTravelElementLocally)
+      .map(this.transformTravelElementLocally.bind(this))
 
     const travelElementsGlobally: TravelElementGloballyFormat[] = travelRecipe.travelElements
       .filter((elem) => elem.elementTravelGlobally)
@@ -99,7 +101,7 @@ export class TravelService {
 
         return globalObjA.from - globalObjB.from
       })
-      .map(this.transformTravelElementGlobally)
+      .map(this.transformTravelElementGlobally.bind(this))
 
     return {
       id: travelRecipe.id,
@@ -173,10 +175,13 @@ export class TravelService {
       },
       relations: [
         'travelElements',
+        'travelElements.elementTravelLocally',
+        'travelElements.elementTravelGlobally',
         'travelElements.activity',
-        'travelElements.activity.activityType',
-        'accommodationTravelElements',
-        'accommodationTravelElements.accommodation',
+        'travelElements.activity.accommodation',
+        'travelElements.activity.attraction',
+        'travelElements.activity.restaurant',
+        'travelElements.activity.trip',
       ],
       withDeleted: true,
     })
@@ -226,15 +231,14 @@ export class TravelService {
           })),
       })
       travelRecipe = await this.travelRepository.save(travelRecipeObj)
+      await queryRunner.release()
     } catch (err) {
       this.logger.error(err)
       await queryRunner.rollbackTransaction()
       throw new BadRequestException()
-    } finally {
-      await queryRunner.release()
     }
 
-    return this.transformTravelRecipe(travelRecipe)
+    return this.getTravel(travelRecipe.id)
   }
 
   async planATravel(body: PlanATravelDto, userId: number) {
@@ -250,9 +254,10 @@ export class TravelService {
         where: {
           travelId: body.travelRecipeId,
         },
+        relations: ['elementTravelGlobally', 'elementTravelLocally'],
       })
 
-      travelInstanceResult = this.travelInstanceRepository.create({
+      const travelInstance = this.travelInstanceRepository.create({
         userId,
         travelRecipeId: body.travelRecipeId,
         from:
@@ -291,21 +296,21 @@ export class TravelService {
           return travelElement
         }),
       })
+      travelInstanceResult = await this.travelInstanceRepository.save(travelInstance)
+      await queryRunner.release()
     } catch (err) {
       this.logger.error(err)
       await queryRunner.rollbackTransaction()
       throw new BadRequestException()
-    } finally {
-      await queryRunner.release()
     }
 
-    return this.transformTravelInstance(travelInstanceResult)
+    return this.getTravelInstance(travelInstanceResult.id)
   }
 
-  async getTravelInstance(id: string) {
+  async getTravelInstance(id: number) {
     const travelInstance = await this.travelInstanceRepository.findOne({
       where: {
-        id: parseInt(id, 10),
+        id,
       },
       relations: [
         'travelElements',
@@ -326,7 +331,7 @@ export class TravelService {
     return this.transformTravelInstance(travelInstance)
   }
 
-  async passTravelElement(id: string, files: Express.Multer.File[]): Promise<PassElementDto> {
+  async passTravelElement(id: number, files: Express.Multer.File[]): Promise<PassElementDto> {
     const queryRunner = this.dataSource.createQueryRunner()
     await queryRunner.connect()
     const urls = []
@@ -334,7 +339,7 @@ export class TravelService {
     try {
       await queryRunner.startTransaction()
       await this.elementTravelInstanceRepository.save({
-        id: parseInt(id, 10),
+        id,
         passed: true,
       })
 
@@ -342,7 +347,7 @@ export class TravelService {
         try {
           const photoObj = await this.cloudinary.uploadImage(file)
           await this.photoRepository.save({
-            elementTravelId: id,
+            elementTravelInstanceId: id,
             url: photoObj.url,
           })
           urls.push(photoObj.url)
@@ -352,12 +357,11 @@ export class TravelService {
       }))
 
       await addPhotos()
+      await queryRunner.release()
     } catch (err) {
       this.logger.error(err)
       await queryRunner.rollbackTransaction()
       throw new BadRequestException()
-    } finally {
-      await queryRunner.release()
     }
 
     return {

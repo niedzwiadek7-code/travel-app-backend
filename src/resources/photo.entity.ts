@@ -18,8 +18,13 @@ export class PhotoEntity {
   @ManyToOne(
     () => ElementTravelInstanceEntity,
     (elementTravelInstance) => elementTravelInstance.photos,
+    {
+      onDelete: 'CASCADE',
+      eager: true,
+      orphanedRowAction: 'disable',
+    },
   )
-    elementTravelInstance: ElementTravelInstanceEntity
+    elementTravelInstance?: ElementTravelInstanceEntity
 
   @Column({
     nullable: true,

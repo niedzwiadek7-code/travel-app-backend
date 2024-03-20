@@ -1,7 +1,9 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator'
+import {
+  IsDateString, IsNotEmpty, IsNumber,
+} from 'class-validator'
 
 export class AddActivityToTravelInstanceDto {
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
     activityId: number
 

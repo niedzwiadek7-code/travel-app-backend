@@ -26,7 +26,7 @@ export class TravelController {
 
   @Get('find/instance/:id')
   getInstance(@Param('id') id: string) {
-    return this.travelService.getTravelInstance(id)
+    return this.travelService.getTravelInstance(parseInt(id, 10))
   }
 
   @Get('user-list')
@@ -67,7 +67,7 @@ export class TravelController {
     @Param('id') id: string,
       @UploadedFiles() files: Express.Multer.File[],
   ): Promise<PassElementDto> {
-    return this.travelService.passTravelElement(id, files)
+    return this.travelService.passTravelElement(parseInt(id, 10), files)
   }
 
   @Post('travel-instance/element/cancel/:id')

@@ -37,7 +37,11 @@ export class ElementTravelEntity {
   @ManyToOne(
     () => TravelRecipeEntity,
     (travel) => travel.travelElements,
-    { cascade: true, onDelete: 'CASCADE' },
+    {
+      onDelete: 'CASCADE',
+      eager: true,
+      orphanedRowAction: 'disable',
+    },
   )
     travel: TravelRecipeEntity
 
@@ -56,18 +60,12 @@ export class ElementTravelEntity {
     (elementTravelLocally) => elementTravelLocally.elementTravel,
     { cascade: true, onDelete: 'SET NULL' },
   )
-    elementTravelLocally: ElementTravelLocallyEntity
-
-  @Column()
-    elementTravelLocallyId: number
+    elementTravelLocally?: ElementTravelLocallyEntity
 
   @OneToOne(
     () => ElementTravelGloballyEntity,
     (elementTravelGlobally) => elementTravelGlobally.elementTravel,
     { cascade: true, onDelete: 'SET NULL' },
   )
-    elementTravelGlobally: ElementTravelGloballyEntity
-
-  @Column()
-    elementTravelGloballyId: number
+    elementTravelGlobally?: ElementTravelGloballyEntity
 }

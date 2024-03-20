@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryGeneratedColumn,
+  Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryColumn,
 } from 'typeorm'
 import { UserEntity } from './user.entity'
 import { ActivityEntity } from './activity.entity'
@@ -9,8 +9,9 @@ import { ElementTravelInstanceEntity } from './element-travel-instance.entity'
 
 @Entity('rating')
 export class RatingEntity {
-  @PrimaryGeneratedColumn()
-    id: number
+  @Column()
+  @PrimaryColumn()
+    elementTravelId: number
 
   @Column({
     nullable: false,
@@ -36,13 +37,10 @@ export class RatingEntity {
   )
     activity: ActivityEntity
 
-  @Column()
-    elementTravelId: number
-
   @OneToOne(
     () => ElementTravelInstanceEntity,
     (instance) => instance.rating,
-    { onDelete: 'CASCADE' },
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   @JoinColumn()
     elementTravel: ElementTravelInstanceEntity

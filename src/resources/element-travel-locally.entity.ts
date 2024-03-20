@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, OneToOne, PrimaryGeneratedColumn,
+  Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { ElementTravelEntity } from './element-travel.entity'
 
@@ -28,5 +28,6 @@ export class ElementTravelLocallyEntity {
     () => ElementTravelEntity,
     (elementTravel) => elementTravel.elementTravelLocally,
   )
+  @JoinColumn()
     elementTravel: ElementTravelEntity
 }

@@ -21,7 +21,7 @@ export class RatingService {
 
   transformRating(result: RatingEntity): RatingFormat {
     return {
-      id: result.id,
+      elementTravelId: result.elementTravelId,
       text: result.text,
       sharePhotos: result.sharePhotos,
     }

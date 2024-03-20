@@ -1,5 +1,5 @@
 export interface RatingFormat {
-  id: number
+  elementTravelId: number
   text: string
   sharePhotos: boolean
 }
