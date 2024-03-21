@@ -1,19 +1,9 @@
 /* eslint-disable max-classes-per-file */
 
 import {
-  IsArray,
-  IsInstance, IsNotEmpty, IsNumber, IsOptional, IsString,
+  IsArray, IsInstance, IsNotEmpty, IsNumber, IsOptional, IsString,
 } from 'class-validator'
-
-export class DateDto {
-  @IsNumber()
-  @IsNotEmpty()
-    hour: number
-
-  @IsNumber()
-  @IsNotEmpty()
-    minute: number
-}
+import { DateType } from '../../utils'
 
 export class TravelElementGloballyDto {
   @IsNumber()
@@ -30,11 +20,11 @@ export class TravelElementLocallyDto {
   @IsNotEmpty()
     dayCount: number
 
-  @IsInstance(DateDto)
-    from: DateDto
+  @IsNotEmpty()
+    from: DateType
 
-  @IsInstance(DateDto)
-    to: DateDto
+  @IsNotEmpty()
+    to: DateType
 }
 
 export class TravelElementDto {

@@ -14,7 +14,6 @@ import {
 } from '../resources'
 import {
   AddActivityToTravelInstanceDto,
-  DateDto,
   PassElementDto,
   PlanATravelDto,
   TravelDto,
@@ -135,7 +134,7 @@ export class TravelService {
           from: new DateHandler(elemInstance.from).toISOString(),
           to: new DateHandler(elemInstance.to).toISOString(),
           activity: this.activityService.transformActivity(elemInstance.activity),
-          photos: elemInstance.photos,
+          photos: elemInstance.photos.map((photo) => photo.url),
           elementTravel: getTravelElement(elemInstance.elementTravel),
         }
       }),
@@ -196,7 +195,6 @@ export class TravelService {
 
     try {
       await queryRunner.startTransaction()
-      const transformDate = (date: DateDto) => `${date.hour}:${date.minute}`
 
       if (travelId) {
         await this.elementTravelRepository.delete({
@@ -225,8 +223,8 @@ export class TravelService {
               travelElement.travelElementLocally
               && this.elementTravelLocallyRepository.create({
                 dayCount: travelElement.travelElementLocally.dayCount,
-                from: transformDate(travelElement.travelElementLocally.from),
-                to: transformDate(travelElement.travelElementLocally.to),
+                from: new DateHandler(travelElement.travelElementLocally.from).format('HH:mm'),
+                to: new DateHandler(travelElement.travelElementLocally.to).format('HH:mm'),
               }),
           })),
       })
@@ -278,7 +276,7 @@ export class TravelService {
               .add(elem.elementTravelLocally.dayCount - 1, 'days')
               .toISOString()
 
-            travelElement.to = new DateHandler(`${body.startDate} ${elem.elementTravelLocally.from}`)
+            travelElement.to = new DateHandler(`${body.startDate} ${elem.elementTravelLocally.to}`)
               .add(elem.elementTravelLocally.dayCount - 1, 'days')
               .toISOString()
           }
