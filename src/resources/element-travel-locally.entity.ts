@@ -1,14 +1,17 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn,
+  Column, Entity, JoinColumn, OneToOne, PrimaryColumn,
 } from 'typeorm'
 import { ElementTravelEntity } from './element-travel.entity'
 
 @Entity('element_travel_locally')
 export class ElementTravelLocallyEntity {
-  @PrimaryGeneratedColumn()
-    id: number
+  @Column({
+    nullable: false,
+  })
+  @PrimaryColumn()
+    elementTravelId: number
 
   @Column()
     dayCount: number
@@ -19,14 +22,10 @@ export class ElementTravelLocallyEntity {
   @Column('time')
     to: Date
 
-  @Column({
-    nullable: false,
-  })
-    elementTravelId: number
-
   @OneToOne(
     () => ElementTravelEntity,
     (elementTravel) => elementTravel.elementTravelLocally,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   @JoinColumn()
     elementTravel: ElementTravelEntity

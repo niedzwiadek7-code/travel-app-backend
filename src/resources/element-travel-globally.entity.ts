@@ -1,14 +1,17 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn,
+  Column, Entity, JoinColumn, OneToOne, PrimaryColumn,
 } from 'typeorm'
 import { ElementTravelEntity } from './element-travel.entity'
 
 @Entity('element_travel_globally')
 export class ElementTravelGloballyEntity {
-  @PrimaryGeneratedColumn()
-    id: number
+  @Column({
+    nullable: false,
+  })
+  @PrimaryColumn()
+    elementTravelId: number
 
   @Column()
     from: number
@@ -16,14 +19,10 @@ export class ElementTravelGloballyEntity {
   @Column()
     to: number
 
-  @Column({
-    nullable: false,
-  })
-    elementTravelId: number
-
   @OneToOne(
     () => ElementTravelEntity,
     (elementTravel) => elementTravel.elementTravelGlobally,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   @JoinColumn()
     elementTravel: ElementTravelEntity

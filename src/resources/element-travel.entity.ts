@@ -58,14 +58,14 @@ export class ElementTravelEntity {
   @OneToOne(
     () => ElementTravelLocallyEntity,
     (elementTravelLocally) => elementTravelLocally.elementTravel,
-    { cascade: true, onDelete: 'SET NULL' },
+    { cascade: true },
   )
     elementTravelLocally?: ElementTravelLocallyEntity
 
   @OneToOne(
     () => ElementTravelGloballyEntity,
     (elementTravelGlobally) => elementTravelGlobally.elementTravel,
-    { cascade: true, onDelete: 'SET NULL' },
+    { cascade: true },
   )
     elementTravelGlobally?: ElementTravelGloballyEntity
 }

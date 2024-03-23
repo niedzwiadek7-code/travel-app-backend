@@ -56,9 +56,9 @@ export class TravelController {
   updateElement(
   @GetUser('id') userId: string,
     @Body() body: TravelDto,
-    @Param('id') id: number,
+    @Param('id') id: string,
   ) {
-    return this.travelService.putTravel(body, userId, id)
+    return this.travelService.putTravel(body, userId, parseInt(id, 10))
   }
 
   @Put('pass-travel-element/:id')
