@@ -39,6 +39,8 @@ export class ActivityService {
           author: resultObj.author,
           text: resultObj.text,
           photos: [],
+          createdAt: resultObj.createdAt,
+          updatedAt: resultObj.updatedAt,
         }
 
         if (resultObj.sharePhotos) {

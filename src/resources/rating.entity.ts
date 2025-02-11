@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryColumn,
+  Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm'
 import { UserEntity } from './user.entity'
 import { ActivityEntity } from './activity.entity'
@@ -50,4 +50,16 @@ export class RatingEntity {
     default: false,
   })
     sharePhotos: boolean
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'created_at',
+  })
+    createdAt: Date
+
+  @UpdateDateColumn({
+    type: 'timestamp',
+    name: 'updated_at',
+  })
+    updatedAt: Date
 }
