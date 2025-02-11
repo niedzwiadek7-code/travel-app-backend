@@ -98,4 +98,13 @@ export class TravelController {
   ) {
     return this.travelService.addActivityToTravelInstance(travelId, body)
   }
+
+  @UseGuards(JwtGuard)
+  @Delete('restore/:id')
+  restoreTravelRecipe(
+  @Param('id') id: string,
+  ) {
+    console.log('heree')
+    return this.travelService.restoreTravelRecipe(id)
+  }
 }

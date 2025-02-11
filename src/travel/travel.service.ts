@@ -168,7 +168,7 @@ export class TravelService {
   }
 
   async getUserTravels(userId: string) {
-    const results = await this.travelRepository.find({
+    const results = (await this.travelRepository.find({
       where: {
         userId,
       },
@@ -183,7 +183,7 @@ export class TravelService {
         'travelElements.activity.trip',
       ],
       withDeleted: true,
-    })
+    })).filter((result) => result.deleteAt === null)
 
     return results.map((result) => this.transformTravelRecipe(result))
   }
@@ -409,5 +409,10 @@ export class TravelService {
       to: new DateHandler(body.to).toISOString(),
     })
     return this.elementTravelInstanceRepository.save(elementTravelInstance)
+  }
+
+  async restoreTravelRecipe(id: string) {
+    await this.travelRepository.softDelete({ id: parseInt(id, 10) })
+    return HttpStatus.ACCEPTED
   }
 }

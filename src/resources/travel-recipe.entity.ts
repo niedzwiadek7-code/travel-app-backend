@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
+  Column, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { UserEntity } from './user.entity'
 import { ElementTravelEntity } from './element-travel.entity'
@@ -46,4 +46,7 @@ export class TravelRecipeEntity {
     { cascade: true },
   )
     travelInstances: TravelInstanceEntity[]
+
+  @DeleteDateColumn()
+    deleteAt?: Date
 }
