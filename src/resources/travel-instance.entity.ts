@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 
 import {
-  Column,
+  Column, DeleteDateColumn,
   Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
 } from 'typeorm'
 import { TravelRecipeEntity } from './travel-recipe.entity'
@@ -53,4 +53,7 @@ export class TravelInstanceEntity {
     { cascade: true },
   )
     photos: PhotoEntity[]
+
+  @DeleteDateColumn()
+    deleteAt?: Date
 }

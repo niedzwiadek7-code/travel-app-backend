@@ -368,7 +368,7 @@ export class TravelService {
   }
 
   async getAllInstances(userId: number) {
-    const travelInstances = await this.travelInstanceRepository.find({
+    const travelInstances = (await this.travelInstanceRepository.find({
       where: {
         userId,
       },
@@ -386,7 +386,7 @@ export class TravelService {
         'travelRecipe',
       ],
       withDeleted: true,
-    })
+    })).filter((result) => result.deleteAt === null)
 
     return travelInstances.map(this.transformTravelInstance.bind(this))
   }
@@ -397,8 +397,8 @@ export class TravelService {
   }
 
   async deleteTravelInstance(id: string) {
-    await this.travelInstanceRepository.delete({ id: parseInt(id, 10) })
-    return HttpStatus.OK
+    await this.travelInstanceRepository.softDelete({ id: parseInt(id, 10) })
+    return HttpStatus.ACCEPTED
   }
 
   async addActivityToTravelInstance(travelId: string, body: AddActivityToTravelInstanceDto) {
