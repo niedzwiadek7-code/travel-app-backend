@@ -12,6 +12,9 @@ import { RatingModule } from './rating/rating.module'
 import { dataSourceOptions } from './db/data-source'
 import { AppController } from './app.controller'
 import { CloudinaryModule } from './cloudinary/cloudinary.module'
+import { UserSeederService } from './db/seed/user-seeder.service'
+import entities from './resources'
+import { ActivitySeederService } from './db/seed/activity-seeder.service'
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module'
       useFactory: dataSourceOptions,
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature(entities),
     AuthModule,
     UserModule,
     TravelModule,
@@ -37,5 +41,9 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module'
     CloudinaryModule,
   ],
   controllers: [AppController],
+  providers: [
+    UserSeederService,
+    ActivitySeederService,
+  ],
 })
 export class AppModule {}

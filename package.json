@@ -23,8 +23,7 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:migration:generate": "yarn typeorm migration:generate src/db/migrations/migration -d src/db/migration.config.ts --outputJs",
     "typeorm:migration:run": "yarn typeorm migration:run -d src/db/migration.config.ts",
-    "typeorm:seed:run": "yarn build && ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d ./src/db/migration.config.ts",
-    "typeorm:seed:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-extension/bin/cli.cjs seed:create --root='./src/db/seeds'",
+    "typeorm:seed:run": "ts-node -r tsconfig-paths/register src/db/seed/seed.ts",
     "vercel:env:get": "vercel env pull ignoreme/prod/.env"
   },
   "dependencies": {
@@ -56,7 +55,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
+    "@faker-js/faker": "^9.5.0",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
@@ -91,7 +90,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.1.1",
-    "typescript": "^4.7.4"
+    "typescript": "^5.7.3"
   },
   "jest": {
     "moduleFileExtensions": [
