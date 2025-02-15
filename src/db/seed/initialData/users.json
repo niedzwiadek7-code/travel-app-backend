@@ -1,0 +1,135 @@
+[
+  {
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "email": "jan.kowalski@example.com",
+    "password": "SecurePass123!",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Anna",
+    "lastName": "Nowak",
+    "email": "anna.nowak@firma.pl",
+    "password": "BiznesoweHaslo2024",
+    "roles": ["admin", "user"]
+  },
+  {
+    "firstName": "Marek",
+    "lastName": "Wiśniewski",
+    "email": "marek.wisniewski@turystyka.com",
+    "password": "Wakacje2024!",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Piotr",
+    "lastName": "Zieliński",
+    "email": "piotr.zielinski@domena.com",
+    "password": "HasloBezpieczne321",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Magda",
+    "lastName": "Kowalczyk",
+    "email": "magda.kowalczyk@firma.pl",
+    "password": "Praca2024!",
+    "roles": ["admin"]
+  },
+  {
+    "firstName": "Tomasz",
+    "lastName": "Nowicki",
+    "email": "tomasz.nowicki@example.com",
+    "password": "SilneHaslo123",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Karolina",
+    "lastName": "Mazur",
+    "email": "karolina.mazur@biznes.com",
+    "password": "KontoFirmowe2024",
+    "roles": ["admin", "user"]
+  },
+  {
+    "firstName": "Łukasz",
+    "lastName": "Wójcik",
+    "email": "lukasz.wojcik@firma.pl",
+    "password": "BezpieczneHaslo!",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Natalia",
+    "lastName": "Kamińska",
+    "email": "natalia.kaminska@example.com",
+    "password": "MojeSuperHaslo",
+    "roles": ["admin"]
+  },
+  {
+    "firstName": "Paweł",
+    "lastName": "Dąbrowski",
+    "email": "pawel.dabrowski@turystyka.com",
+    "password": "Podroze123!",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Dominika",
+    "lastName": "Olszewska",
+    "email": "dominika.olszewska@example.com",
+    "password": "SekretneHaslo987",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Bartek",
+    "lastName": "Piotrowski",
+    "email": "bartek.piotrowski@firma.pl",
+    "password": "NoweHaslo2024!",
+    "roles": ["admin"]
+  },
+  {
+    "firstName": "Sylwia",
+    "lastName": "Grabowska",
+    "email": "sylwia.grabowska@example.com",
+    "password": "SuperSilneHaslo!",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Krzysztof",
+    "lastName": "Jankowski",
+    "email": "krzysztof.jankowski@domena.com",
+    "password": "DobreHaslo111",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Ewa",
+    "lastName": "Król",
+    "email": "ewa.krol@firma.pl",
+    "password": "Haslo1234!",
+    "roles": ["admin"]
+  },
+  {
+    "firstName": "Grzegorz",
+    "lastName": "Lewandowski",
+    "email": "grzegorz.lewandowski@example.com",
+    "password": "Silne12345",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Agnieszka",
+    "lastName": "Zawadzka",
+    "email": "agnieszka.zawadzka@turystyka.com",
+    "password": "Podroze2024!",
+    "roles": ["user"]
+  },
+  {
+    "firstName": "Michał",
+    "lastName": "Szymański",
+    "email": "michal.szymanski@firma.pl",
+    "password": "DobreHaslo2024!",
+    "roles": ["admin", "user"]
+  },
+  {
+    "firstName": "Patrycja",
+    "lastName": "Witkowska",
+    "email": "patrycja.witkowska@example.com",
+    "password": "BezpieczneHaslo999",
+    "roles": ["user"]
+  }
+]

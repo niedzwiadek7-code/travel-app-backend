@@ -1,0 +1,385 @@
+[
+  {
+    "accepted": true,
+    "name": "Hotel Kraków",
+    "description": "Luksusowy hotel w centrum Krakowa.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 300 }],
+    "userId": 1,
+    "accommodation": { "place": "Kraków" }
+  },
+  {
+    "accepted": true,
+    "name": "Zamek Królewski w Warszawie",
+    "description": "Zabytkowy zamek w sercu Warszawy.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 50 }],
+    "userId": 2,
+    "attraction": { "place": "Warszawa", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Pod Różą",
+    "description": "Tradycyjna polska kuchnia w eleganckim otoczeniu.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 100 }],
+    "userId": 3,
+    "restaurant": { "place": "Gdańsk" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Zakopanego",
+    "description": "Wycieczka z Warszawy do Zakopanego.",
+    "activityType": "Trip",
+    "prices": [{ "price": 200 }],
+    "userId": 4,
+    "trip": { "from": "Warszawa", "to": "Zakopane" }
+  },
+  {
+    "accepted": false,
+    "name": "Hostel Wrocław",
+    "description": "Tani hostel dla podróżujących.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 50 }],
+    "userId": 5,
+    "accommodation": { "place": "Wrocław" },
+    "deleteAt": "2023-12-31T23:59:59.999Z"
+  },
+  {
+    "accepted": true,
+    "name": "Kopalnia Soli w Wieliczce",
+    "description": "Zabytkowa kopalnia soli wpisana na listę UNESCO.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 80 }],
+    "userId": 6,
+    "attraction": { "place": "Wieliczka", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja U Szewca",
+    "description": "Regionalne dania w klimatycznej restauracji.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 70 }],
+    "userId": 7,
+    "restaurant": { "place": "Poznań" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Morskiego Oka",
+    "description": "Piesza wycieczka do najpiękniejszego jeziora w Tatrach.",
+    "activityType": "Trip",
+    "prices": [{ "price": 150 }],
+    "userId": 8,
+    "trip": { "from": "Zakopane", "to": "Morskie Oko" }
+  },
+  {
+    "accepted": true,
+    "name": "Apartamenty nad Bałtykiem",
+    "description": "Apartamenty z widokiem na morze w Sopocie.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 400 }],
+    "userId": 9,
+    "accommodation": { "place": "Sopot" }
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Powstania Warszawskiego",
+    "description": "Interaktywne muzeum poświęcone historii Powstania Warszawskiego.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 25 }],
+    "userId": 10,
+    "attraction": { "place": "Warszawa", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Smak Natury",
+    "description": "Wegetariańska restauracja z ekologicznymi produktami.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 90 }],
+    "userId": 11,
+    "restaurant": { "place": "Kraków" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Białowieży",
+    "description": "Wycieczka do Puszczy Białowieskiej, ostatniego naturalnego lasu w Europie.",
+    "activityType": "Trip",
+    "prices": [{ "price": 180 }],
+    "userId": 12,
+    "trip": { "from": "Warszawa", "to": "Białowieża" }
+  },
+  {
+    "accepted": false,
+    "name": "Hotel Nad Wisłą",
+    "description": "Hotel z widokiem na rzekę Wisłę.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 250 }],
+    "userId": 13,
+    "accommodation": { "place": "Toruń" },
+    "deleteAt": "2023-11-15T23:59:59.999Z"
+  },
+  {
+    "accepted": true,
+    "name": "Oceanarium w Gdyni",
+    "description": "Największe oceanarium w Polsce.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 60 }],
+    "userId": 14,
+    "attraction": { "place": "Gdynia", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Rybna Chata",
+    "description": "Specjalność: świeże ryby z Bałtyku.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 120 }],
+    "userId": 15,
+    "restaurant": { "place": "Gdańsk" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Karkonoszy",
+    "description": "Wycieczka górska w Karkonosze.",
+    "activityType": "Trip",
+    "prices": [{ "price": 220 }],
+    "userId": 16,
+    "trip": { "from": "Wrocław", "to": "Karpacz" }
+  },
+  {
+    "accepted": true,
+    "name": "Pensjonat w Bieszczadach",
+    "description": "Spokojne miejsce na łonie natury.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 150 }],
+    "userId": 17,
+    "accommodation": { "place": "Bieszczady" }
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Żup Krakowskich",
+    "description": "Muzeum poświęcone historii górnictwa solnego.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 30 }],
+    "userId": 18,
+    "attraction": { "place": "Wieliczka", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Włoska Bella",
+    "description": "Autentyczna włoska kuchnia w centrum Poznania.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 110 }],
+    "userId": 19,
+    "restaurant": { "place": "Poznań" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Malborka",
+    "description": "Zwiedzanie największego zamku krzyżackiego.",
+    "activityType": "Trip",
+    "prices": [{ "price": 170 }],
+    "userId": 2,
+    "trip": { "from": "Gdańsk", "to": "Malbork" }
+  },
+  {
+    "accepted": false,
+    "name": "Hotel Pod Kogutem",
+    "description": "Niewielki hotel w centrum Lublina.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 200 }],
+    "userId": 4,
+    "accommodation": { "place": "Lublin" },
+    "deleteAt": "2023-10-01T23:59:59.999Z"
+  },
+  {
+    "accepted": true,
+    "name": "Park Narodowy Białowieski",
+    "description": "Rezerwat przyrody z żubrami.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 40 }],
+    "userId": 1,
+    "attraction": { "place": "Białowieża", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Smak Świata",
+    "description": "Kuchnia fusion z całego świata.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 130 }],
+    "userId": 4,
+    "restaurant": { "place": "Warszawa" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Ojcowa",
+    "description": "Zwiedzanie Ojcowskiego Parku Narodowego.",
+    "activityType": "Trip",
+    "prices": [{ "price": 90 }],
+    "userId": 10,
+    "trip": { "from": "Kraków", "to": "Ojców" }
+  },
+  {
+    "accepted": true,
+    "name": "Hotel Nad Jeziorem",
+    "description": "Hotel z widokiem na jezioro w Augustowie.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 280 }],
+    "userId": 7,
+    "accommodation": { "place": "Augustów" }
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Zamkowe w Malborku",
+    "description": "Największy zamek gotycki na świecie.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 70 }],
+    "userId": 6,
+    "attraction": { "place": "Malbork", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Polska Chata",
+    "description": "Tradycyjne polskie dania w rustykalnym stylu.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 80 }],
+    "userId": 5,
+    "restaurant": { "place": "Kraków" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Pienin",
+    "description": "Spływ Dunajcem i zwiedzanie Pienin.",
+    "activityType": "Trip",
+    "prices": [{ "price": 160 }],
+    "userId": 19,
+    "trip": { "from": "Kraków", "to": "Szczawnica" }
+  },
+  {
+    "accepted": false,
+    "name": "Hotel Pod Lasem",
+    "description": "Hotel położony na skraju lasu.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 180 }],
+    "userId": 19,
+    "accommodation": { "place": "Białystok" },
+    "deleteAt": "2023-09-30T23:59:59.999Z"
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Lotnictwa Polskiego",
+    "description": "Kolekcja historycznych samolotów.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 35 }],
+    "userId": 10,
+    "attraction": { "place": "Kraków", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Pod Kogutem",
+    "description": "Regionalne dania w stylu wiejskim.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 60 }],
+    "userId": 1,
+    "restaurant": { "place": "Lublin" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Kazimierza Dolnego",
+    "description": "Zwiedzanie malowniczego miasteczka nad Wisłą.",
+    "activityType": "Trip",
+    "prices": [{ "price": 120 }],
+    "userId": 10,
+    "trip": { "from": "Warszawa", "to": "Kazimierz Dolny" }
+  },
+  {
+    "accepted": true,
+    "name": "Hotel Nad Zalewem",
+    "description": "Hotel z widokiem na zalew w Zegrzu.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 220 }],
+    "userId": 2,
+    "accommodation": { "place": "Zegrze" }
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Narodowe w Warszawie",
+    "description": "Największe muzeum sztuki w Polsce.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 20 }],
+    "userId": 4,
+    "attraction": { "place": "Warszawa", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Pod Aniołem",
+    "description": "Ekskluzywna restauracja z widokiem na Stare Miasto.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 150 }],
+    "userId": 9,
+    "restaurant": { "place": "Gdańsk" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Częstochowy",
+    "description": "Pielgrzymka do Jasnej Góry.",
+    "activityType": "Trip",
+    "prices": [{ "price": 100 }],
+    "userId": 19,
+    "trip": { "from": "Kraków", "to": "Częstochowa" }
+  },
+  {
+    "accepted": false,
+    "name": "Hotel Pod Gwiazdami",
+    "description": "Hotel z tarasem widokowym na góry.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 300 }],
+    "userId": 11,
+    "accommodation": { "place": "Szklarska Poręba" },
+    "deleteAt": "2023-08-31T23:59:59.999Z"
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Emigracji w Gdyni",
+    "description": "Muzeum poświęcone historii polskiej emigracji.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 30 }],
+    "userId": 13,
+    "attraction": { "place": "Gdynia", "priceType": "per_entry" }
+  },
+  {
+    "accepted": true,
+    "name": "Restauracja Pod Katedrą",
+    "description": "Tradycyjna kuchnia polska w sercu miasta.",
+    "activityType": "Restaurant",
+    "prices": [{ "price": 85 }],
+    "userId": 15,
+    "restaurant": { "place": "Poznań" }
+  },
+  {
+    "accepted": true,
+    "name": "Wycieczka do Krynicy-Zdroju",
+    "description": "Wycieczka do uzdrowiska w Krynicy.",
+    "activityType": "Trip",
+    "prices": [{ "price": 140 }],
+    "userId": 16,
+    "trip": { "from": "Kraków", "to": "Krynica-Zdrój" }
+  },
+  {
+    "accepted": true,
+    "name": "Hotel Pod Zamkiem",
+    "description": "Hotel położony u stóp zamku.",
+    "activityType": "Accommodation",
+    "prices": [{ "price": 190 }],
+    "userId": 17,
+    "accommodation": { "place": "Olsztyn" }
+  },
+  {
+    "accepted": true,
+    "name": "Muzeum Historyczne w Krakowie",
+    "description": "Muzeum poświęcone historii Krakowa.",
+    "activityType": "Attraction",
+    "prices": [{ "price": 25 }],
+    "userId": 18,
+    "attraction": { "place": "Kraków", "priceType": "per_entry" }
+  }
+]
