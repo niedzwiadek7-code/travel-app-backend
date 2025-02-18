@@ -7,7 +7,7 @@ import { getActualPrice, Paginate, PaginateInput } from '../utils'
 import { ActivityEntity } from '../resources'
 import {
   AccommodationDto,
-  ActivityDto, AttractionDto, QueryActivityDto, RestaurantDto, TripDto,
+  ActivityDto, AttractionDto, QueryActivityDto, RestaurantDto, TransformActivityOptionsDto, TripDto,
 } from './dto'
 import { AccommodationService } from './accommodation.service'
 import { TripService } from './trip.service'
@@ -26,8 +26,11 @@ export class ActivityService {
     private readonly restaurantService: RestaurantService,
   ) {}
 
-  transformActivity(result: ActivityEntity): ActivityFormat {
-    const getBasicActivity = () => ({
+  transformActivity(
+    result: ActivityEntity,
+    options?: TransformActivityOptionsDto,
+  ): ActivityFormat {
+    const getBasicActivity: () => ActivityFormat = () => ({
       id: result.id,
       accepted: result.accepted,
       name: result.name,
@@ -41,14 +44,25 @@ export class ActivityService {
           photos: [],
           createdAt: resultObj.createdAt,
           updatedAt: resultObj.updatedAt,
+          rating: resultObj.rating,
         }
 
-        if (resultObj.sharePhotos) {
-          obj.photos = resultObj.elementTravel.photos.map((photo) => photo.url)
-        }
+        const allPhotos = (resultObj.elementTravel.photos || []).filter((photo) => {
+          if (photo.deleteAt) {
+            return false
+          }
+
+          return photo.isShared || resultObj.author.id.toString() === options.userId
+        })
+
+        obj.photos = allPhotos.map((photo) => photo.url)
 
         return obj
       }) : [],
+      averageRating: result.ratings
+        ? result.ratings.reduce((acc, curr) => acc + curr.rating, 0) / result.ratings.length
+        : 0,
+      countRatings: result.ratings ? result.ratings.length : 0,
     })
 
     const activity = getBasicActivity()
@@ -95,7 +109,10 @@ export class ActivityService {
     return whereObj
   }
 
-  async getActivity(id: string): Promise<ActivityFormat> {
+  async getActivity(
+    id: string,
+    userId: string,
+  ): Promise<ActivityFormat> {
     const result = await this.activityRepository.findOne({
       where: {
         id: parseInt(id, 10),
@@ -103,11 +120,13 @@ export class ActivityService {
       withDeleted: true,
       relations: [
         'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
-        'accommodation', 'trip', 'restaurant', 'attraction',
+        'accommodation', 'trip', 'restaurant', 'attraction', 'user',
       ],
     })
 
-    return this.transformActivity(result)
+    return this.transformActivity(result, {
+      userId,
+    })
   }
 
   async getAllActivities(
@@ -122,7 +141,7 @@ export class ActivityService {
       where: whereObj,
       relations: [
         'prices', 'ratings', 'ratings.author', 'ratings.elementTravel', 'ratings.elementTravel.photos',
-        'accommodation', 'trip', 'restaurant', 'attraction',
+        'accommodation', 'trip', 'restaurant', 'attraction', 'user',
       ],
       withDeleted: source === 'user',
       take: pagination.take,
@@ -131,7 +150,9 @@ export class ActivityService {
 
     return new Paginate<ActivityFormat>(
       total,
-      results.map(this.transformActivity.bind(this)),
+      results.map((result) => this.transformActivity(result, {
+        userId: result.user.id.toString(),
+      })),
     )
   }
 

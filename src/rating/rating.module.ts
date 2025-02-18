@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { RatingController } from './rating.controller'
 import { RatingService } from './rating.service'
 import {
-  ElementTravelInstanceEntity,
+  ElementTravelInstanceEntity, PhotoEntity,
   RatingEntity,
 } from '../resources'
+import { CloudinaryService } from '../cloudinary/cloudinary.service'
 
 @Module({
   imports: [
@@ -13,10 +14,11 @@ import {
       [
         RatingEntity,
         ElementTravelInstanceEntity,
+        PhotoEntity,
       ],
     ),
   ],
   controllers: [RatingController],
-  providers: [RatingService, Logger],
+  providers: [RatingService, Logger, CloudinaryService],
 })
 export class RatingModule {}

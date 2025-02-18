@@ -18,4 +18,6 @@ export interface ActivityFormat {
   activityType: ActivityType
   ratings: Array<Rating>,
   price?: number,
+  averageRating: number,
+  countRatings: number,
 }

@@ -1,5 +1,12 @@
+type PhotoFormat = {
+  id: number
+  url: string
+  isShared: boolean
+}
+
 export interface RatingFormat {
   elementTravelId: number
   text: string
-  sharePhotos: boolean
+  rating: number
+  photos: PhotoFormat[]
 }

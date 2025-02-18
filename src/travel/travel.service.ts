@@ -134,7 +134,9 @@ export class TravelService {
           from: new DateHandler(elemInstance.from).toISOString(),
           to: new DateHandler(elemInstance.to).toISOString(),
           activity: this.activityService.transformActivity(elemInstance.activity),
-          photos: elemInstance.photos.map((photo) => photo.url),
+          photos: elemInstance.photos
+            .filter((photo) => !photo.deleteAt)
+            .map((photo) => photo.url),
           elementTravel: getTravelElement(elemInstance.elementTravel),
         }
       }),

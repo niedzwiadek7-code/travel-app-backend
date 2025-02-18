@@ -33,9 +33,13 @@ export class ActivityController {
     )
   }
 
+  @UseGuards(JwtGuard)
   @Get('find/:id')
-  get(@Param('id') id: string) {
-    return this.activityService.getActivity(id)
+  get(
+  @Param('id') id: string,
+    @GetUser('id') userId: number,
+  ) {
+    return this.activityService.getActivity(id, userId.toString())
   }
 
   @UseGuards(JwtGuard)

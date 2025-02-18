@@ -32,6 +32,8 @@ export class UserSeederService {
     await this.resetRoles()
 
     const jsonPath = path.join(__dirname, 'initialData', 'users.json')
+    await this.generateRoles()
+    await this.generateAdmin()
     await this.seedFromJson(jsonPath)
 
     if (process.env.WITH_FACTORY !== 'true') {
@@ -41,8 +43,6 @@ export class UserSeederService {
     const promises = []
 
     const count = parseInt(process.env.FACTORY_SIZE, 10) || 1
-    await this.generateRoles()
-    await this.generateAdmin()
 
     for (let i = 0; i < count; i += 1) {
       promises.push(this.generateUsers())
