@@ -61,15 +61,6 @@ export class TravelController {
     return this.travelService.putTravel(body, userId, parseInt(id, 10))
   }
 
-  @Put('pass-travel-element/:id')
-  @UseInterceptors(FilesInterceptor('images', 100))
-  passTravelElement(
-    @Param('id') id: string,
-      @UploadedFiles() files: Express.Multer.File[],
-  ): Promise<PassElementDto> {
-    return this.travelService.passTravelElement(parseInt(id, 10), files)
-  }
-
   @Post('travel-instance/element/cancel/:id')
   cancelTravelElementInstance(
   @Param('id') id: string,

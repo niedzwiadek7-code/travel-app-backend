@@ -331,44 +331,6 @@ export class TravelService {
     return this.transformTravelInstance(travelInstance)
   }
 
-  async passTravelElement(id: number, files: Express.Multer.File[]): Promise<PassElementDto> {
-    const queryRunner = this.dataSource.createQueryRunner()
-    await queryRunner.connect()
-    const urls = []
-
-    try {
-      await queryRunner.startTransaction()
-      await this.elementTravelInstanceRepository.save({
-        id,
-        passed: true,
-      })
-
-      const addPhotos = async () => Promise.all(files.map(async (file) => {
-        try {
-          const photoObj = await this.cloudinary.uploadImage(file)
-          await this.photoRepository.save({
-            elementTravelInstanceId: id,
-            url: photoObj.url,
-          })
-          urls.push(photoObj.url)
-        } catch (err) {
-          this.logger.error(err)
-        }
-      }))
-
-      await addPhotos()
-      await queryRunner.release()
-    } catch (err) {
-      this.logger.error(err)
-      await queryRunner.rollbackTransaction()
-      throw new BadRequestException()
-    }
-
-    return {
-      urls,
-    }
-  }
-
   async getAllInstances(userId: number) {
     const travelInstances = (await this.travelInstanceRepository.find({
       where: {
